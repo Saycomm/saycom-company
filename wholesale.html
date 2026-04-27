@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="wholesale_title">Оптовые продажи и B2B - SAYCOM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css?v=2.2">
+    <style>
+        .wholesale-hero {
+            padding: 120px 0 80px;
+            background: radial-gradient(circle at top right, rgba(16, 185, 129, 0.05), transparent),
+                radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.05), transparent);
+            text-align: center;
+        }
+
+        .wholesale-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--primary);
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .wholesale-title {
+            font-size: 56px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #fff, #999);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .wholesale-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .benefit-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 40px;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary);
+            opacity: 0;
+            transition: 0.3s;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(16, 185, 129, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .benefit-card:hover::before {
+            opacity: 1;
+        }
+
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--primary);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+
+        .benefit-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .benefit-desc {
+            color: var(--text-muted);
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .threshold-section {
+            padding: 100px 0;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .threshold-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+
+        .threshold-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .threshold-count {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .threshold-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-section {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .cta-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.02) 100%);
+            padding: 60px;
+            border-radius: 32px;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .wholesale-hero {
+                padding: 60px 0 40px;
+            }
+
+            .wholesale-title {
+                font-size: 24px;
+                margin-bottom: 12px;
+            }
+
+            .wholesale-hero p {
+                font-size: 14px !important;
+                line-height: 1.5 !important;
+            }
+
+            .benefit-card {
+                padding: 25px;
+            }
+
+            .cta-section {
+                padding: 40px 0;
+            }
+
+            .cta-box {
+                padding: 30px 20px;
+                border-radius: 20px;
+            }
+
+            .cta-box h2 {
+                font-size: 20px !important;
+                margin-bottom: 12px !important;
+            }
+
+            .cta-box p {
+                font-size: 13px !important;
+                margin-bottom: 25px !important;
+            }
+
+            .cta-box a {
+                padding: 12px 25px !important;
+                font-size: 15px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar"
+        style="background: var(--bg-light); border-bottom: 1px solid var(--border-color); padding: 12px 0; font-size: 13px; color: var(--text-muted);">
+        <div class="container top-bar-container"
+            style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-weight: 500;"><i class="fa-solid fa-truck"
+                    style="color: var(--primary); margin-right:4px;"></i> <span data-i18n="top_bar_delivery">Бесплатная
+                    доставка при заказе от <span style="color: var(--primary); font-weight: 700;"
+                        data-i18n="auto_index_1">250 000 ₸</span></span></div>
+            <div class="top-lang" style="display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-globe" style="color: var(--text-muted); font-size: 12px;"></i>
+                <select class="lang-select" id="lang-switch" onchange="setLanguage(this.value)"
+                    style="background: transparent; border: none; color: white; outline: none; cursor: pointer; font-weight: 600; font-family: 'Inter', sans-serif;">
+                    <option value="ru" data-i18n="auto_index_2">Русский</option>
+                    <option value="en" data-i18n="auto_index_3">English</option>
+                    <option value="kz" data-i18n="auto_index_4">Қазақша</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header"
+        style="background: var(--bg-light); border-bottom: 1px solid var(--border-color); padding: 20px 0;">
+        <div class="container header-container"
+            style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo" style="display: flex; align-items: center; gap: 12px; cursor: pointer;"
+                onclick="window.location.href='index.html'">
+                <img src="uploads/icon_premium_v2.png" alt="SAYCOM Logo"
+                    style="width: 40px; height: 40px; border-radius: 10px; object-fit: contain;">
+                <div class="logo-text">
+                    <div class="logo-title" style="font-weight: 700; font-size: 18px; color: white; "
+                        data-i18n="auto_index_5">SAYCOM</div>
+                    <div class="logo-subtitle" data-i18n="premium_solutions"
+                        style="font-size: 11px; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">
+                        Premium Solutions</div>
+                </div>
+            </div>
+
+            <div class="search-wrap" style="position: relative; width: 500px; flex-shrink: 1;">
+                <div class="search-bar"
+                    style="width: 100%; border: 1px solid var(--border-color); background: rgba(255,255,255,0.03); border-radius: 8px; padding: 10px 16px; display: flex; align-items: center; gap: 12px; transition: 0.3s; z-index: 101;">
+                    <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted); font-size: 14px;"></i>
+                    <input type="text" id="global-search" data-i18n-placeholder="search_placeholder"
+                        placeholder="Search for products, brands..."
+                        style="border:none; background:transparent; width:100%; outline:none; color: white; font-size: 13.5px; font-weight: 500; font-family: 'Inter', sans-serif;">
+                    <button id="search-submit-btn" data-i18n="auto_index_6">Search</button>
+                </div>
+
+                <div id="search-suggestions"
+                    style="position: absolute; top: 110%; left: 0; width: 100%; background: rgba(13, 20, 33, 0.95); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; display: none; z-index: 100; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: translateY(-10px); opacity: 0; transition: all 0.3s ease;">
+                    <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;"
+                        data-i18n="auto_index_7">Популярные запросы</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <span class="suggestion-tag" data-i18n="auto_index_8">Daikin</span>
+                        <span class="suggestion-tag" data-i18n="auto_index_9">CCTV Hikvision</span>
+                        <span class="suggestion-tag" data-i18n="auto_index_10">Inverter AC</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-actions" style="display: flex; gap: 12px; align-items: center;">
+                <div class="action-btn"
+                    style="width: 40px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; color: white;">
+                    <i class="fa-regular fa-heart" style="font-size:16px;"></i>
+                </div>
+                <div class="action-btn"
+                    style="position: relative; width: 40px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; color: white;">
+                    <i class="fa-solid fa-cart-shopping" style="font-size:16px;"></i>
+                    <span
+                        style="position: absolute; top: -6px; right: -6px; background: var(--primary); color: white; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; border: 2px solid var(--bg-light);">0</span>
+                </div>
+                <div class="action-btn" onclick="window.location.href='auth.html'" id="user-account-btn"
+                    style="display:flex; align-items:center; gap:12px; background: rgba(255,255,255,0.04); padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.2s; border: 1px solid transparent;">
+                    <i class="fa-regular fa-user" style="font-size:16px; color: white;"></i>
+                    <div style="text-align: left; line-height:1.2;">
+                        <div style="font-size:13px; font-weight:700; color:white;"><span
+                                data-i18n="auto_mixed_index_0">Мой аккаунт </span><i class="fa-solid fa-chevron-down"
+                                style="font-size:10px; margin-left:2px; color: var(--text-muted);"></i></div>
+                        <div style="font-size:11px; color:var(--text-muted); font-weight: 500;"
+                            data-i18n="auto_index_15">Войти</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="main-nav" style="background: var(--bg-light); border-bottom: 1px solid var(--border-color); ">
+        <div class="container nav-container" style="display:flex; gap: 30px; font-size: 14px; font-weight: 500;">
+            <a href="/all-products" data-i18n="nav_all_products" class="nav-link" data-filename="all-products.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Все
+                товары</a>
+            <a href="/wholesale" data-i18n="nav_wholesale" class="nav-link" data-filename="wholesale.html"
+                style="padding: 15px 0; color: var(--text-muted);">Оптом</a>
+            <a href="/air-conditioners" data-i18n="nav_ac" class="nav-link" data-filename="air-conditioners.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Кондиционеры</a>
+            <a href="/cctv-systems" data-i18n="nav_cctv" class="nav-link" data-filename="cctv-systems.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Видеонаблюдение</a>
+            <a href="/automatic-gates" data-i18n="nav_gates" class="nav-link" data-filename="automatic-gates.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Автоматические
+                ворота</a>
+            <a href="/intercom-systems" data-i18n="nav_intercom" class="nav-link"
+                data-filename="intercom-systems.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Домофоны</a>
+            <a href="/installation-services" data-i18n="nav_install" class="nav-link"
+                data-filename="installation-services.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Услуги
+                монтажа</a>
+            <a href="/about-us" data-i18n="nav_about" class="nav-link" data-filename="about-us.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">О
+                нас</a>
+            <a href="/contact" data-i18n="nav_contact" class="nav-link" data-filename="contact.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Контакты</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="wholesale-hero">
+            <div class="container">
+                <span class="wholesale-badge" data-i18n="wholesale_badge">B2B Партнерство</span>
+                <h1 class="wholesale-title" data-i18n="wholesale_hero_title">Особые условия для крупных заказов</h1>
+                <p style="color: var(--text-muted); max-width: 700px; margin: 0 auto; font-size: 18px; line-height: 1.6;"
+                    data-i18n="wholesale_hero_desc">
+                    Мы предлагаем эксклюзивные цены и премиальную поддержку для партнеров и крупномасштабных проектов.
+                    Развивайте свой бизнес с надежными технологиями SAYCOM.
+                </p>
+            </div>
+        </section>
+
+        <section class="threshold-section">
+            <div class="container">
+                <div style="text-align: center; margin-bottom: 50px;">
+                    <h2 style="color: white; font-size: 32px; font-weight: 800;" data-i18n="wholesale_threshold_title">
+                        Пороги квалификации</h2>
+                    <p style="color: var(--text-muted);" data-i18n="wholesale_threshold_desc">Закажите больше указанного
+                        количества, чтобы разблокировать специальные цены B2B</p>
+                </div>
+
+                <div class="threshold-grid">
+                    <div class="threshold-item">
+                        <span class="threshold-count">10+</span>
+                        <span class="threshold-label" data-i18n="nav_ac">Кондиционеры</span>
+                    </div>
+                    <div class="threshold-item">
+                        <span class="threshold-count">50+</span>
+                        <span class="threshold-label" data-i18n="nav_cctv">Видеонаблюдение</span>
+                    </div>
+                    <div class="threshold-item">
+                        <span class="threshold-count">5+</span>
+                        <span class="threshold-label" data-i18n="nav_gates">Автоматические ворота</span>
+                    </div>
+                    <div class="threshold-item">
+                        <span class="threshold-count">10+</span>
+                        <span class="threshold-label" data-i18n="nav_intercom">Домофоны</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section style="padding: 100px 0;">
+            <div class="container">
+                <div class="wholesale-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon"><i class="fa-solid fa-percent"></i></div>
+                        <h3 class="benefit-name" data-i18n="benefit_1_title">Система специальных скидок</h3>
+                        <p class="benefit-desc" data-i18n="benefit_1_desc">Персональные скидки от 10% до 25% в
+                            зависимости от объема вашего заказа и длительности партнерства.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                        <h3 class="benefit-name" data-i18n="benefit_2_title">Приоритетная доставка</h3>
+                        <p class="benefit-desc" data-i18n="benefit_2_desc">Оптовые партнеры получают первый приоритет в
+                            нашей логистической цепочке, гарантируя, что ваши проекты никогда не задержутся.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon"><i class="fa-solid fa-user-tie"></i></div>
+                        <h3 class="benefit-name" data-i18n="benefit_3_title">Персональный менеджер</h3>
+                        <p class="benefit-desc" data-i18n="benefit_3_desc">Выделенный B2B-менеджер возьмет на себя все
+                            ваши запросы, документацию и технические консультации.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-box">
+                    <h2 style="color: white; font-size: 36px; font-weight: 800; margin-bottom: 20px;"
+                        data-i18n="wholesale_cta_title">Готовы стать нашим партнером?</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 40px;" data-i18n="wholesale_cta_desc">Отправьте
+                        нам запрос в WhatsApp, и наш B2B-отдел предоставит вам индивидуальное коммерческое предложение в
+                        течение 30 минут.</p>
+                    <a href="https://wa.me/77752826666?text=Здравствуйте! Меня интересует оптовое сотрудничество и условия B2B."
+                        target="_blank"
+                        style="display: inline-flex; align-items: center; gap: 12px; background: var(--primary); color: white; padding: 18px 40px; border-radius: 16px; font-weight: 700; text-decoration: none; font-size: 18px; transition: 0.3s; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);">
+                        <i class="fa-brands fa-whatsapp" style="font-size: 24px;"></i>
+                        <span data-i18n="wholesale_cta_btn">Связаться с оптовым отделом</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer"
+        style="background: var(--bg-light); color: var(--text-dark); border-top: 1px solid var(--border-color); font-family: 'Inter', sans-serif;">
+        <div class="container" style="max-width: 1400px; margin: 0 auto; display: flex;">
+
+            <!-- Left Column -->
+            <div class="footer-left"
+                style="width: 30%; padding: 40px 40px 40px 0; border-right: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="logo footer-logo"
+                        style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                        <img src="uploads/icon_premium_v2.png" alt="SAYCOM Logo"
+                            style="width: 40px; height: 40px; border-radius: 8px; object-fit: contain;">
+                        <div class="logo-text">
+                            <div class="logo-title" style="color: white; font-weight: 700; font-size: 18px;"
+                                data-i18n="auto_index_5">SAYCOM</div>
+                            <div class="logo-subtitle"
+                                style="color: var(--primary); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;"
+                                data-i18n="premium_solutions">Premium Solutions</div>
+                        </div>
+                    </div>
+                    <p class="footer-desc" data-i18n="footer_desc"
+                        style="color: var(--text-muted); font-size: 13px; line-height: 1.6; margin-bottom: 30px;">
+                        Leading provider of premium HVAC systems, security solutions, and smart home automation in
+                        Central Asia. Quality installation and maintenance services.</p>
+                </div>
+                <div class="social-links" style="display: flex; gap: 12px;">
+                    <a href="#"
+                        style="width: 36px; height: 36px; background: rgba(255,255,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 15px; transition: 0.2s;"><i
+                            class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"
+                        style="width: 36px; height: 36px; background: rgba(255,255,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 15px; transition: 0.2s;"><i
+                            class="fa-brands fa-instagram"></i></a>
+                    <a href="#"
+                        style="width: 36px; height: 36px; background: rgba(255,255,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 15px; transition: 0.2s;"><i
+                            class="fa-brands fa-twitter"></i></a>
+                    <a href="#"
+                        style="width: 36px; height: 36px; background: rgba(255,255,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 15px; transition: 0.2s;"><i
+                            class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <!-- Right Column Container -->
+            <div class="footer-right"
+                style="width: 70%; padding: 40px 0 30px 40px; display: flex; flex-direction: column; justify-content: space-between;">
+
+                <!-- Links Grid -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 2fr; gap: 30px; margin-bottom: 40px;">
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <h4 data-i18n="footer_products"
+                            style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Products</h4>
+                        <a href="/air-conditioners" data-i18n="nav_ac"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Air
+                            Conditioners</a>
+                        <a href="/cctv-systems" data-i18n="nav_cctv"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">CCTV
+                            Systems</a>
+                        <a href="/automatic-gates" data-i18n="nav_gates"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Automatic
+                            Gates</a>
+                        <a href="/intercom-systems" data-i18n="nav_intercom"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Intercom
+                            Systems</a>
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <h4 data-i18n="footer_services"
+                            style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Services</h4>
+                        <a href="/installation-services" data-i18n="nav_install"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Installation</a>
+                        <a href="/installation-services" data-i18n="footer_maintenance"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Maintenance</a>
+                        <a href="/installation-services" data-i18n="footer_repair"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Repair
+                            Services</a>
+                        <a href="/contact" data-i18n="footer_support"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Support
+                            Center</a>
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <h4 data-i18n="footer_company"
+                            style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Company</h4>
+                        <a href="/about-us" data-i18n="nav_about"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">About
+                            Us</a>
+                        <a href="/wholesale" data-i18n="nav_wholesale"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Wholesale</a>
+                        <a href="/all-products" data-i18n="footer_blog"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Blog</a>
+                        <a href="/contact" data-i18n="footer_faq"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">FAQ</a>
+                        <a href="/contact" data-i18n="nav_contact"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Contact</a>
+                    </div>
+
+                    <div>
+                        <h4 data-i18n="footer_newsletter"
+                            style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 12px;">Subscribe to
+                            Newsletter</h4>
+                        <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 15px; font-weight: 500;"
+                            data-i18n="auto_index_37">Get updates on new products and exclusive offers</p>
+                        <form class="newsletter-form" onsubmit="event.preventDefault()"
+                            style="display: flex; height: 42px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color);">
+                            <input type="email" placeholder="Enter your email" required=""
+                                style="border: none; background: transparent; color: white; padding: 0 15px; width: 100%; outline: none; font-size: 13px; font-family: 'Inter', sans-serif;"
+                                data-i18n-placeholder="auto_index_42">
+                            <button type="submit"
+                                style="background: var(--primary); color: white; border: none; padding: 0 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Horizontal Divider -->
+                <div style="height: 1px; background: var(--border-color); margin-bottom: 25px;"></div>
+
+                <!-- Footer Right Bottom -->
+                <div class="footer-right-bottom">
+                    <div class="footer-copyright-links">
+                        <span data-i18n="auto_index_38">© 2026 SAYCOM. All rights reserved.</span>
+                        <a href="#" style="color: var(--text-muted); text-decoration: none;"
+                            data-i18n="auto_index_39">Privacy Policy</a>
+                        <a href="#" style="color: var(--text-muted); text-decoration: none;"
+                            data-i18n="auto_index_40">Terms of Service</a>
+                    </div>
+                    <div class="footer-trust-icons">
+                        <div class="trust-item"><i class="fa-solid fa-shield-halved"></i><span data-i18n="auto_mixed_index_1"> 2 Year
+                                Warranty</span></div>
+                        <div class="trust-item"><i class="fa-solid fa-truck"></i><span data-i18n="auto_mixed_index_2"> Бесплатная доставка
+                                250 000₸+</span></div>
+                        <div class="trust-item"><i class="fa-solid fa-headphones"></i><span data-i18n="auto_mixed_index_3"> 24/7 Support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/translations.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                const btn = document.getElementById('user-account-btn');
+                if (btn) {
+                    const nameParts = user.full_name.trim().split(/\s+/);
+                    let initials = "";
+                    if (nameParts.length >= 2) {
+                        initials = (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase();
+                    } else {
+                        initials = (nameParts[0][0] + (nameParts[0][1] || "")).toUpperCase();
+                    }
+                    const colors = ['#10B981', '#3B82F6', '#8B5CF6', '#F59E0B', '#EF4444', '#EC4899', '#06B6D4', '#84CC16', '#F97316', '#6366F1'];
+                    let hash = 0;
+                    for (let i = 0; i < user.email.length; i++) hash = user.email.charCodeAt(i) + ((hash << 5) - hash);
+                    const randomColor = colors[Math.abs(hash % colors.length)];
+
+                    btn.innerHTML = `
+                        <div style="width: 32px; height: 32px; border-radius: 50%; background: ${randomColor}; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:white; margin-right:8px;">${initials}</div>
+                        <div style="text-align: left; line-height:1.2;">
+                            <div style="font-size:13px; font-weight:700; color:white;">${(user.display_name || user.full_name).toUpperCase()}</div>
+                            <div style="font-size:11px; color:var(--text-muted); font-weight: 500;">Личный кабинет</div>
+                        </div>
+                    `;
+                    btn.onclick = () => window.location.href = 'profile.html';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

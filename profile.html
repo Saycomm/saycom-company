@@ -1,0 +1,569 @@
+<!DOCTYPE html><html lang="ru"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="auto_profile_110">SAYCOM - Личный кабинет</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css?v=2.2">
+    <style>
+        body { background: #060B15; color: white; margin: 0; min-height: 100vh; font-family: 'Inter', sans-serif; }
+        .profile-wrapper { max-width: 1200px; margin: 40px auto; display: grid; grid-template-columns: 320px 1fr; gap: 30px; padding: 0 20px; }
+        
+        /* Sidebar Design */
+        .sidebar { background: #0D1421; border-radius: 20px; padding: 40px 20px; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; align-items: center; height: fit-content; position: sticky; top: 20px; }
+        .avatar-circle { width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 38px; font-weight: 800; margin-bottom: 25px; color: white; transition: 0.3s; }
+        .sidebar h2 { font-size: 18px; margin: 0 0 8px; font-weight: 800; text-align: center; }
+        .sidebar .email-label { font-size: 13px; color: #64748B; margin-bottom: 35px; text-align: center; word-break: break-all; }
+
+        .nav-list { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+        .nav-item { display: flex; align-items: center; gap: 15px; padding: 14px 20px; border-radius: 12px; color: #94A3B8; text-decoration: none; font-weight: 600; font-size: 14px; transition: 0.23s; cursor: pointer; border: 1px solid transparent; }
+        .nav-item i { width: 20px; font-size: 16px; text-align: center; }
+        .nav-item.active { background: rgba(16, 185, 129, 0.1); color: #10B981; border-color: rgba(16, 185, 129, 0.2); }
+        .nav-item:hover:not(.active) { background: rgba(255,255,255,0.03); color: white; }
+
+        .logout-btn-box { margin-top: 30px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.05); width: 100%; }
+        .logout-btn { display: flex; align-items: center; gap: 12px; color: #EF4444; text-decoration: none; font-weight: 700; font-size: 14px; background: rgba(239, 68, 68, 0.05); padding: 12px 20px; border-radius: 12px; transition: 0.23s; width: 100%; box-sizing: border-box; justify-content: center; }
+        .logout-btn:hover { background: rgba(239, 68, 68, 0.15); transform: translateY(-2px); }
+
+        /* Content Area */
+        .main-content { background: #0D1421; border-radius: 25px; padding: 45px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .content-header h1 { font-size: 24px; font-weight: 800; margin: 0 0 35px; letter-spacing: -0.5px; }
+        
+        .data-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.03); padding: 22px 28px; border-radius: 15px; margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; }
+        .data-item:hover { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); }
+        .data-label { font-size: 11px; color: #64748B; font-weight: 800; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 1px; }
+        .data-value { font-size: 15px; font-weight: 700; color: white; }
+        .edit-icon { color: #94A3B8; cursor: pointer; transition: 0.23s; padding: 10px; border-radius: 8px; }
+        .edit-icon:hover { color: white; background: rgba(255,255,255,0.05); }
+
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 5000; display: none; align-items: center; justify-content: center; backdrop-filter: blur(10px); }
+        .confirm-modal { background: #0D1421; border: 1px solid rgba(239, 68, 68, 0.3); padding: 40px; border-radius: 20px; width: 100%; max-width: 450px; text-align: center; }
+
+        @media (max-width: 968px) {
+            .profile-wrapper { grid-template-columns: 1fr; margin: 20px auto; }
+            .sidebar { position: relative; top: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header" style="background: var(--bg-light); border-bottom: 1px solid var(--border-color); padding: 15px 0;">
+        <div class="container header-container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo" style="display: flex; align-items: center; gap: 12px; cursor: pointer;" onclick="window.location.href='index.html'">
+                <img src="uploads/icon_premium_v2.png" alt="SAYCOM Logo" style="width: 35px; height: 35px; border-radius: 8px; object-fit: contain;">
+                <div class="logo-text">
+                    <div class="logo-title" style="font-weight: 700; font-size: 16px; color: white;" data-i18n="auto_profile_112">SAYCOM</div>
+                </div>
+            </div>
+            
+            <a href="javascript:history.back()" style="display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-weight: 600; font-size: 14px; transition: 0.2s; text-decoration: none;" class="back-link">
+                <i class="fa-solid fa-arrow-left" style="font-size: 12px;"></i><span data-i18n="back_text">Назад</span></a>
+            <style>
+                .back-link:hover { color: var(--primary); transform: translateX(-5px); }
+            </style>
+        </div>
+    </header>
+
+    <div class="profile-wrapper">
+        <!-- Sidebar per Image -->
+        <aside class="sidebar">
+            <div class="avatar-circle" id="userInit" data-i18n="auto_profile_114">AB</div>
+            <h2 id="userNameDisplay" data-i18n="auto_profile_115">Abdullahkh</h2>
+            <div class="email-label" id="userEmailDisplay" data-i18n="auto_profile_116">abdullah@saycom.com</div>
+
+            <div class="nav-list">
+                <div class="nav-item active" onclick="showTab('profile')">
+                    <i class="fa-solid fa-user-gear"></i><span data-i18n="auto_profile_117">Профиль</span></div>
+                <div class="nav-item" onclick="showTab('orders')">
+                    <i class="fa-solid fa-box"></i><span data-i18n="auto_profile_118">Мои заказы</span></div>
+                <div class="nav-item" onclick="showTab('wishlist')">
+                    <i class="fa-solid fa-heart"></i><span data-i18n="auto_profile_119">Список желаний</span></div>
+                <div class="nav-item" onclick="showTab('settings')">
+                    <i class="fa-solid fa-gears"></i><span data-i18n="auto_profile_120">Настройки</span></div>
+            </div>
+
+            <div class="logout-btn-box">
+                <a href="javascript:void(0)" onclick="handleLogout()" class="logout-btn">
+                    <i class="fa-solid fa-right-from-bracket"></i><span data-i18n="auto_profile_121">Выйти из системы</span></a>
+            </div>
+        </aside>
+
+        <!-- Main Content per Image -->
+        <main class="main-content" id="content-area">
+            <!-- Default Content: Profile -->
+        </main>
+    </div>
+
+    <!-- SMS Verification Modal -->
+    <div class="modal-overlay" id="otpModal">
+        <div class="confirm-modal" style="border-color: var(--primary);">
+            <div style="background: rgba(16, 185, 129, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                <i class="fa-solid fa-comment-sms" style="font-size: 28px; color: var(--primary);"></i>
+            </div>
+            <h2 style="font-weight: 800; margin-bottom: 8px;" data-i18n="auto_profile_122">ПОДТВЕРЖДЕНИЕ</h2>
+            <p id="otp-status" style="color: #64748B; font-size: 14px; margin-bottom: 25px;" data-i18n="auto_profile_123">Введите 4-значный код, отправленный на ваш номер</p>
+            
+            <input type="text" id="otp-input" maxlength="4" placeholder="0 0 0 0" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 15px; border-radius: 12px; width: 150px; text-align: center; font-size: 24px; font-weight: 800; letter-spacing: 5px; outline:none; margin-bottom: 25px;" data-i18n-placeholder="auto_profile_107">
+            
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <button class="btn-auth" onclick="verifyOTP()" data-i18n="auto_profile_124">ПОДТВЕРДИТЬ</button>
+                <button onclick="closeOTPModal()" style="background:none; border:none; color:#64748B; font-weight:600; cursor:pointer;" data-i18n="auto_profile_125">ОТМЕНА</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout Confirmation Modal -->
+    <div class="modal-overlay" id="logoutModal">
+        <div class="confirm-modal" style="border-color: rgba(16, 185, 129, 0.3);">
+            <i class="fa-solid fa-right-from-bracket" style="font-size: 44px; color: #10B981; margin-bottom: 20px;"></i>
+            <h2 style="color: #10B981; font-weight: 800; margin-bottom: 10px;" data-i18n="auto_profile_126">ВЫХОД ИЗ СИСТЕМЫ</h2>
+            <p style="color: rgba(255,255,255,0.5); font-size: 14px; margin-bottom: 30px; line-height: 1.6;" data-i18n="auto_profile_127">Вы действительно хотите выйти из своего аккаунта SAYCOM?</p>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+                <button class="btn-auth" style="background: #10B981; border:none; color: white;" onclick="finalLogout()" data-i18n="auto_profile_128">ДА, ВЫЙТИ</button>
+                <button onclick="closeLogoutModal()" style="background:transparent; border:1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 12px; color: white; cursor: pointer; font-weight:600;" data-i18n="auto_profile_129">ОТМЕНА</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal (Phase 1: Countdown) -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="confirm-modal" style="border-color: #EF4444;">
+            <i class="fa-solid fa-triangle-exclamation" style="font-size: 44px; color: #EF4444; margin-bottom: 20px;"></i>
+            <h2 style="color: #EF4444; font-weight: 800;" data-i18n="auto_profile_130">ВЫ УВЕРЕНЫ?</h2>
+            <p style="color: rgba(255,255,255,0.6); font-size: 14px; margin-bottom: 30px; line-height: 1.6;" data-i18n="auto_profile_131">Это действие навсегда удалит ваш профиль SAYCOM, включая все заказы и личные данные.</p>
+            <div style="display:flex; flex-direction:column; gap:12px;">
+                <button id="del-confirm-btn" class="btn-auth" style="background: #EF4444; border:none; opacity: 0.5; cursor: not-allowed;" disabled="" onclick="startEmailInput()"><span data-i18n="auto_profile_132">ДА</span><span id="del-timer" data-i18n="auto_profile_133">(5)</span></button>
+                <button onclick="closeDeleteModal()" style="background:transparent; border:1px solid rgba(255,255,255,0.1); padding: 15px; border-radius: 12px; color: white; cursor: pointer; font-weight:600;" data-i18n="auto_profile_134">ОТМЕНА</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal (Phase 2: Email Input) -->
+    <div class="modal-overlay" id="deleteEmailModal">
+        <div class="confirm-modal" style="border-color: #EF4444;">
+            <div style="background: rgba(239, 68, 68, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                <i class="fa-solid fa-user-shield" style="font-size: 28px; color: #EF4444;"></i>
+            </div>
+            <h2 style="font-weight: 800; margin-bottom: 8px;" data-i18n="auto_profile_135">ПОДТВЕРЖДЕНИЕ</h2>
+            <p style="color: #64748B; font-size: 14px; margin-bottom: 25px;"><span data-i18n="auto_profile_136">Для удаления аккаунта введите ваш</span><br><b data-i18n="auto_profile_137">Email адрес</b></p>
+            
+            <input type="email" id="del-email-check" placeholder="example@mail.com" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: white; padding: 15px; border-radius: 12px; width: 100%; outline:none; margin-bottom: 25px; box-sizing: border-box;" data-i18n-placeholder="auto_profile_108">
+            
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <button class="btn-auth" style="background: #EF4444; border:none;" onclick="checkEmailForDelete()" data-i18n="auto_profile_138">ПОДТВЕРДИТЬ EMAIL</button>
+                <button onclick="document.getElementById('deleteEmailModal').style.display='none'" style="background:none; border:none; color:#64748B; font-weight:600; cursor:pointer;" data-i18n="auto_profile_139">ОТМЕНА</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Verification Modal (Phase 3: Email Code) -->
+    <div class="modal-overlay" id="deleteVerifyModal">
+        <div class="confirm-modal" style="border-color: #EF4444;">
+            <div style="background: rgba(239, 68, 68, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                <i class="fa-solid fa-envelope-shield" style="font-size: 28px; color: #EF4444;"></i>
+            </div>
+            <h2 style="font-weight: 800; margin-bottom: 8px;" data-i18n="auto_profile_140">ПОДТВЕРДИТЕ EMAIL</h2>
+            <p style="color: #64748B; font-size: 14px; margin-bottom: 25px;"><span data-i18n="auto_profile_141">Введите код подтверждения, отправленный на</span><br><b id="display-del-email" style="color:white;" data-i18n="auto_profile_142">---</b></p>
+            
+            <input type="text" id="del-otp-input" maxlength="6" placeholder="0 0 0 0 0 0" style="background: rgba(255,255,255,0.05); border: 1px solid #EF4444; color: white; padding: 15px; border-radius: 12px; width: 220px; text-align: center; font-size: 24px; font-weight: 800; letter-spacing: 5px; outline:none; margin-bottom: 25px;" data-i18n-placeholder="auto_profile_109">
+            
+            <div style="display:flex; flex-direction:column; gap:10px;">
+                <button class="btn-auth" style="background: #EF4444; border:none;" onclick="finalDestruction()" data-i18n="auto_profile_143">УДАЛИТЬ НАВСЕГДА</button>
+                <button onclick="document.getElementById('deleteVerifyModal').style.display='none'" style="background:none; border:none; color:#64748B; font-weight:600; cursor:pointer;" data-i18n="auto_profile_144">ОТМЕНА</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        const user = JSON.parse(localStorage.getItem('user'));
+        if(!user) window.location.href = 'auth.html';
+
+        function addToCartFromWishlist(p) {
+            // Re-use logic from app.js
+            if(typeof addToCart === 'function') {
+                addToCart(p);
+            } else {
+                let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+                const idx = cart.findIndex(item => item.id === p.id);
+                if(idx === -1) cart.push({...p, quantity: 1});
+                else cart[idx].quantity++;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                alert("Товар добавлен в корзину!");
+                if(typeof updateHeaderCounts === 'function') updateHeaderCounts();
+            }
+        }
+
+        function init() {
+            // Setup Header User Button
+            const userBtn = document.querySelector('.user-btn-desktop');
+            if(userBtn && user) {
+                const nameParts = user.full_name.trim().split(/\s+/);
+                let initials = "";
+                if(nameParts.length >= 2) {
+                    initials = (nameParts[0][0] + nameParts[nameParts.length-1][0]).toUpperCase();
+                } else {
+                    initials = (nameParts[0][0] + (nameParts[0][1] || "")).toUpperCase();
+                }
+
+                const colors = ['#10B981', '#3B82F6', '#8B5CF6', '#F59E0B', '#EF4444', '#EC4899', '#06B6D4', '#84CC16', '#F97316', '#6366F1'];
+                let hash = 0;
+                for (let i = 0; i < user.email.length; i++) hash = user.email.charCodeAt(i) + ((hash << 5) - hash);
+                const randomColor = colors[Math.abs(hash % colors.length)];
+
+                userBtn.innerHTML = `
+                    <div style="width: 32px; height: 32px; border-radius: 50%; background: ${randomColor}; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:white; margin-right:8px;">${initials}</div>
+                    <div style="text-align: left; line-height:1.2;">
+                        <div style="font-size:13px; font-weight:700; color:white;">${(user.display_name || user.full_name).toUpperCase()}</div>
+                        <div style="font-size:11px; color:var(--text-muted); font-weight: 500;">Личный кабинет</div>
+                    </div>
+                `;
+            }
+
+            // Setup Sidebar Info
+            document.getElementById('userNameDisplay').innerText = user.display_name || user.full_name;
+            document.getElementById('userEmailDisplay').innerText = user.email;
+            
+            // --- NEW: DYNAMIC INITIALS AND COLORS ---
+            const nameParts = user.full_name.trim().split(/\s+/);
+            let initials = "";
+            if(nameParts.length >= 2) {
+                initials = (nameParts[0][0] + nameParts[nameParts.length-1][0]).toUpperCase();
+            } else {
+                initials = (nameParts[0][0] + (nameParts[0][1] || "")).toUpperCase();
+            }
+            const avatar = document.getElementById('userInit');
+            avatar.innerText = initials;
+
+            // Generate Random Premium Color based on Email (Deterministic)
+            const colors = [
+                '#10B981', '#3B82F6', '#8B5CF6', '#F59E0B', '#EF4444', 
+                '#EC4899', '#06B6D4', '#84CC16', '#F97316', '#6366F1'
+            ];
+            // Simple hash for consistency
+            let hash = 0;
+            for (let i = 0; i < user.email.length; i++) {
+                hash = user.email.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            const colorIndex = Math.abs(hash % colors.length);
+            const randomColor = colors[colorIndex];
+            
+            avatar.style.background = `linear-gradient(135deg, ${randomColor}, ${adjustColor(randomColor, -20)})`;
+            avatar.style.boxShadow = `0 0 35px ${randomColor}44`;
+            // ----------------------------------------
+
+            // Load default tab
+            showTab('profile');
+        }
+
+        function adjustColor(hex, amt) {
+            let usePound = false;
+            if (hex[0] == "#") { hex = hex.slice(1); usePound = true; }
+            let num = parseInt(hex, 16);
+            let r = (num >> 16) + amt;
+            if (r > 255) r = 255; else if (r < 0) r = 0;
+            let b = ((num >> 8) & 0x00FF) + amt;
+            if (b > 255) b = 255; else if (b < 0) b = 0;
+            let g = (num & 0x0000FF) + amt;
+            if (g > 255) g = 255; else if (g < 0) g = 0;
+            return (usePound ? "#" : "") + (g | (b << 8) | (r << 16)).toString(16);
+        }
+
+        function showTab(tab) {
+            const content = document.getElementById('content-area');
+            const navItems = document.querySelectorAll('.nav-item');
+            
+            // Update Active Menu
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if(item.innerText.toLowerCase().includes(tab === 'profile' ? 'профиль' : (tab === 'orders' ? 'заказы' : (tab === 'wishlist' ? 'желаний' : 'настройки')))) {
+                    item.classList.add('active');
+                }
+            });
+
+            if(tab === 'profile') {
+                content.innerHTML = `
+                    <div class="content-header"><h1>Данные профиля</h1></div>
+                    <div class="activity-stats-grid" id="profile-stats-grid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:15px; margin-bottom:35px;">
+                        <div style="background:rgba(239, 68, 68, 0.05); border:1px solid rgba(239, 68, 68, 0.1); padding:20px; border-radius:15px; text-align:center;">
+                            <i class="fa-solid fa-heart" style="color:#EF4444; font-size:20px; margin-bottom:8px;"></i>
+                            <div class="stat-value" style="font-size:24px; font-weight:800;">0</div>
+                            <div style="font-size:10px; text-transform:uppercase; color:#64748B; font-weight:700;">Liked</div>
+                        </div>
+                        <div style="background:rgba(245, 158, 11, 0.05); border:1px solid rgba(245, 158, 11, 0.1); padding:20px; border-radius:15px; text-align:center;">
+                            <i class="fa-solid fa-bookmark" style="color:#F59E0B; font-size:20px; margin-bottom:8px;"></i>
+                            <div class="stat-value" style="font-size:24px; font-weight:800;">0</div>
+                            <div style="font-size:10px; text-transform:uppercase; color:#64748B; font-weight:700;">Saved</div>
+                        </div>
+                        <div style="background:rgba(59, 130, 246, 0.05); border:1px solid rgba(59, 130, 246, 0.1); padding:20px; border-radius:15px; text-align:center;">
+                            <i class="fa-solid fa-paper-plane" style="color:#3B82F6; font-size:20px; margin-bottom:8px;"></i>
+                            <div class="stat-value" style="font-size:24px; font-weight:800;">0</div>
+                            <div style="font-size:10px; text-transform:uppercase; color:#64748B; font-weight:700;">Shared</div>
+                        </div>
+                    </div>
+                `;
+                
+                // Fetch real stats
+                fetch(`/api/user/${user.email}/activity-stats`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const stats = data.data;
+                        const staticDivs = document.querySelectorAll('#profile-stats-grid .stat-value');
+                        if (staticDivs.length === 3) {
+                            staticDivs[0].innerText = stats.likes || 0;
+                            staticDivs[1].innerText = stats.saves || 0;
+                            staticDivs[2].innerText = stats.shares || 0;
+                        }
+                    })
+                    .catch(e => console.error(e));
+
+                content.innerHTML += `
+                    <div class="data-item">
+                        <div style="flex:1">
+                            <div class="data-label">Полное имя</div>
+                            <div class="data-value" id="field-name-val">${user.full_name}</div>
+                        </div>
+                        <i class="fa-solid fa-pen edit-icon" onclick="editField('name')"></i>
+                    </div>
+                    <div class="data-item">
+                        <div style="flex:1">
+                            <div class="data-label">Email адрес</div>
+                            <div class="data-value">${user.email}</div>
+                        </div>
+                        <i class="fa-solid fa-lock" style="opacity: 0.3;"></i>
+                    </div>
+                    <div class="data-item">
+                        <div style="flex:1">
+                            <div class="data-label">Телефон</div>
+                            <div class="data-value" id="field-phone-val">${user.phone || 'Не указан'}</div>
+                        </div>
+                        <i class="fa-solid fa-pen edit-icon" onclick="editField('phone')"></i>
+                    </div>
+                `;
+            } else if(tab === 'orders') {
+                content.innerHTML = `
+                    <div class="content-header"><h1>Мои заказы</h1></div>
+                    <div style="text-align:center; padding: 60px 0; color:#64748B;">
+                        <div style="background:rgba(255,255,255,0.02); display:inline-flex; padding:30px; border-radius:50%; margin-bottom:20px;">
+                            <i class="fa-solid fa-box-open" style="font-size: 48px; opacity:0.3;"></i>
+                        </div>
+                        <h3>История заказов пуста</h3>
+                        <p style="max-width:300px; margin:10px auto;">Вы еще не совершили ни одной покупки. Ваши заказы появятся здесь после оформления.</p>
+                        <button class="btn-auth" onclick="window.location.href='all-products.html'" style="width:auto; padding:12px 30px; margin-top:20px;">ПЕРЕЙТИ К ПОКУПКАМ</button>
+                    </div>
+                `;
+            } else if(tab === 'wishlist') {
+                const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+                content.innerHTML = `
+                    <div class="content-header"><h1>Список желаний</h1></div>
+                    ${wishlist.length === 0 ? `
+                        <div style="text-align:center; padding: 60px 0; color:#64748B;">
+                            <i class="fa-solid fa-heart-crack" style="font-size: 48px; margin-bottom: 20px; opacity:0.3;"></i>
+                            <p>Ваш список желаний пуст</p>
+                        </div>
+                    ` : `
+                        <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:20px;">
+                            ${wishlist.map(p => `
+                                <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05); padding:15px; border-radius:15px; text-align:center;">
+                                    <img src="${p.image_url}" style="width:100%; height:120px; object-fit:contain; margin-bottom:10px;">
+                                    <h4 style="font-size:14px; margin:0 0 10px; height:34px; overflow:hidden;">${p.title}</h4>
+                                    <div style="color:var(--primary); font-weight:800; margin-bottom:15px;">₸${p.price.toLocaleString()}</div>
+                                    <button class="btn-auth" style="padding:8px; font-size:12px;" onclick="addToCartFromWishlist(${JSON.stringify(p).replace(/"/g, '&quot;')})">В КОРЗИНУ</button>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `}
+                `;
+            } else if(tab === 'settings') {
+                content.innerHTML = `
+                    <div class="content-header"><h1>Настройки</h1></div>
+                    <div class="data-item">
+                        <div style="flex:1">
+                            <div class="data-label">ТЕКУЩИЙ ПАРОЛЬ</div>
+                            <div class="data-value" id="pass-field" style="letter-spacing: 2px; font-family: monospace; font-size: 20px;">••••••••</div>
+                        </div>
+                        <i class="fa-solid fa-eye" id="pass-toggle" onclick="togglePassword()" style="cursor:pointer; color:var(--primary); font-size: 18px; padding: 10px;"></i>
+                    </div>
+                    <div class="data-item" style="border-color: rgba(239, 68, 68, 0.1); background: rgba(239, 68, 68, 0.02); margin-top: 40px;">
+                        <div style="flex:1">
+                            <div class="data-label" style="color:#EF4444">ДЕЙСТВИЯ С АККАУНТОМ</div>
+                            <div class="data-value" style="font-size:16px;">Удалить профиль навсегда</div>
+                        </div>
+                        <button class="btn-auth" style="background:#EF4444; width:auto; padding:10px 25px;" onclick="openDeleteModal()">УДАЛИТЬ</button>
+                    </div>
+                `;
+            }
+        }
+
+        let pwdVisible = false;
+        function togglePassword() {
+            const pwdText = document.getElementById('pass-field');
+            const pwdIcon = document.getElementById('pass-toggle');
+            pwdVisible = !pwdVisible;
+            
+            if(pwdVisible) {
+                pwdText.innerText = user.password || "No Password";
+                pwdText.style.letterSpacing = "normal";
+                pwdText.style.fontFamily = "'Inter', sans-serif";
+                pwdText.style.fontSize = "16px";
+                pwdIcon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                pwdText.innerText = "••••••••";
+                pwdText.style.letterSpacing = "2px";
+                pwdText.style.fontFamily = "monospace";
+                pwdText.style.fontSize = "20px";
+                pwdIcon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        function editField(type) {
+            const el = document.getElementById(`field-${type}-val`);
+            const currentVal = el.innerText === 'Не указан' ? '' : el.innerText;
+            el.innerHTML = `
+                <div style="display:flex; gap:10px; align-items:center; margin-top:5px;">
+                    <input type="text" id="input-${type}" value="${currentVal}" style="background: rgba(255,255,255,0.05); border: 1px solid var(--primary); color: white; padding: 8px 12px; border-radius: 8px; width: 100%; outline:none;">
+                    <button onclick="saveField('${type}')" style="background:var(--primary); border:none; color:white; padding: 8px 15px; border-radius: 8px; font-weight:700; cursor:pointer;">OK</button>
+                    <button onclick="showTab('profile')" style="background:none; border:none; color:#64748B; cursor:pointer;">✕</button>
+                </div>
+            `;
+        }
+
+        let pendingPhone = "";
+        const SYSTEM_OTP = "8888"; // Simulated code for development
+
+        function saveField(type) {
+            const newVal = document.getElementById(`input-${type}`).value;
+            if(type === 'name') {
+                user.full_name = newVal;
+                const names = newVal.trim().split(/\s+/);
+                user.display_name = names.length > 1 ? `${names[0]} ${names[names.length-1][0]}.` : names[0];
+                localStorage.setItem('user', JSON.stringify(user));
+                init(); showTab('profile');
+            }
+            if(type === 'phone') {
+                pendingPhone = newVal;
+                openOTPModal();
+            }
+        }
+
+        function openOTPModal() { 
+            document.getElementById('otpModal').style.display = 'flex'; 
+            console.log("SMS Sent to " + pendingPhone + ": " + SYSTEM_OTP);
+        }
+        function closeOTPModal() { document.getElementById('otpModal').style.display = 'none'; }
+
+        function verifyOTP() {
+            const input = document.getElementById('otp-input').value;
+            if(input === SYSTEM_OTP) {
+                user.phone = pendingPhone;
+                localStorage.setItem('user', JSON.stringify(user));
+                closeOTPModal();
+                showTab('profile');
+                alert("Номер успешно подтвержден!");
+            } else {
+                alert("Неверный код!");
+            }
+        }
+
+        function handleLogout() {
+            document.getElementById('logoutModal').style.display = 'flex';
+        }
+        
+        function closeLogoutModal() {
+            document.getElementById('logoutModal').style.display = 'none';
+        }
+
+        function finalLogout() {
+            localStorage.removeItem('user');
+            localStorage.removeItem('wishlist');
+            localStorage.removeItem('cart');
+            window.location.href = 'index.html';
+        }
+
+        function openDeleteModal() { 
+            document.getElementById('deleteModal').style.display = 'flex'; 
+            let count = 5;
+            const btn = document.getElementById('del-confirm-btn');
+            const timer = document.getElementById('del-timer');
+            
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
+            btn.style.cursor = "not-allowed";
+
+            const interval = setInterval(() => {
+                count--;
+                timer.innerText = `(${count})`;
+                if(count === 0) {
+                    clearInterval(interval);
+                    timer.innerText = "";
+                    btn.disabled = false;
+                    btn.style.opacity = "1";
+                    btn.style.cursor = "pointer";
+                }
+            }, 1000);
+        }
+
+        function closeDeleteModal() { document.getElementById('deleteModal').style.display = 'none'; }
+
+        function startEmailInput() {
+            closeDeleteModal();
+            document.getElementById('deleteEmailModal').style.display = 'flex';
+        }
+
+        async function checkEmailForDelete() {
+            const inputEmail = document.getElementById('del-email-check').value;
+            if(inputEmail === user.email) {
+                try {
+                    // Send real OTP via server
+                    const res = await fetch('/api/send-delete-otp', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ email: user.email })
+                    });
+                    
+                    if(!res.ok) {
+                        const err = await res.json();
+                        throw new Error(err.error || "Failed to send code");
+                    }
+                    
+                    document.getElementById('display-del-email').innerText = user.email;
+                    document.getElementById('deleteEmailModal').style.display = 'none';
+                    document.getElementById('deleteVerifyModal').style.display = 'flex';
+                } catch(e) {
+                    alert("Ошибка при отправке кода: " + e.message);
+                }
+            } else {
+                alert("Введенный email не совпадает с вашим текущим адресом!");
+            }
+        }
+
+        async function finalDestruction() {
+            const code = document.getElementById('del-otp-input').value;
+            if(code.length === 6) {
+                try {
+                    const res = await fetch('/api/delete-profile', {
+                        method: 'DELETE',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ email: user.email, code: code })
+                    });
+                    const result = await res.json();
+                    
+                    if(result.message === 'deleted') {
+                        localStorage.clear();
+                        alert("Ваш профиль был навсегда удален.");
+                        window.location.href = 'index.html';
+                    } else {
+                        alert(result.error || "Ошибка удаления");
+                    }
+                } catch(e) {
+                    alert("Ошибка сервера");
+                }
+            } else {
+                alert("Введите полный 6-значный код!");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+
+
+</body></html>

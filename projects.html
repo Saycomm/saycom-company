@@ -1,0 +1,315 @@
+<!DOCTYPE html><html lang="ru"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="auto_projects_147">Наши Проекты | SAYCOM - Примеры профессионального монтажа</title>
+    <meta name="description" content="Посмотрите примеры наших реализованных проектов по установке систем кондиционирования, видеонаблюдения и автоматизации по всему Узбекистану.">
+    <meta property="og:title" content="Наши Проекты | SAYCOM">
+    <meta property="og:image" content="uploads/icon_premium_v2.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Outfit:wght@400;600;800&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css?v=2.2">
+    <style>
+        .projects-page {
+            min-height: 100vh;
+            background: #020812;
+            padding-top: 120px;
+            padding-bottom: 150px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* High-Intensity Transparent Aura Glows */
+        .projects-page::before {
+            content: '';
+            position: fixed;
+            top: -20%;
+            left: -10%;
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.4) 0%, transparent 70%);
+            z-index: 0;
+            filter: blur(120px);
+            animation: flow1 15s infinite alternate;
+            pointer-events: none;
+        }
+
+        .projects-page::after {
+            content: '';
+            position: fixed;
+            bottom: -20%;
+            right: -10%;
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(0, 150, 255, 0.3) 0%, transparent 70%);
+            z-index: 0;
+            filter: blur(120px);
+            animation: flow2 18s infinite alternate;
+            pointer-events: none;
+        }
+
+        .extra-glow {
+            position: fixed;
+            top: 40%;
+            left: 50%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.2) 0%, transparent 70%);
+            z-index: 0;
+            filter: blur(150px);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        @keyframes flow1 {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(150px, 100px); }
+        }
+
+        @keyframes flow2 {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100px, -150px); }
+        }
+
+        .grid-texture {
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.2); }
+        }
+
+        .back-nav {
+            max-width: 1200px;
+            margin: 0 auto 60px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            padding: 12px 28px;
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .btn-back:hover {
+            color: var(--primary);
+            border-color: rgba(16, 185, 129, 0.5);
+            background: rgba(16, 185, 129, 0.05);
+            transform: translateX(-8px);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.1);
+        }
+
+        .projects-header {
+            text-align: center;
+            margin-bottom: 120px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .projects-header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: clamp(36px, 6vw, 64px);
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: white;
+            letter-spacing: -1px;
+            background: linear-gradient(to bottom, #fff 30%, rgba(255,255,255,0.6));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .projects-header p {
+            color: #94A3B8;
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .master-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 60px 40px;
+        }
+
+        .simple-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(2, 8, 18, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px 0;
+        }
+
+        .simple-header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .back-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .back-circle:hover {
+            background: var(--primary);
+            color: black;
+            border-color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .master-grid { 
+                grid-template-columns: 1fr;
+                gap: 30px;
+                padding: 100px 15px 40px;
+            }
+            .simple-header-container { padding: 0 20px; }
+            .back-circle { width: 40px; height: 40px; }
+        }
+    </style>
+</head>
+<body class="projects-page">
+    <!-- Comment Sheet System -->
+    <div id="sheetOverlay" class="sheet-overlay" onclick="closeCommentSheet()"></div>
+    <div id="commentSheet" class="comment-sheet">
+        <div class="comment-sheet-header">
+            <div style="width: 40px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin: 0 auto 15px;"></div>
+            <h3 data-i18n="auto_projects_148">Comments</h3>
+            <i class="fa-solid fa-xmark close-sheet" onclick="closeCommentSheet()"></i>
+        </div>
+        <div class="comment-list" id="sheetCommentList"></div>
+        <div class="comment-input-area">
+            <input type="text" id="sheetCommentInput" placeholder="Add a comment..." data-i18n-placeholder="auto_projects_145">
+            <button onclick="sendSheetComment()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+    <div class="grid-texture"></div>
+    <div class="extra-glow"></div>
+    <header class="simple-header">
+        <div class="simple-header-container">
+            <div class="header-left">
+                <a href="javascript:history.back()" class="back-circle">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </a>
+                <div class="search-wrap" style="position: relative; width: 400px; margin: 0 40px;">
+                    <div class="search-bar">
+                        <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted); font-size: 14px;"></i>
+                        <input type="text" id="global-search" placeholder="Search products..." style="border:none; background:transparent; width:100%; outline:none; color: white; font-size: 13.5px; font-weight: 500;" data-i18n-placeholder="auto_projects_146">
+                        <button id="search-submit-btn" data-i18n="auto_projects_149">Search</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <div class="logo" style="display: flex; align-items: center; gap: 15px; cursor: pointer;" onclick="window.location.href='index.html'">
+                    <img src="uploads/icon_premium_v2.png" alt="SAYCOM Logo" style="width: 45px; height: 45px; border-radius: 12px; object-fit: contain;">
+                    <div class="logo-text">
+                        <div class="logo-title" style="font-weight: 800; font-size: 20px; color: white; letter-spacing: 1px;" data-i18n="auto_projects_151">SAYCOM</div>
+                        <div class="logo-subtitle" style="font-size: 11px; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 2px;" data-i18n="auto_projects_152">Portfolio</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div style="height: 120px;"></div>
+
+    <main class="master-grid" id="archive-grid">
+        <!-- Loaded via JS -->
+    </main>
+
+    <script src="js/translations.js"></script>
+    <script src="js/app.js?v=2.7"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const grid = document.getElementById('archive-grid');
+            try {
+                const res = await fetch('/api/projects');
+                const data = await res.json();
+                const projects = data.data || [];
+
+                grid.innerHTML = projects.map(p => `
+                    <div class="project-card" data-id="${p.id}">
+                        <div class="project-img-wrapper">
+                            <div class="project-img" onclick="toggleProjectVideo(this.parentElement.parentElement)">
+                                ${p.video_url ? 
+                                    `<video src="${p.video_url}" muted loop playsinline></video>` : 
+                                    '<i class="fa-solid fa-play" style="font-size: 40px; color: var(--primary);"></i>'
+                                }
+                                <div class="video-overlay-actions">
+                                    <button onclick="handleInteraction(${p.id}, 'likes', event)" class="v-action-btn"><i class="fa-regular fa-heart"></i> <span>${p.likes || 0}</span></button>
+                                    <button onclick="handleInteraction(${p.id}, 'saves', event)" class="v-action-btn"><i class="fa-regular fa-bookmark"></i> <span>${p.saves || 0}</span></button>
+                                    <button onclick="openVideoShareMenu(${p.id}, event)" class="v-action-btn"><i class="fa-regular fa-paper-plane"></i> <span>${p.shares || 0}</span></button>
+                                    <button onclick="openCommentSheet(${p.id}, event)" class="v-action-btn comment-btn"><i class="fa-regular fa-comment"></i> <span>${p.comments_count || 0}</span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-info">
+                            <div class="proj-badge">PREMIUM CASE</div>
+                            <h5>${p.title}</h5>
+                            <p>${p.description}</p>
+                            
+                            <div class="project-footer-meta">
+                                 <div class="comments-preview" onclick="openComments(${p.id})">
+                                     <i class="fa-regular fa-comment"></i> ${p.comments_count || 0} comments
+                                 </div>
+                                 <button class="download-proj-btn" onclick="downloadProject('${p.video_url}', event)"><i class="fa-solid fa-download"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                if (typeof applyUserActivityStatus === 'function') {
+                    applyUserActivityStatus();
+                }
+            } catch (e) { console.error(e); }
+        });
+    </script>
+
+
+</body></html>

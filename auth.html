@@ -1,0 +1,217 @@
+<!DOCTYPE html><html lang="ru"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="auto_auth_7">SAYCOM - Вход и Регистрация</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css?v=2.2">
+    <style>
+        body { background: #060B15; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+        .auth-container { width: 100%; max-width: 480px; background: #0D1421; padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        .auth-header { text-align: center; margin-bottom: 30px; }
+        .auth-header h2 { font-size: 26px; font-weight: 800; color: white; margin-bottom: 8px; }
+        .auth-header p { color: #94A3B8; font-size: 14px; }
+        .auth-form { display: flex; flex-direction: column; gap: 18px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .form-group label { font-size: 12px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 12px 16px; border-radius: 10px; color: white; font-family: inherit; outline: none; transition: 0.2s; }
+        .form-group input:focus { border-color: var(--primary); background: rgba(16,185,129,0.05); box-shadow: 0 0 15px rgba(16,185,129,0.1); }
+        .btn-auth { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; margin-top: 10px; }
+        .btn-auth:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(16,185,129,0.2); }
+        .auth-footer { text-align: center; margin-top: 25px; font-size: 14px; color: #64748B; }
+        .auth-footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .back-home { position: absolute; top: 30px; left: 30px; color: #64748B; text-decoration: none; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; transition: 0.23s; }
+        .back-home:hover { color: white; }
+    </style>
+</head>
+<body>
+    <a href="/index" class="back-home"><i class="fa-solid fa-arrow-left"></i><span data-i18n="auto_auth_8">На главную</span></a>
+
+    <!-- LOGIN BOX -->
+    <div class="auth-container" id="loginBox">
+        <div class="auth-header">
+            <h2 data-i18n="auto_auth_9">С возвращением!</h2>
+            <p data-i18n="auto_auth_10">Войдите в свой личный кабинет SAYCOM</p>
+        </div>
+        <form class="auth-form" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label data-i18n="auto_auth_11">Email адрес</label>
+                <input type="email" id="loginEmail" placeholder="example@mail.com" required="" data-i18n-placeholder="auto_auth_0">
+            </div>
+            <div class="form-group">
+                <label data-i18n="auto_auth_12">Пароль</label>
+                <input type="password" id="loginPassword" placeholder="••••••••" required="" data-i18n-placeholder="auto_auth_1">
+            </div>
+            <button type="submit" class="btn-auth" data-i18n="auto_auth_13">Войти в аккаунт</button>
+        </form>
+        <div class="auth-footer"><span data-i18n="auto_auth_14">У вас еще нет аккаунта?</span><a href="javascript:void(0)" onclick="toggleAuth()" data-i18n="auto_auth_15">Регистрация</a>
+        </div>
+    </div>
+
+    <!-- REGISTER BOX -->
+    <div class="auth-container" id="registerBox" style="display: none;">
+        <div class="auth-header">
+            <h2 data-i18n="auto_auth_16">Регистрация</h2>
+            <p data-i18n="auto_auth_17">Создайте аккаунт и станьте частью SAYCOM</p>
+        </div>
+        <form class="auth-form" onsubmit="handleRegister(event)">
+            <div class="form-row">
+                <div class="form-group">
+                    <label data-i18n="auto_auth_18">Имя</label>
+                    <input type="text" id="regFirstName" placeholder="Иван" required="" data-i18n-placeholder="auto_auth_2">
+                </div>
+                <div class="form-group">
+                    <label data-i18n="auto_auth_19">Фамилия</label>
+                    <input type="text" id="regLastName" placeholder="Иванов" required="" data-i18n-placeholder="auto_auth_3">
+                </div>
+            </div>
+            <div class="form-group">
+                <label data-i18n="auto_auth_20">Email адрес</label>
+                <input type="email" id="regEmail" placeholder="example@mail.com" required="" data-i18n-placeholder="auto_auth_4">
+            </div>
+            <div class="form-group">
+                <label data-i18n="auto_auth_21">Ваш Пароль</label>
+                <input type="password" id="regPassword" placeholder="Минимум 8 знаков" required="" data-i18n-placeholder="auto_auth_5">
+            </div>
+            <div class="form-group">
+                <label data-i18n="auto_auth_22">Повторите Пароль</label>
+                <input type="password" id="regConfirm" placeholder="••••••••" required="" data-i18n-placeholder="auto_auth_6">
+            </div>
+            <button type="submit" class="btn-auth" data-i18n="auto_auth_23">Зарегистрироваться</button>
+        </form>
+        <div class="auth-footer"><span data-i18n="auto_auth_24">Уже зарегистрированы?</span><a href="javascript:void(0)" onclick="toggleAuth()" data-i18n="auto_auth_25">Войти</a>
+        </div>
+    </div>
+
+    <!-- VERIFY BOX -->
+    <div class="auth-container" id="verifyBox" style="display: none;">
+        <div class="auth-header">
+            <h2 data-i18n="auto_auth_26">Подтверждение Email</h2>
+            <p data-i18n="auto_auth_27">Мы отправили проверочный код на вашу почту</p>
+        </div>
+        <form class="auth-form" onsubmit="handleVerify(event)">
+            <input type="hidden" id="verifyEmail">
+            <div class="form-group">
+                <label data-i18n="auto_auth_28">Код из письма</label>
+                <input type="text" id="verifyCode" placeholder="123456" maxlength="6" required="" style="text-align: center; font-size: 24px; letter-spacing: 5px; font-weight: 800;" data-i18n-placeholder="auto_auth_0">
+            </div>
+            <button type="submit" class="btn-auth" data-i18n="auto_auth_29">Активировать аккаунт</button>
+        </form>
+    </div>
+
+    <script>
+        function toggleAuth() {
+            const lb = document.getElementById('loginBox');
+            const rb = document.getElementById('registerBox');
+            lb.style.display = lb.style.display === 'none' ? 'block' : 'none';
+            rb.style.display = rb.style.display === 'none' ? 'block' : 'none';
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({email, password})
+                });
+                const result = await res.json();
+
+                if (result.message === 'success') {
+                    // Create visual display name (e.g., Ivan I.)
+                    const fn = result.data.full_name || "Пользователь";
+                    const names = fn.split(' ');
+                    const displayName = names.length > 1 ? `${names[0]} ${names[1][0]}.` : names[0];
+                    
+                    // Save USER with actual password
+                    const userData = { ...result.data, display_name: displayName, password: password };
+                    localStorage.setItem('user', JSON.stringify(userData));
+                    
+                    // Restore persistent cart and wishlist
+                    localStorage.setItem('cart', JSON.stringify(result.data.cart || []));
+                    localStorage.setItem('wishlist', JSON.stringify(result.data.wishlist || []));
+                    
+                    window.location.href = 'index.html';
+                } else if (res.status === 403) {
+                    showVerify(result.email);
+                } else {
+                    alert('Ошибка: ' + result.error);
+                }
+            } catch (err) { alert('Ошибка сети: Сервер не отвечает'); }
+        }
+
+        async function handleRegister(e) {
+            e.preventDefault();
+            const fName = document.getElementById('regFirstName').value;
+            const lName = document.getElementById('regLastName').value;
+            const email = document.getElementById('regEmail').value;
+            const password = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('regConfirm').value;
+
+            if (password !== confirm) return alert('Пароли не совпадают!');
+            if (password.length < 8) return alert('Пароль должен быть не менее 8 символов');
+
+            const full_name = `${fName} ${lName}`;
+
+            try {
+                const res = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({full_name, email, password})
+                });
+                const result = await res.json();
+                if (result.message === 'success') {
+                    showVerify(email);
+                } else { alert('Ошибка: ' + result.error); }
+            } catch (err) { alert('Ошибка сервера'); }
+        }
+
+        function showVerify(email) {
+            document.getElementById('loginBox').style.display = 'none';
+            document.getElementById('registerBox').style.display = 'none';
+            document.getElementById('verifyBox').style.display = 'block';
+            document.getElementById('verifyEmail').value = email;
+        }
+
+        async function handleVerify(e) {
+            e.preventDefault();
+            const email = document.getElementById('verifyEmail').value;
+            const code = document.getElementById('verifyCode').value;
+
+            try {
+                const res = await fetch('/api/verify', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({email, code})
+                });
+                const result = await res.json();
+                if (result.message === 'verified') {
+                    // Create visual display name (e.g., Ivan I.)
+                    const fn = result.data.full_name;
+                    const names = fn.split(' ');
+                    const displayName = names.length > 1 ? `${names[0]} ${names[1][0]}.` : names[0];
+                    
+                    // CRITICAL FIX: Save actual user data from result
+                    localStorage.setItem('user', JSON.stringify({
+                        ...result.data, 
+                        display_name: displayName
+                    }));
+
+                    // Restore persistent cart and wishlist
+                    localStorage.setItem('cart', JSON.stringify(result.data.cart || []));
+                    localStorage.setItem('wishlist', JSON.stringify(result.data.wishlist || []));
+
+                    window.location.href = 'index.html';
+                } else { alert('Неверный код'); }
+            } catch (err) { alert('Ошибка сервера'); }
+        }
+    </script>
+
+    <script src="js/translations.js"></script>
+    <script src="js/app.js"></script>
+
+</body></html>

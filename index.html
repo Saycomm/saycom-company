@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="site_title">SAYCOM | Премиальные системы кондиционирования, безопасности и автоматизации в
+        Казахстане</title>
+    <meta name="description"
+        content="SAYCOM - ведущий поставщик и инсталлятор премиальных систем кондиционирования, видеонаблюдения, автоматических ворот и домофонов в Узбекистане. Профессиональный монтаж Daikin, Gree, Hikvision.">
+    <meta name="keywords"
+        content="кондиционеры ташкент, видеонаблюдение узбекистан, автоматические ворота, установка кондиционеров, Hikvision, Daikin, Gree, SAYCOM">
+    <meta property="og:title" content="SAYCOM | Премиальные инженерные решения">
+    <meta property="og:description"
+        content="Профессиональный монтаж и поставка систем кондиционирования и безопасности.">
+    <meta property="og:image" content="uploads/icon_premium_v2.png">
+    <meta property="og:type" content="website">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Premium Logo Preloader -->
+    <div id="preloader"
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #060B15; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 1s cubic-bezier(0.65, 0, 0.35, 1);">
+        <div class="loader-content" style="text-align: center; position: relative;">
+            <div class="logo-animation-wrapper" style="position: relative; margin-bottom: 30px;">
+                <!-- Glowing effect behind logo -->
+                <div
+                    style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120px; height: 120px; background: var(--primary); filter: blur(40px); border-radius: 50%; opacity: 0; animation: pulseGlow 2.5s ease-in-out infinite;">
+                </div>
+
+                <img src="uploads/icon_premium_v2.png" alt="SAYCOM" class="loader-logo"
+                    style="width: 100px; height: 100px; position: relative; z-index: 2; opacity: 0; transform: scale(0.8); animation: logoEntry 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
+            </div>
+
+            <div class="loader-text"
+                style="color: white; font-family: 'Inter', sans-serif; opacity: 0; transform: translateY(20px); animation: textEntry 0.8s ease-out 0.8s forwards;">
+                <div style="font-size: 32px; font-weight: 800; letter-spacing: 4px; margin-bottom: 8px;">SAYCOM</div>
+                <div style="font-size: 12px; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 5px;"
+                    data-i18n="premium_solutions">Premium Solutions</div>
+            </div>
+
+            <!-- Minimal Progress Bar -->
+            <div
+                style="width: 200px; height: 2px; background: rgba(255,255,255,0.05); border-radius: 4px; margin-top: 40px; overflow: hidden; position: relative;">
+                <div id="loader-progress"
+                    style="position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: var(--primary); transition: width 4s linear; box-shadow: 0 0 10px var(--primary);">
+                </div>
+            </div>
+        </div>
+
+        <style>
+            @keyframes logoEntry {
+                0% {
+                    opacity: 0;
+                    transform: scale(0.5) rotate(-10deg);
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: scale(1) rotate(0);
+                }
+            }
+
+            @keyframes textEntry {
+                0% {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+
+                100% {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes pulseGlow {
+
+                0%,
+                100% {
+                    opacity: 0.15;
+                    transform: translate(-50%, -50%) scale(0.8);
+                }
+
+                50% {
+                    opacity: 0.4;
+                    transform: translate(-50%, -50%) scale(1.1);
+                }
+            }
+
+            body.loading {
+                overflow: hidden !important;
+            }
+
+            .preloader-hidden {
+                opacity: 0 !important;
+                visibility: hidden !important;
+                pointer-events: none !important;
+            }
+        </style>
+    </div>
+
+    <script>
+        // Preloader Logic
+        (function () {
+            const preloader = document.getElementById('preloader');
+            const progressBar = document.getElementById('loader-progress');
+
+            // Check if this is the first visit in this session
+            const hasSeenLoader = sessionStorage.getItem('saycom_preloader_seen');
+
+            if (hasSeenLoader) {
+                // If already seen, remove loader immediately
+                preloader.style.display = 'none';
+            } else {
+                // Add loading class to body to prevent scroll
+                document.body.classList.add('loading');
+
+                // Start progress bar animation
+                setTimeout(() => {
+                    if (progressBar) progressBar.style.width = '100%';
+                }, 100);
+
+                // Hide loader after 5 seconds
+                setTimeout(() => {
+                    preloader.classList.add('preloader-hidden');
+                    document.body.classList.remove('loading');
+                    sessionStorage.setItem('saycom_preloader_seen', 'true');
+
+                    // Remove from DOM after transition
+                    setTimeout(() => {
+                        preloader.style.display = 'none';
+                    }, 1000);
+                }, 5000);
+            }
+        })();
+    </script>
+
+    <!-- Comment Sheet System -->
+    <div id="sheetOverlay" class="sheet-overlay" onclick="closeCommentSheet()"></div>
+    <div id="commentSheet" class="comment-sheet">
+        <div class="comment-sheet-header">
+            <div
+                style="width: 40px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin: 0 auto 15px;">
+            </div>
+            <h3 data-i18n="auto_index_0">Comments</h3>
+            <i class="fa-solid fa-xmark close-sheet" onclick="closeCommentSheet()"></i>
+        </div>
+        <div class="comment-list" id="sheetCommentList"></div>
+        <div class="comment-input-area">
+            <input type="text" id="sheetCommentInput" placeholder="Add a comment..."
+                data-i18n-placeholder="auto_index_41">
+            <button onclick="sendSheetComment()"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar"
+        style="background: var(--bg-light); border-bottom: 1px solid var(--border-color); padding: 12px 0; font-size: 13px; color: var(--text-muted);">
+        <div class="container top-bar-container"
+            style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-weight: 500;"><i class="fa-solid fa-truck"
+                    style="color: var(--primary); margin-right:4px;"></i> <span data-i18n="top_bar_delivery">Бесплатная
+                    доставка при заказе от <span style="color: var(--primary); font-weight: 700;"
+                        data-i18n="auto_index_1">250 000 ₸</span></span></div>
+            <div class="top-lang" style="display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-globe" style="color: var(--text-muted); font-size: 12px;"></i>
+                <select class="lang-select" id="lang-switch" onchange="setLanguage(this.value)"
+                    style="background: transparent; border: none; color: white; outline: none; cursor: pointer; font-weight: 600; font-family: 'Inter', sans-serif;">
+                    <option value="ru" data-i18n="auto_index_2">Русский</option>
+                    <option value="en" data-i18n="auto_index_3">English</option>
+                    <option value="kz" data-i18n="auto_index_4">Қазақша</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header"
+        style="background: var(--bg-light); border-bottom: 1px solid var(--border-color); padding: 20px 0;">
+        <div class="container header-container"
+            style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo" style="display: flex; align-items: center; gap: 12px; cursor: pointer;"
+                onclick="window.location.href='index.html'">
+                <img src="uploads/icon_premium_v2.png" alt="SAYCOM Logo"
+                    style="width: 45px; height: 45px; border-radius: 10px; object-fit: contain;">
+                <div class="logo-text">
+                    <div class="logo-title"
+                        style="font-weight: 800; font-size: 20px; color: white; letter-spacing: 1px;"
+                        data-i18n="auto_index_5">SAYCOM</div>
+                    <div class="logo-subtitle" data-i18n="premium_solutions"
+                        style="font-size: 11px; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">
+                        Premium Solutions</div>
+                </div>
+            </div>
+
+            <div class="search-wrap" style="position: relative; width: 500px; flex-shrink: 1;">
+                <div class="search-bar"
+                    style="width: 100%; border: 1px solid var(--border-color); background: rgba(255,255,255,0.03); border-radius: 8px; padding: 10px 16px; display: flex; align-items: center; gap: 12px; transition: 0.3s; z-index: 101;">
+                    <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted); font-size: 14px;"></i>
+                    <input type="text" id="global-search" data-i18n-placeholder="search_placeholder"
+                        placeholder="Search for products, brands..."
+                        style="border:none; background:transparent; width:100%; outline:none; color: white; font-size: 13.5px; font-weight: 500; font-family: 'Inter', sans-serif;">
+                    <button id="search-submit-btn" data-i18n="auto_index_6">Search</button>
+                </div>
+
+                <!-- Search Suggestions (Premium Glassmorphism) -->
+                <div id="search-suggestions"
+                    style="position: absolute; top: 110%; left: 0; width: 100%; background: rgba(13, 20, 33, 0.95); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; display: none; z-index: 100; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: translateY(-10px); opacity: 0; transition: all 0.3s ease;">
+                    <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;"
+                        data-i18n="auto_index_7">Популярные запросы</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <span class="suggestion-tag" onclick="quickSearch('Daikin')"
+                            data-i18n="auto_index_8">Daikin</span>
+                        <span class="suggestion-tag" onclick="quickSearch('CCTV Hikvision')"
+                            data-i18n="auto_index_9">CCTV Hikvision</span>
+                        <span class="suggestion-tag" onclick="quickSearch('Inverter AC')"
+                            data-i18n="auto_index_10">Inverter AC</span>
+                        <span class="suggestion-tag" onclick="quickSearch('Gree')" data-i18n="auto_index_11">Gree</span>
+                        <span class="suggestion-tag" onclick="quickSearch('Gate Motor')" data-i18n="auto_index_12">Gate
+                            Motor</span>
+                        <span class="suggestion-tag" onclick="quickSearch('Intercom')"
+                            data-i18n="auto_index_13">Intercom</span>
+                        <span class="suggestion-tag" onclick="quickSearch('SAYCOM')"
+                            data-i18n="auto_index_14">SAYCOM</span>
+                    </div>
+                    <style>
+                        .suggestion-tag {
+                            background: rgba(255, 255, 255, 0.04);
+                            padding: 6px 14px;
+                            border-radius: 20px;
+                            font-size: 12px;
+                            color: white;
+                            cursor: pointer;
+                            transition: 0.2s;
+                            border: 1px solid transparent;
+                            font-weight: 500;
+                        }
+
+                        .suggestion-tag:hover {
+                            background: rgba(16, 185, 129, 0.1);
+                            border-color: var(--primary);
+                            color: var(--primary);
+                            transform: translateY(-2px);
+                        }
+
+                        .search-bar.active {
+                            border-color: var(--primary) !important;
+                            box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+                            background: rgba(16, 185, 129, 0.02) !important;
+                        }
+                    </style>
+                </div>
+            </div>
+
+            <div class="header-actions" style="display: flex; gap: 12px; align-items: center;">
+                <div class="action-btn"
+                    style="width: 40px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; color: white;">
+                    <i class="fa-regular fa-heart" style="font-size:16px;"></i>
+                </div>
+                <div class="action-btn"
+                    style="position: relative; width: 40px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; color: white;">
+                    <i class="fa-solid fa-cart-shopping" style="font-size:16px;"></i>
+                    <span
+                        style="position: absolute; top: -6px; right: -6px; background: var(--primary); color: white; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; border: 2px solid var(--bg-light);">0</span>
+                </div>
+                <div class="action-btn" onclick="window.location.href='auth.html'"
+                    style="display:flex; align-items:center; gap:12px; background: rgba(255,255,255,0.04); padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.2s; border: 1px solid transparent;">
+                    <i class="fa-regular fa-user" style="font-size:16px; color: white;"></i>
+                    <div style="text-align: left; line-height:1.2;">
+                        <div style="font-size:13px; font-weight:700; color:white;"><span
+                                data-i18n="auto_mixed_index_0">Мой аккаунт </span><i class="fa-solid fa-chevron-down"
+                                style="font-size:10px; margin-left:2px; color: var(--text-muted);"></i></div>
+                        <div style="font-size:11px; color:var(--text-muted); font-weight: 500;"
+                            data-i18n="auto_index_15">Войти</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="main-nav" style="background: var(--bg-color); border-bottom: 1px solid var(--border-color);">
+        <div class="container nav-container" style="display:flex; gap: 30px; font-size: 14px; font-weight: 500;">
+            <a href="/all-products" data-i18n="nav_all_products" class="nav-link" data-filename="all-products.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Все
+                товары</a>
+            <a href="/wholesale" data-i18n="nav_wholesale" class="nav-link" data-filename="wholesale.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Оптом</a>
+            <a href="/air-conditioners" data-i18n="nav_ac" class="nav-link" data-filename="air-conditioners.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Кондиционеры</a>
+            <a href="/cctv-systems" data-i18n="nav_cctv" class="nav-link" data-filename="cctv-systems.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Видеонаблюдение</a>
+            <a href="/automatic-gates" data-i18n="nav_gates" class="nav-link" data-filename="automatic-gates.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Автоматические
+                ворота</a>
+            <a href="/intercom-systems" data-i18n="nav_intercom" class="nav-link"
+                data-filename="intercom-systems.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Домофоны</a>
+            <a href="/spare-parts" data-i18n="nav_spare_parts" class="nav-link" data-filename="spare-parts.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Запчасти</a>
+            <a href="/installation-services" data-i18n="nav_install" class="nav-link"
+                data-filename="installation-services.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Услуги
+                монтажа</a>
+            <a href="/about-us" data-i18n="nav_about" class="nav-link" data-filename="about-us.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">О
+                нас</a>
+            <a href="/contact" data-i18n="nav_contact" class="nav-link" data-filename="contact.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Контакты</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <div class="badge" data-i18n="hero_badge">Premium Smart Solutions</div>
+                <h1 data-i18n="hero_title">Transform Your Space with Smart Technology</h1>
+                <p data-i18n="hero_subtitle">Professional HVAC, security, and automation solutions for homes and
+                    businesses. Expert installation and maintenance services.</p>
+                <div class="hero-btns">
+                    <button class="btn btn-white" data-i18n="hero_btn_products"
+                        onclick="window.location.href='all-products.html'">Browse Products <i
+                            class="fa-solid fa-arrow-right"></i></button>
+                    <button class="btn btn-blue-outline" data-i18n="hero_btn_install"
+                        onclick="window.location.href='installation-services.html'">Book Installation</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <!-- Air conditioner icon to represent the image block -->
+                <i class="fa-solid fa-window-maximize" style="font-size: 150px;"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Categories -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="cat_title">Our Product Categories</h2>
+            <p class="section-subtitle" data-i18n="cat_subtitle">Explore our comprehensive range of premium solutions
+            </p>
+
+            <div class="categories-grid">
+                <div class="cat-card" onclick="window.location.href='air-conditioners.html'" style="cursor:pointer;">
+                    <div class="cat-icon cat-1"><i class="fa-solid fa-snowflake"></i></div>
+                    <h3 class="cat-title" data-i18n="nav_ac">Air Conditioners</h3>
+                    <p class="cat-desc" data-i18n="cat_ac_desc">Premium HVAC systems for any space</p>
+                </div>
+                <div class="cat-card" onclick="window.location.href='cctv-systems.html'" style="cursor:pointer;">
+                    <div class="cat-icon cat-2"><i class="fa-solid fa-video"></i></div>
+                    <h3 class="cat-title" data-i18n="nav_cctv">CCTV Systems</h3>
+                    <p class="cat-desc" data-i18n="cat_cctv_desc">24/7 security surveillance</p>
+                </div>
+                <div class="cat-card" onclick="window.location.href='automatic-gates.html'" style="cursor:pointer;">
+                    <div class="cat-icon cat-3"><i class="fa-solid fa-door-open"></i></div>
+                    <h3 class="cat-title" data-i18n="nav_gates">Automatic Gates</h3>
+                    <p class="cat-desc" data-i18n="cat_gates_desc">Smart access control solutions</p>
+                </div>
+                <div class="cat-card" onclick="window.location.href='intercom-systems.html'" style="cursor:pointer;">
+                    <div class="cat-icon cat-4"><i class="fa-solid fa-phone-volume"></i></div>
+                    <h3 class="cat-title" data-i18n="nav_intercom">Intercom Systems</h3>
+                    <p class="cat-desc" data-i18n="cat_intercom_desc">Modern communication systems</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Brands Showcase - Infinity Marquee -->
+    <section class="section brands-marquee-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="brands_title">Наши люксовые партнеры</h2>
+            <div class="marquee-container">
+                <div class="marquee-content">
+                    <div class="brand-pill" data-i18n="auto_index_16">DAIKIN</div>
+                    <div class="brand-pill" data-i18n="auto_index_17">GREE</div>
+                    <div class="brand-pill" data-i18n="auto_index_18">HIKVISION</div>
+                    <div class="brand-pill" data-i18n="auto_index_19">CAME</div>
+                    <div class="brand-pill" data-i18n="auto_index_20">DAHUA</div>
+                    <div class="brand-pill" data-i18n="auto_index_21">LG</div>
+                    <!-- Duplicate for seamless loop -->
+                    <div class="brand-pill" data-i18n="auto_index_22">DAIKIN</div>
+                    <div class="brand-pill" data-i18n="auto_index_23">GREE</div>
+                    <div class="brand-pill" data-i18n="auto_index_24">HIKVISION</div>
+                    <div class="brand-pill" data-i18n="auto_index_25">CAME</div>
+                    <div class="brand-pill" data-i18n="auto_index_26">DAHUA</div>
+                    <div class="brand-pill" data-i18n="auto_index_27">LG</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features & Stats -->
+    <section class="section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feat">
+                    <div class="feat-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <div>
+                        <h4 data-i18n="feat_1_title">Гарантия качества</h4>
+                        <p data-i18n="feat_1_desc">let currentLang = 'ru';
+                            Все товары имеют сертификаты качества и гарантию производителя</p>
+                    </div>
+                </div>
+                <div class="feat">
+                    <div class="feat-icon"><i class="fa-solid fa-truck-fast"></i></div>
+                    <div>
+                        <h4 data-i18n="feat_2_title">Free Delivery</h4>
+                        <p data-i18n="feat_2_desc">Fast and free delivery on orders over 250 000 ₸</p>
+                    </div>
+                </div>
+                <div class="feat">
+                    <div class="feat-icon"><i class="fa-solid fa-wrench"></i></div>
+                    <div>
+                        <h4 data-i18n="feat_3_title">Professional Installation</h4>
+                        <p data-i18n="feat_3_desc">Expert installation by certified technicians</p>
+                    </div>
+                </div>
+                <div class="feat">
+                    <div class="feat-icon"><i class="fa-solid fa-headset"></i></div>
+                    <div>
+                        <h4 data-i18n="feat_4_title">24/7 Support</h4>
+                        <p data-i18n="feat_4_desc">Round-the-clock customer service and technical support</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat">
+                    <h2 data-i18n="auto_index_28">10,000+</h2>
+                    <p data-i18n="stat_1">Happy Customers</p>
+                </div>
+                <div class="stat">
+                    <h2 data-i18n="auto_index_29">15+</h2>
+                    <p data-i18n="stat_2">Years Experience</p>
+                </div>
+                <div class="stat">
+                    <h2 data-i18n="auto_index_30">50+</h2>
+                    <p data-i18n="stat_3">Expert Technicians</p>
+                </div>
+                <div class="stat">
+                    <h2 data-i18n="auto_index_31">98%</h2>
+                    <p data-i18n="stat_4">Satisfaction Rate</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Step-by-Step Workflow -->
+    <section class="section workflow-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="flow_title">Как мы работаем</h2>
+            <p class="section-subtitle" data-i18n="flow_subtitle">От вашего выбора до идеальной установки</p>
+            <div class="workflow-grid">
+                <div class="flow-item">
+                    <div class="flow-num">01</div>
+                    <h4 data-i18n="flow_1_t">Выбор решения</h4>
+                    <p data-i18n="flow_1_d">Выберите лучшие премиальные системы для вашего дома или бизнеса.</p>
+                </div>
+                <div class="flow-item">
+                    <div class="flow-num">02</div>
+                    <h4 data-i18n="flow_2_t">Консультация эксперта</h4>
+                    <p data-i18n="flow_2_d">Наши специалисты посетят объект для детальной технической оценки.</p>
+                </div>
+                <div class="flow-item">
+                    <div class="flow-num">03</div>
+                    <h4 data-i18n="flow_3_t">Профессиональный монтаж</h4>
+                    <p data-i18n="flow_3_d">Сертифицированные мастера обеспечат безупречную установку.</p>
+                </div>
+                <div class="flow-item">
+                    <div class="flow-num">04</div>
+                    <h4 data-i18n="flow_4_t">Постоянная поддержка</h4>
+                    <p data-i18n="flow_4_d">Круглосуточное обслуживание и поддержка ваших систем.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="testi_title">What Our Customers Say</h2>
+            <p class="section-subtitle" data-i18n="testi_subtitle">Join thousands of satisfied customers</p>
+
+            <div class="testi-grid">
+                <div class="testi-card">
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i></div>
+                    <div class="testi-text" data-i18n="t1_text">"Excellent service! The team installed our AC system
+                        professionally and efficiently. Very satisfied with the quality."</div>
+                    <div class="testi-user">
+                        <div class="user-avatar" style="background:#0ea5e9;" data-i18n="auto_index_32">MJ</div>
+                        <div class="user-info">
+                            <h5 data-i18n="t1_user">Michael Johnson</h5>
+                            <p data-i18n="t1_role">Homeowner</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testi-card">
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i></div>
+                    <div class="testi-text" data-i18n="t2_text">"The CCTV system has greatly improved our security.
+                        Professional installation and great customer support."</div>
+                    <div class="testi-user">
+                        <div class="user-avatar" style="background:#0ea5e9;" data-i18n="auto_index_33">SW</div>
+                        <div class="user-info">
+                            <h5 data-i18n="t2_user">Sarah Williams</h5>
+                            <p data-i18n="t2_role">Business Owner</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testi-card">
+                    <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i></div>
+                    <div class="testi-text" data-i18n="t3_text">"Automated our entire complex with their smart gate
+                        systems. Excellent quality and reliable service."</div>
+                    <div class="testi-user">
+                        <div class="user-avatar" style="background:#0ea5e9;" data-i18n="auto_index_34">DB</div>
+                        <div class="testi-user">
+                            <h5 data-i18n="t3_user">David Brown</h5>
+                            <p data-i18n="t3_role">Property Manager</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Services Section -->
+    <section class="install-section">
+        <div class="container install-container">
+            <div class="install-content">
+                <h2 data-i18n="inst_title">Professional Installation Services</h2>
+                <p data-i18n="inst_desc">Our certified technicians ensure perfect installation of all products. We
+                    handle everything from site assessment to final testing and training.</p>
+                <ul class="install-list">
+                    <li><i class="fa-regular fa-circle-check"></i> <span data-i18n="inst_li1">Certified and experienced
+                            technicians</span></li>
+                    <li><i class="fa-regular fa-circle-check"></i> <span data-i18n="inst_li2">Free site inspection and
+                            consultation</span></li>
+                    <li><i class="fa-regular fa-circle-check"></i> <span data-i18n="inst_li3">Post-installation support
+                            and warranty</span></li>
+                </ul>
+                <button class="btn btn-white" data-i18n="inst_btn"
+                    onclick="window.location.href='installation-services.html'">Schedule Installation</button>
+            </div>
+            <div class="install-cards">
+                <div class="icard">
+                    <i class="fa-solid fa-medal"></i>
+                    <h4 data-i18n="icard1_title">Certified</h4>
+                    <p data-i18n="icard1_desc">Licensed professionals</p>
+                </div>
+                <div class="icard">
+                    <i class="fa-solid fa-shield"></i>
+                    <h4 data-i18n="icard2_title">Insured</h4>
+                    <p data-i18n="icard2_desc">Fully covered work</p>
+                </div>
+                <div class="icard">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <h4 data-i18n="icard3_title">Experienced</h4>
+                    <p data-i18n="icard3_desc">15+ years in business</p>
+                </div>
+                <div class="icard">
+                    <i class="fa-solid fa-thumbs-up"></i>
+                    <h4 data-i18n="icard4_title">Guaranteed</h4>
+                    <p data-i18n="icard4_desc">Work satisfaction</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Project Showcase Dashboard -->
+    <section class="section project-dash">
+        <div class="container">
+            <h2 class="section-title" data-i18n="proj_title">Примеры наших работ</h2>
+            <p class="section-subtitle" data-i18n="proj_subtitle">Реализованные проекты по всему Узбекистану</p>
+            <div class="project-grid" id="dynamic-projects">
+                <!-- Dynamically loaded from API -->
+            </div>
+            <div style="text-align: center; margin-top: 50px;">
+                <a href="/projects" class="btn btn-primary" data-i18n="view_all_projects">Смотреть все работы</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="faq_title">Frequently Asked Questions</h2>
+            <p class="section-subtitle" data-i18n="faq_subtitle">Quick answers to common questions</p>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-q" data-i18n="faq_q1">What areas do you serve?</div>
+                    <div class="faq-a" data-i18n="faq_a1">We provide services throughout Kazakhstan, including Shymkent,
+                        Almaty, Astana, and all major cities.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" data-i18n="faq_q2">Do you offer installation services?</div>
+                    <div class="faq-a" data-i18n="faq_a2">Yes, we provide professional installation for all our products
+                        by certified technicians.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" data-i18n="faq_q3">What warranty do you provide?</div>
+                    <div class="faq-a" data-i18n="faq_a3">All products come with manufacturer warranty ranging from 1-5
+                        years depending on the product.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-q" data-i18n="faq_q4">Can I get a custom quote?</div>
+                    <div class="faq-a" data-i18n="faq_a4">Absolutely! Contact us with your requirements and we'll
+                        provide a detailed quote within 24 hours.</div>
+                </div>
+            </div>
+
+            <div class="faq-btn-wrap">
+                <button class="btn btn-outline" data-i18n="faq_btn" onclick="window.location.href='faq.html'">ВСЕ
+                    ВОПРОСЫ</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="cta_title">Ready to Get Started?</h2>
+            <p class="section-subtitle" style="margin-bottom:0;" data-i18n="cta_subtitle">Contact us today for a free
+                consultation and quote</p>
+            <div class="cta-btns">
+                <button class="btn btn-primary glow" data-i18n="cta_btn_contact"
+                    onclick="window.location.href='contact.html'">Contact Us</button>
+                <button class="btn btn-outline" data-i18n="cta_btn_catalog"
+                    onclick="window.location.href='all-products.html'">Browse Catalog</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CREATIVE VIP NEWSLETTER -->
+    <section class="newsletter-creative">
+        <div class="container">
+            <style>
+                .newsletter-creative {
+                    padding: 120px 0;
+                    position: relative;
+                }
+
+                .creative-card {
+                    background: rgba(255, 255, 255, 0.01);
+                    backdrop-filter: blur(30px);
+                    border: 1px solid rgba(255, 255, 255, 0.05);
+                    border-radius: 60px;
+                    padding: 80px;
+                    display: grid;
+                    grid-template-columns: 1.2fr 1fr;
+                    align-items: center;
+                    gap: 60px;
+                    position: relative;
+                    overflow: hidden;
+                    box-shadow: 0 50px 100px rgba(0, 0, 0, 0.4);
+                }
+
+                .creative-card::before {
+                    content: '';
+                    position: absolute;
+                    top: -100px;
+                    left: -100px;
+                    width: 300px;
+                    height: 300px;
+                    background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+                    z-index: -1;
+                }
+
+                .creative-info h2 {
+                    font-family: 'Outfit', sans-serif;
+                    font-size: 48px;
+                    font-weight: 800;
+                    color: white;
+                    line-height: 1.1;
+                    margin-bottom: 25px;
+                }
+
+                .creative-info h2 span {
+                    display: block;
+                    background: linear-gradient(90deg, #10B981, #34D399);
+                    -webkit-background-clip: text;
+                    background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+
+                .creative-info p {
+                    color: #94A3B8;
+                    font-size: 18px;
+                    max-width: 400px;
+                    line-height: 1.6;
+                }
+
+                /* Smart Capsule Form */
+                .smart-capsule {
+                    background: rgba(255, 255, 255, 0.03);
+                    border: 1px solid rgba(255, 255, 255, 0.08);
+                    border-radius: 100px;
+                    padding: 10px;
+                    display: flex;
+                    align-items: center;
+                    transition: all 0.5s ease;
+                    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.2);
+                }
+
+                .smart-capsule:focus-within {
+                    border-color: rgba(16, 185, 129, 0.4);
+                    background: rgba(16, 185, 129, 0.02);
+                    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(16, 185, 129, 0.1);
+                }
+
+                .smart-capsule input {
+                    flex-grow: 1;
+                    background: transparent !important;
+                    border: none !important;
+                    padding: 20px 30px !important;
+                    color: white !important;
+                    font-size: 16px !important;
+                    outline: none !important;
+                    width: 100% !important;
+                }
+
+                /* Force stop browser autofill from ruining the design */
+                .smart-capsule input:-webkit-autofill,
+                .smart-capsule input:-webkit-autofill:hover,
+                .smart-capsule input:-webkit-autofill:focus {
+                    -webkit-text-fill-color: white !important;
+                    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+                    transition: background-color 5000s ease-in-out 0s !important;
+                    background: transparent !important;
+                }
+
+                .smart-capsule button {
+                    background: #10B981;
+                    border: none;
+                    border-radius: 100px;
+                    width: 65px;
+                    height: 65px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+                    box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+                }
+
+                .smart-capsule button i {
+                    color: #020617;
+                    font-size: 22px;
+                }
+
+                .smart-capsule button:hover {
+                    transform: scale(1.1) rotate(15deg);
+                    background: #34D399;
+                }
+
+                @media (max-width: 1000px) {
+                    .creative-card {
+                        grid-template-columns: 1fr;
+                        padding: 60px 40px;
+                        text-align: center;
+                    }
+
+                    .creative-info h2 {
+                        font-size: 36px;
+                    }
+
+                    .creative-info p {
+                        margin: 0 auto 30px;
+                    }
+                }
+            </style>
+            <div class="creative-card">
+                <div class="creative-info">
+                    <h2 data-i18n="newsletter_title">SAYCOM <span data-i18n="auto_index_35">VIP CLUB</span></h2>
+                    <p data-i18n="newsletter_desc">Подпишитесь на профессиональные новости и получите персональные
+                        условия на установку.</p>
+                </div>
+                <form class="smart-capsule-form">
+                    <div class="smart-capsule">
+                        <input type="email" data-i18n-placeholder="email_placeholder"
+                            placeholder="Enter your email address..." required="">
+                        <button type="submit">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer"
+        style="background: var(--bg-light); color: var(--text-dark); border-top: 1px solid var(--border-color); font-family: 'Inter', sans-serif;">
+        <div class="container" style="max-width: 1400px; margin: 0 auto; display: flex;">
+
+            <!-- Left Column -->
+            <div class="footer-left"
+                style="width: 30%; padding: 40px 40px 40px 0; border-right: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="logo footer-logo"
+                        style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                        <img src="uploads/icon_premium_v2.png" alt="SAYCOM Logo"
+                            style="width: 40px; height: 40px; border-radius: 8px; object-fit: contain;">
+                        <div class="logo-text">
+                            <div class="logo-title" style="color: white; font-weight: 700; font-size: 18px;"
+                                data-i18n="auto_index_36">SAYCOM</div>
+                            <div class="logo-subtitle"
+                                style="color: var(--primary); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px;"
+                                data-i18n="premium_solutions">Premium Solutions</div>
+                        </div>
+                    </div>
+                    <p class="footer-desc" data-i18n="footer_desc"
+                        style="color: var(--text-muted); font-size: 13px; line-height: 1.6; margin-bottom: 30px;">
+                        Leading provider of premium HVAC systems, security solutions, and smart home automation in
+                        Central Asia. Quality installation and maintenance services.</p>
+                </div>
+                <div class="social-links" style="display: flex; gap: 12px;">
+                    <a href="#"
+                        style="width: 36px; height: 36px; background: rgba(255,255,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 15px; transition: 0.2s;"><i
+                            class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"
+                        style="width: 36px; height: 36px; background: rgba(255,255,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 15px; transition: 0.2s;"><i
+                            class="fa-brands fa-instagram"></i></a>
+                    <a href="#"
+                        style="width: 36px; height: 36px; background: rgba(255,255,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 15px; transition: 0.2s;"><i
+                            class="fa-brands fa-twitter"></i></a>
+                    <a href="#"
+                        style="width: 36px; height: 36px; background: rgba(255,255,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 15px; transition: 0.2s;"><i
+                            class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <!-- Right Column Container -->
+            <div class="footer-right"
+                style="width: 70%; padding: 40px 0 30px 40px; display: flex; flex-direction: column; justify-content: space-between;">
+
+                <!-- Links Grid -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 2fr; gap: 30px; margin-bottom: 40px;">
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <h4 data-i18n="footer_products"
+                            style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Products</h4>
+                        <a href="/air-conditioners" data-i18n="nav_ac"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Air
+                            Conditioners</a>
+                        <a href="/cctv-systems" data-i18n="nav_cctv"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">CCTV
+                            Systems</a>
+                        <a href="/automatic-gates" data-i18n="nav_gates"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Automatic
+                            Gates</a>
+                        <a href="/intercom-systems" data-i18n="nav_intercom"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Intercom
+                            Systems</a>
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <h4 data-i18n="footer_services"
+                            style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Services</h4>
+                        <a href="/installation-services" data-i18n="nav_install"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Installation</a>
+                        <a href="/installation-services" data-i18n="footer_maintenance"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Maintenance</a>
+                        <a href="/installation-services" data-i18n="footer_repair"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Repair
+                            Services</a>
+                        <a href="/contact" data-i18n="footer_support"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Support
+                            Center</a>
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <h4 data-i18n="footer_company"
+                            style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Company</h4>
+                        <a href="/about-us" data-i18n="nav_about"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">About
+                            Us</a>
+                        <a href="/wholesale" data-i18n="nav_wholesale"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Wholesale</a>
+                        <a href="/all-products" data-i18n="footer_blog"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Blog</a>
+                        <a href="/contact" data-i18n="footer_faq"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">FAQ</a>
+                        <a href="/contact" data-i18n="nav_contact"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Contact</a>
+                    </div>
+
+                    <div>
+                        <h4 data-i18n="footer_newsletter"
+                            style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 12px;">Subscribe to
+                            Newsletter</h4>
+                        <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 15px; font-weight: 500;"
+                            data-i18n="auto_index_37">Get updates on new products and exclusive offers</p>
+                        <form class="newsletter-form" onsubmit="event.preventDefault()"
+                            style="display: flex; height: 42px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color);">
+                            <input type="email" placeholder="Enter your email" required=""
+                                style="border: none; background: transparent; color: white; padding: 0 15px; width: 100%; outline: none; font-size: 13px; font-family: 'Inter', sans-serif;"
+                                data-i18n-placeholder="auto_index_42">
+                            <button type="submit"
+                                style="background: var(--primary); color: white; border: none; padding: 0 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Horizontal Divider -->
+                <div style="height: 1px; background: var(--border-color); margin-bottom: 25px;"></div>
+
+                <!-- Footer Right Bottom -->
+                <div class="footer-right-bottom">
+                    <div class="footer-copyright-links">
+                        <span data-i18n="auto_index_38">© 2026 SAYCOM. All rights reserved.</span>
+                        <a href="#" style="color: var(--text-muted); text-decoration: none;"
+                            data-i18n="auto_index_39">Privacy Policy</a>
+                        <a href="#" style="color: var(--text-muted); text-decoration: none;"
+                            data-i18n="auto_index_40">Terms of Service</a>
+                    </div>
+                    <div class="footer-trust-icons">
+                        <div class="trust-item"><i class="fa-solid fa-shield-halved"></i><span data-i18n="auto_mixed_index_1"> 2 Year
+                                Warranty</span></div>
+                        <div class="trust-item"><i class="fa-solid fa-truck"></i><span data-i18n="auto_mixed_index_2"> Бесплатная доставка
+                                250 000₸+</span></div>
+                        <div class="trust-item"><i class="fa-solid fa-headphones"></i><span data-i18n="auto_mixed_index_3"> 24/7 Support</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/translations.js"></script>
+    <script src="js/app.js?v=2.7"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                // Find both Login buttons in header/footer if they exist
+                const accountBtns = document.querySelectorAll('.header-actions .action-btn:last-child');
+                accountBtns.forEach(btn => {
+                    // Extract initials
+                    const nameParts = user.full_name.trim().split(/\s+/);
+                    let initials = "";
+                    if (nameParts.length >= 2) {
+                        initials = (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase();
+                    } else {
+                        initials = (nameParts[0][0] + (nameParts[0][1] || "")).toUpperCase();
+                    }
+
+                    // Generate consistent color
+                    const colors = ['#10B981', '#3B82F6', '#8B5CF6', '#F59E0B', '#EF4444', '#EC4899', '#06B6D4', '#84CC16', '#F97316', '#6366F1'];
+                    let hash = 0;
+                    for (let i = 0; i < user.email.length; i++) hash = user.email.charCodeAt(i) + ((hash << 5) - hash);
+                    const randomColor = colors[Math.abs(hash % colors.length)];
+
+                    // Update UI to show Avatar + Name
+                    btn.innerHTML = `
+                        <div style="width: 32px; height: 32px; border-radius: 50%; background: ${randomColor}; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:white; margin-right:8px;">${initials}</div>
+                        <div style="text-align: left; line-height:1.2;">
+                            <div style="font-size:13px; font-weight:700; color:white;">${(user.display_name || user.full_name).toUpperCase()}</div>
+                            <div style="font-size:11px; color:var(--text-muted); font-weight: 500;">Личный кабинет</div>
+                        </div>
+                    `;
+                    btn.onclick = () => window.location.href = 'profile.html';
+                });
+            }
+
+            // FAQ Accordion Logic
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+                    if (!isActive) item.classList.add('active');
+                });
+            });
+
+            // VIP Subscription Logic
+            const vipForm = document.querySelector('.smart-capsule-form');
+            if (vipForm) {
+                vipForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const input = vipForm.querySelector('input');
+                    const btn = vipForm.querySelector('button');
+                    const originalIcon = btn.innerHTML;
+
+                    try {
+                        btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
+                        btn.disabled = true;
+
+                        const response = await fetch('/api/vip/subscribe', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email: input.value })
+                        });
+
+                        const result = await response.json();
+
+                        if (response.ok) {
+                            // Show premium success state
+                            input.value = '';
+                            input.placeholder = 'Welcome to the Club! ✨';
+                            btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+                            btn.style.background = '#34D399';
+
+                            setTimeout(() => {
+                                input.placeholder = 'Enter your email address...';
+                                btn.innerHTML = originalIcon;
+                                btn.style.background = '#10B981';
+                                btn.disabled = false;
+                            }, 5000);
+                        } else {
+                            alert(result.error || "Something went wrong");
+                            btn.innerHTML = originalIcon;
+                            btn.disabled = false;
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        btn.innerHTML = originalIcon;
+                        btn.disabled = false;
+                    }
+                });
+            }
+        });
+    </script>
+
+
+</body>
+
+</html>

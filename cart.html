@@ -1,0 +1,235 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="cart_title">SAYCOM - Корзина</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css?v=2.2">
+    <style>
+        .cart-item {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 15px;
+            transition: 0.2s;
+        }
+
+        .cart-item:hover {
+            border-color: rgba(16, 185, 129, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .qty-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.03);
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .qty-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .summary-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            position: sticky;
+            top: 30px;
+        }
+
+        @media (max-width: 991px) {
+            .shop-layout {
+                grid-template-columns: 1fr !important;
+            }
+            .summary-card {
+                position: static;
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .cart-item-actions {
+                width: 100%;
+                justify-content: space-between;
+                border-top: 1px solid var(--border-color);
+                padding-top: 15px;
+            }
+            .cart-item-info {
+                width: 100%;
+            }
+            .page-title-wrap {
+                flex-direction: column;
+                align-items: flex-start !important;
+                gap: 15px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header-placeholder"></div>
+
+    <main class="container" style="padding-top: 40px; padding-bottom: 80px;">
+        <div class="page-title-wrap" style="margin-bottom: 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
+            <h1 style="font-size: 32px; font-weight: 800; color: white;" data-i18n="cart_title">Корзина</h1>
+            <button onclick="window.history.back()" style="background: rgba(255,255,255,0.03); border: 1px solid var(--border-color); color: white; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: 0.2s;">
+                <i class="fa-solid fa-arrow-left"></i><span data-i18n="auto_cart_30">Назад</span></button>
+        </div>
+
+        <div class="shop-layout" style="display: grid; grid-template-columns: 1fr 350px; gap: 40px;">
+            <!-- Left: Cart Items -->
+            <div id="cart-items-list">
+                <!-- Dynamic Items -->
+            </div>
+
+            <!-- Right: Summary -->
+            <div id="cart-summary-section">
+                <div class="summary-card">
+                    <h3 style="color:white; font-size: 18px; margin-bottom: 25px;" data-i18n="auto_cart_31">Итого к оплате</h3>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:15px; color:var(--text-muted); font-size:14px;">
+                        <span><span data-i18n="auto_cart_32">Товары (</span><span id="total-qty">0</span><span data-i18n="auto_cart_33">)</span></span>
+                        <span id="subtotal-price" data-i18n="auto_cart_34">₸0</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:15px; color:var(--text-muted); font-size:14px;">
+                        <span data-i18n="auto_cart_35">Доставка</span>
+                        <span style="color:var(--primary)" data-i18n="auto_cart_36">Бесплатно</span>
+                    </div>
+                    <div style="height:1px; background:var(--border-color); margin:20px 0;"></div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:30px; align-items:flex-end;">
+                        <span style="color:white; font-weight:700;" data-i18n="auto_cart_37">Общая стоимость:</span>
+                        <span id="total-price" style="color:var(--primary); font-size:24px; font-weight:800;" data-i18n="auto_cart_38">₸0</span>
+                    </div>
+                    <button class="btn btn-primary" onclick="proceedToCheckout()" style="width:100%; padding:15px; font-weight:700; border-radius:10px;" data-i18n="auto_cart_39">Оформить заказ</button>
+
+                    <div style="margin-top:20px; display:flex; align-items:center; gap:10px; color:var(--text-muted); font-size:12px;">
+                        <i class="fa-solid fa-shield-halved" style="color:var(--primary)"></i><span data-i18n="auto_cart_40">Безопасная оплата и гарантия возврата</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="empty-cart" style="text-align: center; padding: 100px 0; display: none;">
+            <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.03); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                <i class="fa-solid fa-cart-shopping" style="font-size: 32px; color: var(--text-muted);"></i>
+            </div>
+            <h3 style="color: white; font-size: 20px; margin-bottom: 10px;" data-i18n="auto_cart_41">Ваша корзина пуста</h3>
+            <p style="color: var(--text-muted); margin-bottom: 30px;" data-i18n="auto_cart_42">Выберите товары, чтобы оформить заказ.</p>
+            <a href="/all-products" class="btn btn-primary" style="display: inline-block; padding: 12px 30px; border-radius: 8px; text-decoration: none;" data-i18n="auto_cart_43">Перейти к
+                выбору</a>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/translations.js"></script>
+    <script src="js/theme.js">
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCart();
+        });
+
+        function renderCart() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            const list = document.getElementById('cart-items-list');
+            const summary = document.getElementById('cart-summary-section');
+            const empty = document.getElementById('empty-cart');
+
+            if (cart.length === 0) {
+                list.style.display = 'none';
+                summary.style.display = 'none';
+                empty.style.display = 'block';
+            } else {
+                list.style.display = 'block';
+                summary.style.display = 'block';
+                empty.style.display = 'none';
+
+                let total = 0;
+                let totalQty = 0;
+
+                list.innerHTML = cart.map((item, index) => {
+                    const price = item.price || 0;
+                    const qty = item.quantity || 1;
+                    total += price * qty;
+                    totalQty += qty;
+
+                    let imageSrc = item.image_url;
+                    if (imageSrc === 'AC' || !imageSrc) imageSrc = 'https://smarttech.uz/wp-content/uploads/2021/04/ac-placeholder.png';
+                    else if (!imageSrc.startsWith('http') && !imageSrc.startsWith('/')) imageSrc = '/' + imageSrc;
+
+                    return `
+                        <div class="cart-item">
+                            <div style="width:80px; height:80px; background:rgba(255,255,255,0.03); border-radius:8px; overflow:hidden; flex-shrink:0; display:flex; align-items:center; justify-content:center;">
+                                <img src="${imageSrc}" style="max-width:90%; max-height:90%; object-fit:contain;">
+                            </div>
+                            <div class="cart-item-info" style="flex-grow:1;">
+                                <h4 style="color:white; font-size:16px; margin:0 0 5px 0;">${item.title}</h4>
+                                <div style="color:var(--primary); font-weight:700;">₸${price.toLocaleString()}</div>
+                            </div>
+                            <div class="cart-item-actions" style="display:flex; align-items:center; gap:15px;">
+                                <div style="display:flex; align-items:center; gap:10px; border:1px solid var(--border-color); padding:5px; border-radius:8px;">
+                                    <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
+                                    <span style="color:white; min-width:20px; text-align:center;">${qty}</span>
+                                    <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+                                </div>
+                                <div style="color:var(--primary); font-weight:800; min-width:100px; text-align:right;">₸${(price * qty).toLocaleString()}</div>
+                                <button onclick="removeItem(${index})" style="background:transparent; border:none; color:var(--text-muted); cursor:pointer; font-size:16px;"><i class="fa-regular fa-trash-can"></i></button>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                document.getElementById('total-qty').innerText = totalQty;
+                document.getElementById('subtotal-price').innerText = `₸${total.toLocaleString()}`;
+                document.getElementById('total-price').innerText = `₸${total.toLocaleString()}`;
+            }
+        }
+
+        function updateQty(index, delta) {
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            cart[index].quantity = (cart[index].quantity || 1) + delta;
+            if (cart[index].quantity < 1) cart[index].quantity = 1;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+            if (typeof updateHeaderCounts === 'function') updateHeaderCounts();
+        }
+
+        function removeItem(index) {
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCart();
+            if (typeof updateHeaderCounts === 'function') updateHeaderCounts();
+        }
+
+        function proceedToCheckout() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if(!user) {
+                alert("Для оформления заказа необходимо войти в аккаунт");
+                window.location.href = 'auth.html';
+                return;
+            }
+            window.location.href = 'checkout.html';
+        }
+    </script>
+
+
+</body></html>

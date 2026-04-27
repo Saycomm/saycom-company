@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="wishlist_title">SAYCOM - Избранное</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css?v=2.2">
+</head>
+<body>
+    <!-- Header code will be synced via common structure -->
+    <div id="header-placeholder"></div>
+
+    <main class="container" style="padding-top: 40px; padding-bottom: 80px;">
+        <div class="breadcrumb" style="font-size: 13px; color: var(--text-muted); margin-bottom: 25px; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-house"></i><span data-i18n="auto_wishlist_176">Home</span><i class="fa-solid fa-chevron-right" style="font-size: 10px;"></i> <span data-i18n="wishlist_title">Избранное</span>
+        </div>
+
+        <div style="margin-bottom: 40px;">
+            <h1 style="font-size: 32px; font-weight: 800; color: white;" data-i18n="wishlist_title">Избранное</h1>
+            <p style="color: var(--text-muted); font-size: 14px;" id="wishlist-count-text" data-i18n="auto_wishlist_177">У вас пока нет товаров в списке желаний</p>
+        </div>
+
+        <div id="wishlist-grid" class="product-grid">
+            <!-- Dynamic items -->
+        </div>
+
+        <div id="empty-wishlist" style="text-align: center; padding: 100px 0; display: none;">
+            <div style="width: 80px; height: 80px; background: rgba(255,255,255,0.03); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px;">
+                <i class="fa-regular fa-heart" style="font-size: 32px; color: var(--text-muted);"></i>
+            </div>
+            <h3 style="color: white; font-size: 20px; margin-bottom: 10px;" data-i18n="auto_wishlist_178">Ваш список избранного пуст</h3>
+            <p style="color: var(--text-muted); margin-bottom: 30px;" data-i18n="auto_wishlist_179">Добавляйте товары в избранное, чтобы не потерять их.</p>
+            <a href="/all-products" class="btn btn-primary" style="display: inline-block; padding: 12px 30px; border-radius: 8px; text-decoration: none;" data-i18n="auto_wishlist_180">Перейти к покупкам</a>
+        </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/translations.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            renderWishlist();
+        });
+
+        function renderWishlist() {
+            const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+            const grid = document.getElementById('wishlist-grid');
+            const empty = document.getElementById('empty-wishlist');
+            const countText = document.getElementById('wishlist-count-text');
+
+            if (wishlist.length === 0) {
+                grid.style.display = 'none';
+                empty.style.display = 'block';
+                countText.innerText = 'Список пока пуст';
+            } else {
+                grid.style.display = 'grid';
+                empty.style.display = 'none';
+                countText.innerText = `У вас ${wishlist.length} товаров в списке желаний`;
+                
+                grid.innerHTML = wishlist.map(p => {
+                    let imageSrc = p.image_url;
+                    if (imageSrc === 'AC' || !imageSrc) imageSrc = 'https://smarttech.uz/wp-content/uploads/2021/04/ac-placeholder.png';
+                    else if (!imageSrc.startsWith('http') && !imageSrc.startsWith('/')) imageSrc = '/' + imageSrc;
+
+                    return `
+                        <div class="product-card" onclick="location.href='product.html?id=${p.id}'" style="cursor:pointer;">
+                            <div class="action-btn-wishlist active" onclick="event.stopPropagation(); removeFromWishlist(${p.id})" style="position:absolute; top:15px; right:15px; z-index:10; background:rgba(16,185,129,0.1); color:var(--primary); padding:8px; border-radius:50%; transition:0.2s;">
+                                <i class="fa-solid fa-heart"></i>
+                            </div>
+                            <div class="p-image-wrap" style="height:200px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.02); border-radius:12px; margin-bottom:15px; overflow:hidden;">
+                                <img src="${imageSrc}" style="max-width:90%; max-height:90%; object-fit:contain;">
+                            </div>
+                            <h3 class="p-title" style="font-size:16px; font-weight:700; color:white; margin-bottom:10px;">${p.title}</h3>
+                            <div class="p-price" style="font-size:18px; font-weight:800; color:var(--primary); margin-bottom:15px;">₸${p.price.toLocaleString()}</div>
+                            <button class="btn btn-primary" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')})" style="width:100%;"><i class="fa-solid fa-cart-shopping"></i> Купить</button>
+                        </div>
+                    `;
+                }).join('');
+            }
+        }
+
+        function removeFromWishlist(id) {
+            let wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+            wishlist = wishlist.filter(p => p.id !== id);
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            renderWishlist();
+            // Update counts if standard headers are used
+            if (typeof updateHeaderCounts === 'function') updateHeaderCounts();
+        }
+    </script>
+
+
+</body></html>

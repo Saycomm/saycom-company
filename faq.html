@@ -1,0 +1,219 @@
+<!DOCTYPE html><html lang="ru"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="auto_faq_87">Часто задаваемые вопросы | SAYCOM Support</title>
+    <meta name="description" content="Найдите ответы на часто задаваемые вопросы о продукции и услугах SAYCOM. Поддержка и помощь клиентам.">
+    <meta property="og:title" content="FAQ | SAYCOM">
+    <meta property="og:image" content="uploads/icon_premium_v2.png">
+    <link rel="stylesheet" href="css/style.css?v=2.2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <style>
+        .faq-hero {
+            padding: 100px 0 60px;
+            background: radial-gradient(circle at 70% 30%, rgba(16, 185, 129, 0.1) 0%, transparent 50%), #0B1120;
+            text-align: center;
+        }
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        .faq-search {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 20px 30px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+        .faq-search input {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+            width: 100%;
+            outline: none;
+        }
+        .loading-spinner {
+            text-align: center;
+            color: var(--primary);
+            padding: 40px;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Nav (Simplified for FAQ) -->
+    <header class="header" style="background: var(--bg-light); border-bottom: 1px solid var(--border-color); padding: 20px 0;">
+        <div class="container header-container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo" style="display: flex; align-items: center; gap: 12px; cursor: pointer;" onclick="window.location.href='index.html'">
+                <img src="uploads/icon_premium_v2.png" alt="SAYCOM Logo" style="width: 40px; height: 40px; border-radius: 8px; object-fit: contain;">
+                <div class="logo-text">
+                    <div class="logo-title" style="font-weight: 700; font-size: 18px; color: white;" data-i18n="auto_faq_89">SAYCOM</div>
+                    <div class="logo-subtitle" data-i18n="premium_solutions" style="font-size: 12px; color: var(--text-muted); font-weight: 500;">Premium Solutions</div>
+                </div>
+            </div>
+            
+            <div class="search-wrap" style="position: relative; width: 500px; flex-shrink: 1;">
+                <div class="search-bar" style="width: 100%; border: 1px solid var(--border-color); background: rgba(255,255,255,0.03); border-radius: 8px; padding: 10px 16px; display: flex; align-items: center; gap: 12px; transition: 0.3s; z-index: 101;">
+                    <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted); font-size: 14px;"></i>
+                    <input type="text" id="global-search" data-i18n-placeholder="search_placeholder" placeholder="Search for products, brands..." style="border:none; background:transparent; width:100%; outline:none; color: white; font-size: 13.5px; font-weight: 500; font-family: 'Inter', sans-serif;">
+                    <button id="search-submit-btn" data-i18n="auto_faq_90">Search</button>
+                </div>
+                
+                <!-- Search Suggestions (Premium Glassmorphism) -->
+                <div id="search-suggestions" style="position: absolute; top: 110%; left: 0; width: 100%; background: rgba(13, 20, 33, 0.95); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; display: none; z-index: 100; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: translateY(-10px); opacity: 0; transition: all 0.3s ease;">
+                    <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;" data-i18n="auto_faq_91">Популярные запросы</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <span class="suggestion-tag" onclick="quickSearch('Daikin')" data-i18n="auto_faq_92">Daikin</span>
+                        <span class="suggestion-tag" onclick="quickSearch('CCTV Hikvision')" data-i18n="auto_faq_93">CCTV Hikvision</span>
+                        <span class="suggestion-tag" onclick="quickSearch('Inverter AC')" data-i18n="auto_faq_94">Inverter AC</span>
+                        <span class="suggestion-tag" onclick="quickSearch('Gree')" data-i18n="auto_faq_95">Gree</span>
+                        <span class="suggestion-tag" onclick="quickSearch('Gate Motor')" data-i18n="auto_faq_96">Gate Motor</span>
+                        <span class="suggestion-tag" onclick="quickSearch('Intercom')" data-i18n="auto_faq_97">Intercom</span>
+                        <span class="suggestion-tag" onclick="quickSearch('SAYCOM')" data-i18n="auto_faq_98">SAYCOM</span>
+                    </div>
+                    <style>
+                        .suggestion-tag {
+                            background: rgba(255,255,255,0.04);
+                            padding: 6px 14px;
+                            border-radius: 20px;
+                            font-size: 12px;
+                            color: white;
+                            cursor: pointer;
+                            transition: 0.2s;
+                            border: 1px solid transparent;
+                            font-weight: 500;
+                        }
+                        .suggestion-tag:hover {
+                            background: rgba(16, 185, 129, 0.1);
+                            border-color: var(--primary);
+                            color: var(--primary);
+                            transform: translateY(-2px);
+                        }
+                        .search-bar.active {
+                            border-color: var(--primary) !important;
+                            box-shadow: 0 0 15px rgba(16, 185, 129, 0.15);
+                            background: rgba(16, 185, 129, 0.02) !important;
+                        }
+                    </style>
+                </div>
+            </div>
+
+            <div class="header-actions" style="display: flex; gap: 12px; align-items: center;">
+                <div class="action-btn" style="width: 40px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; color: white;">
+                    <i class="fa-regular fa-heart" style="font-size:16px;"></i>
+                </div>
+                <div class="action-btn" style="position: relative; width: 40px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; color: white;">
+                    <i class="fa-solid fa-cart-shopping" style="font-size:16px;"></i>
+                    <span style="position: absolute; top: -6px; right: -6px; background: var(--primary); color: white; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; border: 2px solid var(--bg-light);">0</span>
+                </div>
+                <div class="action-btn user-btn-desktop" style="display:flex; align-items:center; gap:12px; background: rgba(255,255,255,0.04); padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.2s; border: 1px solid transparent;">
+                    <i class="fa-regular fa-user" style="font-size:16px; color: white;"></i>
+                    <div style="text-align: left; line-height:1.2;">
+                        <div style="font-size:13px; font-weight:700; color:white;"><span data-i18n="auto_faq_99">Мой аккаунт</span><i class="fa-solid fa-chevron-down" style="font-size:10px; margin-left:2px; color: var(--text-muted);"></i></div>
+                        <div style="font-size:11px; color:var(--text-muted); font-weight: 500;" data-i18n="auto_faq_100">Войти</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="faq-hero">
+        <div class="container text-center">
+            <span class="badge" data-i18n="auto_faq_101">Support Center</span>
+            <h1 class="section-title" style="font-size: 48px; color: white; margin-top: 15px;" data-i18n="auto_faq_102">Часто задаваемые вопросы</h1>
+            <p class="section-subtitle" data-i18n="auto_faq_103">Найдите быстрые ответы на ваши вопросы о наших услугах и продуктах</p>
+        </div>
+    </section>
+
+    <div class="container faq-container">
+        <div class="faq-search">
+            <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted);"></i>
+            <input type="text" id="faqSearchInput" placeholder="Поиск по вопросам..." data-i18n-placeholder="auto_faq_86">
+        </div>
+
+        <div id="faqLoading" class="loading-spinner">
+            <i class="fa-solid fa-circle-notch fa-spin"></i>
+        </div>
+
+        <div id="faqList" class="faq-list">
+            <!-- FAQs will be loaded here -->
+        </div>
+    </div>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="auto_faq_104">Не нашли ответ?</h2>
+            <p class="section-subtitle" data-i18n="auto_faq_105">Свяжитесь с нашей службой поддержки напрямую, и мы поможем вам.</p>
+            <div class="cta-btns">
+                <button class="btn btn-primary glow" onclick="window.location.href='contact.html'" data-i18n="auto_faq_106">Связаться с нами</button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', loadFAQs);
+
+        async function loadFAQs() {
+            try {
+                const response = await fetch('/api/faqs');
+                const result = await response.json();
+                const faqs = result.data;
+                const container = document.getElementById('faqList');
+                const loading = document.getElementById('faqLoading');
+                
+                loading.style.display = 'none';
+                
+                if (!faqs || faqs.length === 0) {
+                    container.innerHTML = '<p class="text-center" style="color: var(--text-muted);">Вопросы пока не добавлены.</p>';
+                    return;
+                }
+
+                renderFAQs(faqs);
+
+                // Search logic
+                document.getElementById('faqSearchInput').addEventListener('input', (e) => {
+                    const term = e.target.value.toLowerCase();
+                    const filtered = faqs.filter(f => 
+                        f.question.toLowerCase().includes(term) || 
+                        f.answer.toLowerCase().includes(term)
+                    );
+                    renderFAQs(filtered);
+                });
+
+            } catch (err) {
+                console.error("Error loading FAQs:", err);
+                document.getElementById('faqLoading').innerHTML = '<p style="color: #ef4444;">Ошибка загрузки вопросов.</p>';
+            }
+        }
+
+        function renderFAQs(faqs) {
+            const container = document.getElementById('faqList');
+            container.innerHTML = faqs.map(faq => `
+                <div class="faq-item">
+                    <div class="faq-q">${faq.question}</div>
+                    <div class="faq-a">${faq.answer}</div>
+                </div>
+            `).join('');
+
+            // Re-apply accordion click logic
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.onclick = () => {
+                    const isActive = item.classList.contains('active');
+                    document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+                    if (!isActive) item.classList.add('active');
+                };
+            });
+        }
+
+    </script>
+
+    <script src="js/translations.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

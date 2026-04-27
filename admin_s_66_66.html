@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAYCOM Admin - Панель управления</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary: #10B981; --sidebar: #0D1421; --bg: #060B15; --card: #0D1421; --border: rgba(255,255,255,0.05); --input-bg: rgba(255, 255, 255, 0.03); --danger: #EF4444; --warning: #EAB308; }
+        body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; margin: 0; display: flex; min-height: 100vh; }
+        
+        /* Sidebar */
+        .sidebar { width: 220px; background: var(--sidebar); border-right: 1px solid var(--border); padding: 25px 15px; display: flex; flex-direction: column; flex-shrink: 0; }
+        .logo { display:flex; align-items:center; gap:8px; margin-bottom: 30px; text-decoration: none; color: white; font-weight: 800; font-size: 16px; }
+        .logo-box { background:var(--primary); width:30px; height:30px; border-radius:6px; display:flex; align-items:center; justify-content:center; }
+        .nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 15px; border-radius: 8px; color: #94A3B8; text-decoration: none; font-weight: 600; margin-bottom: 4px; cursor: pointer; font-size: 13px; }
+        .nav-item.active { background: rgba(16, 185, 129, 0.1); color: var(--primary); }
+
+        /* Main Content */
+        .main { flex: 1; padding: 20px; overflow-y: auto; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .admin-layout { display: flex; gap: 15px; align-items: flex-start; }
+
+        /* LEFT FORM (EXACTLY AS IN IMAGE) */
+        .form-panel { width: 380px; flex-shrink: 0; background: var(--card); border: 1px solid var(--border); padding: 20px; border-radius: 12px; }
+        .form-title { font-size: 15px; font-weight: 800; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-size: 10px; color: #64748B; font-weight: 700; margin-bottom: 5px; text-transform: uppercase; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 8px 12px; border-radius: 6px; background: var(--input-bg); border: 1px solid var(--border); color: white; outline: none; box-sizing: border-box; font-family: inherit; font-size: 13px; }
+        .form-row { display: flex; gap: 10px; }
+        .form-row .form-group { flex: 1; }
+        .btn-add-spec { background: rgba(255,255,255,0.05); color: white; border: 1px dashed var(--border); padding: 8px; border-radius: 6px; width: 100%; cursor: pointer; font-size: 11px; font-weight: 600; margin-bottom: 10px; }
+        .btn-save { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; width: 100%; font-weight: 800; font-size: 14px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* RIGHT LIST PANEL */
+        .list-panel { flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .list-actions { display: flex; gap: 8px; }
+        .btn-act-red-outline { background: rgba(239, 68, 68, 0.05); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.2); padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; }
+        .btn-act-red-full { background: #EF4444; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; }
+
+        table { width: 100%; border-collapse: collapse; }
+        th { text-align: left; padding: 10px 8px; color: #64748B; font-size: 9px; font-weight: 700; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+        td { padding: 10px 8px; border-bottom: 1px solid var(--border); font-size: 12px; vertical-align: middle; }
+        .prod-thumb { width: 36px; height: 36px; border-radius: 6px; object-fit: contain; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border); }
+        .prod-name { font-weight: 700; color: white; display:flex; align-items:center; gap:5px; }
+        .prod-badge { font-size: 9px; background: rgba(16,185,129,0.1); color: var(--primary); padding: 2px 6px; border-radius: 4px; display: inline-block; margin-top: 4px; }
+        .cat-badge { background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 12px; font-size: 10px; color: #94A3B8; }
+        .action-btns { display: flex; gap: 8px; }
+        .btn-act-yellow { background: var(--warning); width: 32px; height: 32px; border-radius: 6px; border: none; cursor: pointer; color: white; }
+        .btn-act-red { background: var(--danger); width: 32px; height: 32px; border-radius: 6px; border: none; cursor: pointer; color: white; }
+        input[type="checkbox"] { accent-color: var(--primary); width: 16px; height: 16px; }
+
+        /* Mobile Adjustments */
+        .mobile-header { display: none; background: var(--sidebar); border-bottom: 1px solid var(--border); padding: 15px 20px; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 1000; }
+        .menu-toggle { background: none; border: none; color: white; font-size: 20px; cursor: pointer; }
+
+        @media (max-width: 1024px) {
+            body { flex-direction: column; }
+            .mobile-header { display: flex; }
+            .sidebar { 
+                position: fixed; 
+                left: -280px; 
+                top: 0; 
+                height: 100%; 
+                z-index: 1001; 
+                transition: 0.3s ease; 
+                box-shadow: 20px 0 50px rgba(0,0,0,0.5);
+                width: 280px;
+            }
+            .sidebar.open { left: 0; }
+            .main { padding: 20px; width: 100%; box-sizing: border-box; }
+            .admin-layout { flex-direction: column; }
+            .form-panel { width: 100%; margin-bottom: 20px; }
+            .list-panel { width: 100%; overflow-x: auto; }
+            table { min-width: 800px; }
+            .sidebar-overlay { 
+                display: none; 
+                position: fixed; 
+                inset: 0; 
+                background: rgba(0,0,0,0.5); 
+                backdrop-filter: blur(5px); 
+                z-index: 1000; 
+            }
+            .sidebar-overlay.active { display: block; }
+        }
+
+        /* Admin Login Overlay */
+        #adminLoginModal { 
+            position: fixed; 
+            inset: 0; 
+            background: #060B15; 
+            z-index: 9999; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            flex-direction: column;
+            gap: 20px;
+        }
+        .login-card {
+            background: var(--card);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .login-input-wrap {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .login-input-wrap input {
+            width: 100%;
+            padding: 12px 40px 12px 15px;
+            border-radius: 10px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            box-sizing: border-box;
+        }
+        .login-input-wrap i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748B;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .login-input-wrap i:hover { color: var(--primary); }
+        .btn-login {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 10px;
+            width: 100%;
+            font-weight: 800;
+            font-size: 15px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .btn-login:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2); }
+
+        /* Settings Sub-Layout */
+        .settings-layout { display: flex; gap: 30px; }
+        .settings-nav { width: 200px; display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; }
+        .s-nav-item { padding: 12px 15px; border-radius: 10px; color: #64748B; cursor: pointer; transition: 0.2s; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        .s-nav-item:hover { background: rgba(255,255,255,0.03); color: #94A3B8; }
+        .s-nav-item.active { background: rgba(16, 185, 129, 0.1); color: var(--primary); }
+        .settings-main { flex: 1; max-width: 600px; }
+        .s-section { display: none; }
+        .s-section.active { display: block; animation: settingsFade 0.3s ease; }
+        @keyframes settingsFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        @media (max-width: 768px) {
+            .settings-layout { flex-direction: column; }
+            .settings-nav { width: 100%; flex-direction: row; overflow-x: auto; padding-bottom: 10px; }
+            .s-nav-item { white-space: nowrap; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal">
+        <div class="login-card">
+            <img src="uploads/icon_premium_v2.png" alt="Logo" style="width: 50px; margin-bottom: 20px;">
+            <h2 style="margin-bottom: 10px; font-size: 20px;">Admin Access</h2>
+            <p style="color: #64748B; font-size: 13px; margin-bottom: 30px;">Please enter the master password to continue</p>
+            
+            <form id="adminLoginForm">
+                <div class="login-input-wrap">
+                    <input type="password" id="adminPassword" placeholder="Enter password..." required>
+                    <i class="fa-solid fa-eye" id="togglePass"></i>
+                </div>
+                <button type="submit" class="btn-login">Unlock Panel</button>
+            </form>
+            <div id="loginError" style="color: #EF4444; font-size: 12px; margin-top: 15px; display: none; font-weight: 600;">Incorrect password. Please try again.</div>
+        </div>
+    </div>
+    <div class="mobile-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="uploads/icon_premium_v2.png" alt="SAYCOM" style="width: 30px; height: 30px; object-fit: contain;">
+            <span style="font-weight: 800; font-size: 16px;">SAYCOM ADMIN</span>
+        </div>
+        <button class="menu-toggle" onclick="toggleSidebar()">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <aside class="sidebar" id="sidebar">
+        <a href="/index" class="logo" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+            <img src="uploads/icon_premium_v2.png" alt="SAYCOM" style="width: 35px; height: 35px; border-radius: 8px; object-fit: contain;">
+            <span style="color: white; font-weight: 800; font-size: 20px;">SAYCOM</span>
+        </a>
+        <nav>
+            <div class="nav-item active" onclick="switchTab('products', this)"><i class="fa-solid fa-box"></i> Товары</div>
+            <div class="nav-item" onclick="switchTab('users', this)"><i class="fa-solid fa-users"></i> Пользователи</div>
+            <div class="nav-item" onclick="switchTab('spare-parts', this)"><i class="fa-solid fa-gears"></i> Запчасти</div>
+            <div class="nav-item" onclick="switchTab('team', this)"><i class="fa-solid fa-user-tie"></i> Команда</div>
+            <div class="nav-item" onclick="switchTab('projects', this)"><i class="fa-solid fa-video"></i> Проекты (Видео)</div>
+            <div class="nav-item" onclick="switchTab('vip', this)"><i class="fa-solid fa-crown"></i> VIP Клуб</div>
+            <div class="nav-item" onclick="switchTab('search-hints', this)"><i class="fa-solid fa-lightbulb"></i> Подskazki</div>
+            <div class="nav-item" onclick="switchTab('faqs', this)"><i class="fa-solid fa-question-circle"></i> FAQ</div>
+            <div class="nav-item" onclick="switchTab('settings', this)"><i class="fa-solid fa-cog"></i> Настройки</div>
+            
+            <div style="margin-top:auto;">
+                <a href="/index" class="nav-item" style="color:#EF4444;"><i class="fa-solid fa-right-from-bracket"></i> Выход</a>
+            </div>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <div id="products-tab" class="tab-content active">
+            <div class="admin-layout">
+                <div class="form-panel">
+                    <div class="form-title" id="formTitle">Добавить новый товар</div>
+                    <form id="productForm" onsubmit="handleSave(event)">
+                        <input type="hidden" id="p_id">
+                        <div class="form-group"><label>Название</label><input type="text" id="p_name" required></div>
+                        <div class="form-group">
+                            <label>Категория</label>
+                            <select id="p_category">
+                                <option value="Air Conditioners">Air Conditioners</option>
+                                <option value="CCTV Systems">CCTV Systems</option>
+                                <option value="Automatic Gates">Automatic Gates</option>
+                                <option value="Intercom Systems">Intercom Systems</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Цена (₸)</label><input type="number" id="p_price" required></div>
+                            <div class="form-group"><label>Старая цена (₸)</label><input type="number" id="p_oldPrice"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Бейдж (Badge)</label>
+                            <select id="p_badge">
+                                <option value="">Без бейджа</option>
+                                <option value="New Arrival">New Arrival</option>
+                                <option value="Bestseller">Bestseller</option>
+                                <option value="NewTop">NewTop</option>
+                            </select>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Тэг 1</label><input type="text" id="p_tag1" placeholder="напр. 12000 BTU"></div>
+                            <div class="form-group"><label>Тэг 2</label><input type="text" id="p_tag2" placeholder="напр. Инвертор"></div>
+                            <div class="form-group"><label>Тэг 3</label><input type="text" id="p_tag3" placeholder="напр. А++"></div>
+                        </div>
+                        <div class="form-group"><label>Краткое описание (превью)</label><textarea id="p_desc" rows="2"></textarea></div>
+                        <div class="form-group"><label>Полное описание (вкладка)</label><textarea id="p_long" rows="3"></textarea></div>
+                        <div class="form-group"><label>Информация о монтаже</label><textarea id="p_inst" rows="2"></textarea></div>
+                        
+                        <div class="form-group">
+                            <label>Характеристики</label>
+                            <div id="spec-container"></div>
+                            <button type="button" class="btn-add-spec" onclick="addSpecRow()">+ Добавить характеристику</button>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group"><label>В наличии (шт.)</label><input type="number" id="p_stock" value="15"></div>
+                            <div class="form-group"><label>Продано</label><input type="number" id="p_sold" value="234"></div>
+                        </div>
+
+                        <div class="form-group"><label>Главное изображение</label><input type="file" id="p_file"></div>
+                        <div class="form-group"><label>Галерея (до 10 шт)</label><input type="file" multiple id="p_gallery"></div>
+
+                        <button type="submit" class="btn-save">СОХРАНИТЬ ТОВАР</button>
+                    </form>
+                </div>
+
+                <div class="list-panel">
+                    <div class="list-header">
+                        <div style="font-size: 16px; font-weight: 800;">Список товаров</div>
+                        <div class="list-actions">
+                            <button class="btn-act-red-outline" onclick="deleteSelected()">Удалить выбранные</button>
+                            <button class="btn-act-red-full" onclick="deleteAll()">Удалить всё</button>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:20px;"><input type="checkbox" id="selectAll" onclick="toggleSelectAll(this)"></th>
+                                <th>ID</th>
+                                <th>ФОТО</th>
+                                <th>НАЗВАНИЕ</th>
+                                <th>КАТЕГОРИЯ</th>
+                                <th>ЦЕНА</th>
+                                <th>РЕЙТИНГ</th>
+                                <th>ДЕЙСТВИЯ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="users-tab" class="tab-content">
+            <div class="header"><h1>Пользователи</h1></div>
+            <div class="list-panel">
+                <table>
+                    <thead><tr><th>Пользователь</th><th>Пароль</th><th>Телефон</th><th>Статус</th></tr></thead>
+                    <tbody id="userTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="spare-parts-tab" class="tab-content">
+            <div class="admin-layout">
+                <div class="form-panel">
+                    <div class="form-title" id="spareFormTitle">Добавить запчасть</div>
+                    <form id="spareForm" onsubmit="handleSpareSave(event)">
+                        <input type="hidden" id="sp_id" name="id">
+                        <div class="form-group"><label>Название запчасти</label><input type="text" id="sp_title" name="title" required></div>
+                        <div class="form-group">
+                            <label>Категория</label>
+                            <select id="sp_category" name="category">
+                                <option value="Air Conditioners">Air Conditioners</option>
+                                <option value="CCTV Systems">CCTV Systems</option>
+                                <option value="Automatic Gates">Automatic Gates</option>
+                                <option value="Intercom Systems">Intercom Systems</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>Совместимость (Модели)</label><input type="text" id="sp_compatibility" name="compatibility" placeholder="напр: Daikin FTXM, Gree Pro"></div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Цена (₸)</label><input type="number" id="sp_price" name="price" required></div>
+                            <div class="form-group"><label>В наличии (шт.)</label><input type="number" id="sp_stock" name="stock_count" required></div>
+                        </div>
+                        <div class="form-group"><label>Изображение</label><input type="file" id="sp_file" name="image"></div>
+                        <button type="submit" class="btn-save">СОХРАНИТЬ ЗАПЧАСТЬ</button>
+                    </form>
+                </div>
+                <div class="list-panel">
+                    <div class="list-header">
+                        <div style="font-size: 16px; font-weight: 800;">Инвентарь запчастей</div>
+                        <div class="list-actions">
+                            <button class="btn-act-red-outline" onclick="deleteSelectedSpares()">Удалить выбранные</button>
+                            <button class="btn-act-red-full" onclick="deleteAllSpares()">Удалить всё</button>
+                        </div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:20px;"><input type="checkbox" id="selectAllSpares" onclick="toggleSelectAllSpares(this)"></th>
+                                <th>ID</th>
+                                <th>ФОТО</th>
+                                <th>НАЗВАНИЕ</th>
+                                <th>КАТЕГОРИЯ</th>
+                                <th>СОВМЕСТИМОСТЬ</th>
+                                <th>ЦЕНА</th>
+                                <th>СКЛАД</th>
+                                <th>ДЕЙСТВИЯ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="spareTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="team-tab" class="tab-content">
+            <div class="admin-layout">
+                <div class="form-panel">
+                    <div class="form-title" id="teamFormTitle">Добавить сотрудника</div>
+                    <form id="teamForm" onsubmit="handleTeamSave(event)">
+                        <input type="hidden" id="t_id" name="id">
+                        <div class="form-group"><label>ФИО</label><input type="text" id="t_name" name="name" required></div>
+                        <div class="form-group"><label>Должность</label><input type="text" id="t_role" name="role" required></div>
+                        <div class="form-row">
+                            <div class="form-group"><label>Опыт (лет)</label><input type="number" id="t_experience" name="experience" required></div>
+                            <div class="form-group"><label>Специализация</label><input type="text" id="t_specialization" name="specialization" placeholder="напр: Умные дома"></div>
+                        </div>
+                        <div class="form-group"><label>Биография / Доп. инfo</label><textarea id="t_bio" name="bio" rows="4"></textarea></div>
+                        <div class="form-group"><label>LinkedIn URL</label><input type="url" id="t_linkedin" name="linkedin_url" placeholder="https://linkedin.com/in/..."></div>
+                        <div class="form-group"><label>Фото (8K AI Style)</label><input type="file" id="t_file" name="image"></div>
+                        <button type="submit" class="btn-save">СОХРАНИТЬ СОТРУДНИКА</button>
+                    </form>
+                </div>
+                <div class="list-panel">
+                    <div class="list-header">
+                        <div style="font-size: 16px; font-weight: 800;">Список сотрудников</div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ФОТО</th>
+                                <th>ИМЯ</th>
+                                <th>ДОЛЖНОСТЬ</th>
+                                <th>ОПЫТ</th>
+                                <th>ДЕЙСТВИЯ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="teamTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="search-hints-tab" class="tab-content">
+            <div class="admin-layout">
+                <div class="form-panel">
+                    <div class="form-title" id="hintFormTitle">Добавить подсказку</div>
+                    <form id="hintForm" onsubmit="handleHintSave(event)">
+                        <input type="hidden" id="h_id">
+                        <div class="form-group">
+                            <label>Текст подсказки</label>
+                            <input type="text" id="h_text" required placeholder="напр: Кондиционер Daikin">
+                        </div>
+                        <div class="form-group">
+                            <label>Привязать к категории (Optional)</label>
+                            <select id="h_category">
+                                <option value="">Без категории</option>
+                                <option value="Air Conditioners">Air Conditioners</option>
+                                <option value="CCTV Systems">CCTV Systems</option>
+                                <option value="Automatic Gates">Automatic Gates</option>
+                                <option value="Intercom Systems">Intercom Systems</option>
+                                <option value="Spare Parts">Spare Parts</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-save">СОХРАНИТЬ ПОДСКАЗКУ</button>
+                    </form>
+                </div>
+                <div class="list-panel">
+                    <div class="list-header">
+                        <div style="font-size: 16px; font-weight: 800;">Список подсказок</div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ТЕКСТ</th>
+                                <th>КАТЕГОРИЯ</th>
+                                <th>ДЕЙСТВИЯ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="hintTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="projects-tab" class="tab-content">
+            <div class="admin-layout">
+                <div class="form-panel">
+                    <div class="form-title" id="projectFormTitle">Добавить проект</div>
+                    <form id="projectForm" onsubmit="handleProjectSave(event)">
+                        <input type="hidden" id="proj_id" name="id">
+                        <div class="form-group"><label>Название проекта</label><input type="text" id="proj_title" name="title" required></div>
+                        <div class="form-group"><label>Описание</label><textarea id="proj_description" name="description" rows="3" required></textarea></div>
+                        <div class="form-group"><label>Видео-файл (MP4)</label><input type="file" id="proj_video_file" name="video" accept="video/*"></div>
+                        <button type="submit" class="btn-save">СОХРАНИТЬ ПРОЕКТ</button>
+                    </form>
+                </div>
+                <div class="list-panel">
+                    <div class="list-header">
+                        <div style="font-size: 16px; font-weight: 800;">Список видео-работ</div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ВИДЕО</th>
+                                <th>НАЗВАНИЕ</th>
+                                <th>СТАТИСТИКА</th>
+                                <th>ДЕЙСТВИЯ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminProjectTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="vip-tab" class="tab-content">
+            <div class="admin-layout">
+                <div class="form-panel">
+                    <div class="form-title">Рассылка VIP-клубу</div>
+                    <form id="broadcastForm" onsubmit="handleBroadcast(event)">
+                        <div class="form-group">
+                            <label>Тема сообщения</label>
+                            <input type="text" id="b_subject" placeholder="напр: Весенние скидки!" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Текст сообщения (HTML поддерживается)</label>
+                            <textarea id="b_message" rows="8" placeholder="Здравствуйте, дорогие VIP-клиенты..." required></textarea>
+                        </div>
+                        <button type="submit" id="broadcastBtn" class="btn-save">ОТПРАВИТЬ ВСЕМ (VIP)</button>
+                    </form>
+                </div>
+                <div class="list-panel">
+                    <div class="list-header">
+                        <div style="font-size: 16px; font-weight: 800;">Список VIP-подписчиков</div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Email Адрес</th>
+                                <th>Дата регистрации</th>
+                                <th>Статус</th>
+                            </tr>
+                        </thead>
+                        <tbody id="subscriberTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="faqs-tab" class="tab-content">
+            <div class="admin-layout">
+                <div class="form-panel">
+                    <div class="form-title" id="faqFormTitle">Добавить вопрос (FAQ)</div>
+                    <form id="faqForm" onsubmit="handleFAQSave(event)">
+                        <input type="hidden" id="faq_id">
+                        <div class="form-group">
+                            <label>Вопрос</label>
+                            <input type="text" id="faq_question" required placeholder="напр: Какая гарантия?">
+                        </div>
+                        <div class="form-group">
+                            <label>Ответ</label>
+                            <textarea id="faq_answer" rows="5" required placeholder="Ваш подробный ответ..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-save">СОХРАНИТЬ FAQ</button>
+                    </form>
+                </div>
+                <div class="list-panel">
+                    <div class="list-header">
+                        <div style="font-size: 16px; font-weight: 800;">Все вопросы и ответы</div>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>ВОПРОС</th>
+                                <th>ОТВЕТ</th>
+                                <th>ДЕЙСТВИЯ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminFaqTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div id="settings-tab" class="tab-content">
+            <div class="settings-layout">
+                <div class="settings-nav">
+                    <div class="s-nav-item active" onclick="switchSettings('security', this)"><i class="fa-solid fa-shield-halved"></i> Безопасность</div>
+                    <div class="s-nav-item" onclick="switchSettings('general', this)"><i class="fa-solid fa-sliders"></i> Общие настройки</div>
+                    <div class="s-nav-item" onclick="switchSettings('system', this)"><i class="fa-solid fa-server"></i> Система</div>
+                </div>
+                
+                <div class="settings-main">
+                    <!-- SECURITY SECTION -->
+                    <div id="s-security" class="s-section active">
+                        <div class="form-panel" style="width: 100%;">
+                            <div class="form-title">Изменение пароля администратора</div>
+                            <p style="color: #64748B; font-size: 13px; margin-bottom: 25px;">Для подтверждения потребуется 8-значный код, который придет на <b>saycomcompaniy@gmail.com</b>.</p>
+                            
+                            <form id="passwordChangeForm">
+                                <div class="form-group">
+                                    <label>Текущий пароль</label>
+                                    <input type="password" id="s_old_pass" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Новый пароль</label>
+                                    <input type="password" id="s_new_pass" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Подтвердите новый пароль</label>
+                                    <input type="password" id="s_confirm_pass" required>
+                                </div>
+
+                                <div id="otp-area" style="display: none; margin-top: 20px; padding: 20px; background: rgba(16, 185, 129, 0.05); border-radius: 12px; border: 1px dashed var(--primary);">
+                                    <div class="form-group">
+                                        <label>8-значный код подтверждения</label>
+                                        <input type="text" id="s_otp" maxlength="8" placeholder="00000000">
+                                    </div>
+                                    <p style="font-size: 11px; color: var(--primary);">Код отправлен на saycomcompaniy@gmail.com</p>
+                                </div>
+
+                                <div style="margin-top: 25px; display: flex; gap: 10px;">
+                                    <button type="button" id="btn-send-otp" class="btn-save" style="background: rgba(255,255,255,0.05); color: white; border: 1px solid var(--border);">ОТПРАВИТЬ КОД</button>
+                                    <button type="submit" id="btn-update-pass" class="btn-save" style="display: none;">ПОДТВЕРДИТЬ ИЗМЕНЕНИЕ</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- GENERAL SECTION -->
+                    <div id="s-general" class="s-section">
+                        <div class="form-panel" style="width: 100%;">
+                            <div class="form-title">Общие настройки сайта</div>
+                            <p style="color: #64748B; font-size: 13px; margin-bottom: 25px;">Управление основными параметрами вашего сайта.</p>
+                            
+                            <div class="form-group">
+                                <label>Название компании</label>
+                                <input type="text" value="SAYCOM" readonly style="opacity: 0.6;">
+                            </div>
+                            <div class="form-group">
+                                <label>Основной Email (для уведомлений)</label>
+                                <input type="email" value="saycomcompaniy@gmail.com" readonly style="opacity: 0.6;">
+                            </div>
+                            <div style="padding: 20px; background: rgba(234, 179, 8, 0.05); border-radius: 10px; border: 1px solid rgba(234, 179, 8, 0.1);">
+                                <p style="color: #EAB308; font-size: 12px; margin: 0; font-weight: 600;"><i class="fa-solid fa-info-circle"></i> Эти настройки будут доступны для редактирования в ближайших обновлениях.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SYSTEM SECTION -->
+                    <div id="s-system" class="s-section">
+                        <div class="form-panel" style="width: 100%;">
+                            <div class="form-title">Системная информация</div>
+                            <div style="display: flex; flex-direction: column; gap: 15px;">
+                                <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                                    <span style="color: #64748B;">Версия сервера</span>
+                                    <span style="color: var(--primary); font-weight: 700;">1.4.2 Stable</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                                    <span style="color: #64748B;">База данных</span>
+                                    <span>SQLite 3.x</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; font-size: 13px;">
+                                    <span style="color: #64748B;">Статус API</span>
+                                    <span style="color: var(--primary);">Online</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // --- Admin Password Security ---
+        (function() {
+            const modal = document.getElementById('adminLoginModal');
+            const form = document.getElementById('adminLoginForm');
+            const input = document.getElementById('adminPassword');
+            const toggle = document.getElementById('togglePass');
+            const error = document.getElementById('loginError');
+
+            // Toggle Password Visibility
+            toggle.onclick = () => {
+                const isPass = input.type === 'password';
+                input.type = isPass ? 'text' : 'password';
+                toggle.classList.toggle('fa-eye');
+                toggle.classList.toggle('fa-eye-slash');
+            };
+
+            form.onsubmit = async (e) => {
+                e.preventDefault();
+                try {
+                    const res = await fetch('/api/admin/check-password', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ password: input.value })
+                    });
+                    
+                    if (res.ok) {
+                        modal.style.opacity = '0';
+                        modal.style.transition = '0.3s ease';
+                        setTimeout(() => modal.style.display = 'none', 300);
+                    } else {
+                        throw new Error();
+                    }
+                } catch (err) {
+                    error.style.display = 'block';
+                    input.style.borderColor = '#EF4444';
+                    input.style.boxShadow = '0 0 10px rgba(239, 68, 68, 0.1)';
+                    input.value = '';
+                    setTimeout(() => {
+                        error.style.display = 'none';
+                        input.style.borderColor = 'rgba(255,255,255,0.05)';
+                        input.style.boxShadow = 'none';
+                    }, 3000);
+                }
+            };
+        })();
+
+        // --- GLOBAL STATE ---
+        const store = {
+            products: {},
+            spareParts: {},
+            projects: {},
+            team: {}
+        };
+
+        // --- TAB SWITCHING LOGIC ---
+        function switchTab(tab, el) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            
+            const targetTab = document.getElementById(tab + '-tab');
+            if (targetTab) targetTab.classList.add('active');
+            if (el) el.classList.add('active');
+            
+            console.log(`Switching to tab: ${tab}`);
+
+            // Close sidebar on mobile after tab switch
+            if (window.innerWidth <= 1024) {
+                toggleSidebar();
+            }
+
+            switch(tab) {
+                case 'products': loadProducts(); break;
+                case 'users': loadUsers(); break;
+                case 'spare-parts': loadSpareParts(); break;
+                case 'vip': loadSubscribers(); break;
+                case 'projects': loadAdminProjects(); break;
+                case 'search-hints': loadSearchHints(); break;
+                case 'faqs': loadAdminFAQs(); break;
+                case 'team': loadTeam(); break;
+                case 'settings': initSettings(); break;
+            }
+        }
+
+        function switchSettings(section, el) {
+            document.querySelectorAll('.s-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.s-nav-item').forEach(i => i.classList.remove('active'));
+            
+            document.getElementById('s-' + section).classList.add('active');
+            el.classList.add('active');
+        }
+
+        function initSettings() {
+            const btnOtp = document.getElementById('btn-send-otp');
+            const btnUpdate = document.getElementById('btn-update-pass');
+            const otpArea = document.getElementById('otp-area');
+            const form = document.getElementById('passwordChangeForm');
+
+            btnOtp.onclick = async () => {
+                const oldPass = document.getElementById('s_old_pass').value;
+                const newPass = document.getElementById('s_new_pass').value;
+                const confirmPass = document.getElementById('s_confirm_pass').value;
+
+                if (!oldPass || !newPass || !confirmPass) return alert("Заполните все поля");
+                if (newPass !== confirmPass) return alert("Пароли не совпадают");
+                if (newPass.length < 6) return alert("Пароль должен быть не менее 6 символов");
+
+                btnOtp.innerText = "ОТПРАВКА...";
+                btnOtp.disabled = true;
+
+                try {
+                    const res = await fetch('/api/admin/send-otp', { method: 'POST' });
+                    if (res.ok) {
+                        alert("8-значный код отправлен на saycomcompaniy@gmail.com");
+                        otpArea.style.display = 'block';
+                        btnOtp.style.display = 'none';
+                        btnUpdate.style.display = 'block';
+                    } else {
+                        alert("Ошибка отправки кода");
+                        btnOtp.disabled = false;
+                        btnOtp.innerText = "ОТПРАВИТЬ КОД";
+                    }
+                } catch (e) {
+                    alert("Ошибка сети");
+                    btnOtp.disabled = false;
+                    btnOtp.innerText = "ОТПРАВИТЬ КОД";
+                }
+            };
+
+            form.onsubmit = async (e) => {
+                e.preventDefault();
+                const oldPassword = document.getElementById('s_old_pass').value;
+                const newPassword = document.getElementById('s_new_pass').value;
+                const otp = document.getElementById('s_otp').value;
+
+                if (otp.length !== 8) return alert("Введите 8-значный код");
+
+                try {
+                    const res = await fetch('/api/admin/update-password', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ oldPassword, newPassword, otp })
+                    });
+                    
+                    const data = await res.json();
+                    if (res.ok) {
+                        alert("Пароль успешно изменен! Теперь используйте новый пароль при входе.");
+                        window.location.reload();
+                    } else {
+                        alert("Ошибка: " + data.error);
+                    }
+                } catch (e) {
+                    alert("Ошибка сети");
+                }
+            };
+        }
+
+        window.onload = () => {
+            loadProducts();
+        };
+
+        // --- PRODUCTS LOGIC ---
+        async function loadProducts() {
+            try {
+                const res = await fetch('/api/products');
+                const data = await res.json();
+                const table = document.getElementById('productTable');
+                if(!table) return;
+
+                const products = data.data || [];
+                products.forEach(p => store.products[p.id] = p);
+
+                table.innerHTML = products.map((p, i) => `
+                    <tr>
+                        <td><input type="checkbox" class="p-check" value="${p.id}"></td>
+                        <td style="color:#475569;">${i+1}</td>
+                        <td><img src="${p.image_url}" class="prod-thumb" onerror="this.src='/uploads/placeholder.png'"></td>
+                        <td>
+                            <div class="prod-name">${p.title}</div>
+                            ${p.badge ? `<span class="prod-badge">${p.badge}</span>` : ''}
+                        </td>
+                        <td><span class="cat-badge">${p.category}</span></td>
+                        <td><b>₸${(p.price || 0).toLocaleString()}</b></td>
+                        <td><span style="color:#FBBF24; font-size:11px;"><i class="fa-solid fa-star"></i> ${(p.rating || 5).toFixed(1)} <small style="color:#64748B;">(${p.reviews || 0})</small></span></td>
+                        <td>
+                            <div class="action-btns">
+                                <a href="/product?id=${p.id}" target="_blank" style="background:#10B981; width:32px; height:32px; border-radius:6px; display:flex; align-items:center; justify-content:center; color:white; text-decoration:none;" title="Посмотреть на сайте"><i class="fa-solid fa-eye"></i></a>
+                                <button class="btn-act-yellow" onclick="editProduct(${p.id})"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn-act-red" onclick="deleteProduct(${p.id})"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) { console.error("Load products failed:", err); }
+        }
+
+        function editProduct(id) {
+            const p = store.products[id];
+            if(!p) return;
+            document.getElementById('formTitle').innerText = "Редактировать #" + p.id;
+            document.getElementById('p_id').value = p.id;
+            document.getElementById('p_name').value = p.title;
+            document.getElementById('p_category').value = p.category;
+            document.getElementById('p_price').value = p.price;
+            document.getElementById('p_oldPrice').value = p.oldPrice || '';
+            document.getElementById('p_badge').value = p.badge || '';
+            document.getElementById('p_tag1').value = p.tag1 || '';
+            document.getElementById('p_tag2').value = p.tag2 || '';
+            document.getElementById('p_tag3').value = p.tag3 || '';
+            document.getElementById('p_desc').value = p.description || '';
+            document.getElementById('p_long').value = p.long_description || '';
+            document.getElementById('p_inst').value = p.installation_info || '';
+            document.getElementById('p_stock').value = p.stock_count || 15;
+            document.getElementById('p_sold').value = p.units_sold || 234;
+            const container = document.getElementById('spec-container');
+            if(container) {
+                container.innerHTML = '';
+                if(p.specifications) {
+                    p.specifications.split(';').forEach(s => {
+                        const [k, v] = s.split(':');
+                        if(k) addSpecRow(k, v);
+                    });
+                }
+            }
+        }
+
+        async function handleSave(e) {
+            e.preventDefault();
+            const id = document.getElementById('p_id').value;
+            const specs = [];
+            document.querySelectorAll('#spec-container div').forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                if(inputs.length >= 2 && inputs[0].value) specs.push(`${inputs[0].value}:${inputs[1].value}`);
+            });
+            const formData = new FormData();
+            formData.append('title', document.getElementById('p_name').value);
+            formData.append('category', document.getElementById('p_category').value);
+            formData.append('price', document.getElementById('p_price').value);
+            formData.append('oldPrice', document.getElementById('p_oldPrice').value);
+            formData.append('badge', document.getElementById('p_badge').value);
+            formData.append('tag1', document.getElementById('p_tag1').value);
+            formData.append('tag2', document.getElementById('p_tag2').value);
+            formData.append('tag3', document.getElementById('p_tag3').value);
+            formData.append('description', document.getElementById('p_desc').value);
+            formData.append('long_description', document.getElementById('p_long').value);
+            formData.append('installation_info', document.getElementById('p_inst').value);
+            formData.append('stock_count', document.getElementById('p_stock').value);
+            formData.append('units_sold', document.getElementById('p_sold').value);
+            formData.append('specifications', specs.join(';'));
+            const file = document.getElementById('p_file').files[0];
+            if(file) formData.append('image', file);
+            // Append gallery images
+            const galleryFiles = document.getElementById('p_gallery').files;
+            for (let i = 0; i < galleryFiles.length; i++) {
+                formData.append('gallery', galleryFiles[i]);
+            }
+            if (id && galleryFiles.length > 0) formData.append('gallery_append', 'true');
+            const url = id ? `/api/products/${id}` : '/api/products';
+            const method = id ? 'PUT' : 'POST';
+            try {
+                const res = await fetch(url, { method, body: formData });
+                if(res.ok) {
+                    alert(id ? "Обновлено!" : "Добавлено!");
+                    e.target.reset();
+                    document.getElementById('p_id').value = '';
+                    document.getElementById('formTitle').innerText = "Добавить новый товар";
+                    const sc = document.getElementById('spec-container');
+                    if(sc) sc.innerHTML = '';
+                    loadProducts();
+                } else {
+                    const err = await res.json();
+                    alert('Ошибка: ' + (err.error || 'Неизвестная ошибка'));
+                }
+            } catch (err) { alert("Ошибка соединения"); }
+        }
+
+        async function deleteProduct(id) { if(!confirm("Удалить товар?")) return; await fetch(`/api/products/${id}`, { method: 'DELETE' }); loadProducts(); }
+
+        function addSpecRow(k='', v='') {
+            const div = document.createElement('div');
+            div.style.display = 'flex'; div.style.gap = '8px'; div.style.marginBottom = '8px';
+            div.innerHTML = `<input type="text" placeholder="Характеристика" value="${k}" style="flex:1;"><input type="text" placeholder="Значение" value="${v}" style="flex:1;"><button type="button" onclick="this.parentElement.remove()" style="background:#EF4444; border:none; border-radius:6px; color:white; width:34px; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>`;
+            const container = document.getElementById('spec-container');
+            if(container) container.appendChild(div);
+        }
+
+        async function loadUsers() {
+            try {
+                const res = await fetch('/api/admin/users');
+                const data = await res.json();
+                const table = document.getElementById('userTable');
+                if(!table) return;
+                table.innerHTML = (data.data || []).map(u => `
+                    <tr>
+                        <td><div style="display:flex; align-items:center; gap:10px;"><div style="width:30px; height:30px; background:rgba(16,185,129,0.1); color:var(--primary); font-weight:800; display:flex; align-items:center; justify-content:center; border-radius:6px;">${(u.full_name || 'U')[0].toUpperCase()}</div><div>${u.full_name}<br><small style="color:#64748B;">${u.email}</small></div></div></td>
+                        <td><code style="color:var(--primary);">${u.password}</code></td>
+                        <td>${u.phone || '—'}</td>
+                        <td><small style="color:#10B981">● Online</small></td>
+                    </tr>
+                `).join('');
+            } catch (err) { console.error(err); }
+        }
+
+        async function loadSubscribers() {
+            try {
+                const res = await fetch('/api/vip/subscribers');
+                const data = await res.json();
+                const table = document.getElementById('subscriberTable');
+                if(!table) return;
+                if(!data || !data.data || data.data.length === 0) {
+                    table.innerHTML = '<tr><td colspan="4" style="text-align:center; padding:40px; color:#64748B;">Подписчиков пока нет</td></tr>';
+                    return;
+                }
+                table.innerHTML = data.data.map(s => {
+                    const ds = s.subscribed_at ? s.subscribed_at.replace(' ', 'T') : null;
+                    const dobj = ds ? new Date(ds) : null;
+                    return `<tr><td style="color:#64748B;">${s.id}</td><td><b>${s.email}</b></td><td>${(dobj && !isNaN(dobj)) ? dobj.toLocaleDateString() : '—'}</td><td><span class="prod-badge">Active</span></td></tr>`;
+                }).join('');
+            } catch (err) { console.error(err); }
+        }
+
+        async function handleBroadcast(e) {
+            e.preventDefault();
+            const subject = document.getElementById('b_subject').value;
+            const message = document.getElementById('b_message').value;
+            const btn = document.getElementById('broadcastBtn');
+            if(!confirm(`Отправить всем VIP?`)) return;
+            try {
+                if(btn) { btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>...'; btn.disabled = true; }
+                const res = await fetch('/api/vip/broadcast', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ subject, message }) });
+                if(res.ok) { alert("Отправлено!"); e.target.reset(); }
+            } catch (err) { alert("Ошибка"); } finally { if(btn) { btn.innerHTML = 'ОТПРАВИТЬ ВСЕМ (VIP)'; btn.disabled = false; } }
+        }
+
+        async function loadSpareParts() {
+            try {
+                const res = await fetch('/api/spare-parts');
+                const data = await res.json();
+                const table = document.getElementById('spareTable');
+                if(!table) return;
+                const parts = data.data || [];
+                parts.forEach(p => store.spareParts[p.id] = p);
+                table.innerHTML = parts.map((sp, i) => `
+                    <tr>
+                        <td><input type="checkbox" class="sp-check" value="${sp.id}"></td>
+                        <td>${i+1}</td>
+                        <td><img src="${sp.image_url}" class="prod-thumb" onerror="this.src='/uploads/parts-placeholder.png'"></td>
+                        <td><div class="prod-name">${sp.title}</div></td>
+                        <td><span class="cat-badge">${sp.category}</span></td>
+                        <td><span class="cat-badge" style="background:rgba(255,255,255,0.02)">${sp.compatibility || '—'}</span></td>
+                        <td><b>₸${(sp.price || 0).toLocaleString()}</b></td>
+                        <td>${sp.stock_count || 0}</td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-act-yellow" onclick="editSparePart(${sp.id})"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn-act-red" onclick="deleteSparePart(${sp.id})"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) { console.error(err); }
+        }
+
+        function editSparePart(id) {
+            const sp = store.spareParts[id];
+            if(!sp) return;
+            document.getElementById('spareFormTitle').innerText = "Редактировать #" + sp.id;
+            document.getElementById('sp_id').value = sp.id;
+            document.getElementById('sp_title').value = sp.title;
+            document.getElementById('sp_category').value = sp.category;
+            document.getElementById('sp_compatibility').value = sp.compatibility || '';
+            document.getElementById('sp_price').value = sp.price;
+            document.getElementById('sp_stock').value = sp.stock_count;
+        }
+
+        async function handleSpareSave(e) {
+            e.preventDefault();
+            const id = document.getElementById('sp_id').value;
+            const formData = new FormData(e.target);
+            const url = id ? `/api/spare-parts/${id}` : '/api/spare-parts';
+            const method = id ? 'PUT' : 'POST';
+            try {
+                const res = await fetch(url, { method, body: formData });
+                if(res.ok) { alert("Сохранено!"); e.target.reset(); document.getElementById('sp_id').value = ''; loadSpareParts(); }
+            } catch (err) { alert("Ошибка"); }
+        }
+
+        async function deleteSparePart(id) { if(!confirm("Удалить?")) return; await fetch(`/api/spare-parts/${id}`, { method: 'DELETE' }); loadSpareParts(); }
+
+        async function loadSearchHints() {
+            try {
+                const res = await fetch('/api/search-hints-all');
+                const data = await res.json();
+                const table = document.getElementById('hintTable');
+                if(!table) return;
+                table.innerHTML = (data.data || []).map(h => `
+                    <tr>
+                        <td>${h.id}</td>
+                        <td><b>${h.text}</b></td>
+                        <td><span class="cat-badge">${h.category || '—'}</span></td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-act-yellow" onclick="editHint(${h.id}, '${h.text.replace(/'/g, "\\'")}', '${h.category || ''}')"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn-act-red" onclick="deleteHint(${h.id})"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) { console.error(err); }
+        }
+
+        async function handleHintSave(e) {
+            e.preventDefault();
+            const id = document.getElementById('h_id').value;
+            const text = document.getElementById('h_text').value;
+            const category = document.getElementById('h_category').value;
+            const url = id ? `/api/search-hints/${id}` : '/api/search-hints';
+            const method = id ? 'PUT' : 'POST';
+            await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text, category }) });
+            e.target.reset(); document.getElementById('h_id').value = ''; loadSearchHints();
+        }
+
+        function editHint(id, text, cat) {
+            document.getElementById('h_id').value = id;
+            document.getElementById('h_text').value = text;
+            document.getElementById('h_category').value = cat || "";
+        }
+
+        async function deleteHint(id) { if(!confirm('Удалить?')) return; await fetch(`/api/search-hints/${id}`, { method: 'DELETE' }); loadSearchHints(); }
+
+        async function loadAdminProjects() {
+            try {
+                const res = await fetch('/api/projects');
+                const result = await res.json();
+                const table = document.getElementById('adminProjectTable');
+                if(!table) return;
+                const projects = result.data || [];
+                projects.forEach(p => store.projects[p.id] = p);
+                table.innerHTML = projects.map(p => `
+                    <tr>
+                        <td>${p.id}</td>
+                        <td>${p.video_url ? `<video src="${p.video_url}" muted style="width:100px; height:60px; object-fit:cover; border-radius:8px;"></video>` : 'No Video'}</td>
+                        <td><b>${p.title}</b></td>
+                        <td>
+                            <div style="display:flex; gap:10px; font-size:12px; color:#94A3B8;">
+                                <span title="Likes"><i class="fa-solid fa-heart" style="color:#EF4444;"></i> ${p.likes || 0}</span>
+                                <span title="Shares"><i class="fa-solid fa-paper-plane" style="color:#3B82F6;"></i> ${p.shares || 0}</span>
+                                <span title="Saves"><i class="fa-solid fa-bookmark" style="color:#F59E0B;"></i> ${p.saves || 0}</span>
+                                <span title="Comments"><i class="fa-solid fa-comment" style="color:#10B981;"></i> ${p.comments_count || 0}</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-act-yellow" onclick="editProjectDetails(${p.id})"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn-act-red" onclick="deleteProject(${p.id})"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) { console.error(err); }
+        }
+
+        function editProjectDetails(id) {
+            const p = store.projects[id]; if(!p) return;
+            document.getElementById('proj_id').value = p.id;
+            document.getElementById('proj_title').value = p.title;
+            document.getElementById('proj_description').value = p.description;
+        }
+
+        async function handleProjectSave(e) {
+            e.preventDefault();
+            const id = document.getElementById('proj_id').value;
+            const formData = new FormData(e.target);
+            const url = id ? `/api/projects/${id}` : '/api/projects';
+            const method = id ? 'PUT' : 'POST';
+            await fetch(url, { method, body: formData });
+            e.target.reset(); document.getElementById('proj_id').value = ''; loadAdminProjects();
+        }
+
+        async function deleteProject(id) { if(!confirm('Удалить?')) return; await fetch(`/api/projects/${id}`, { method: 'DELETE' }); loadAdminProjects(); }
+
+        async function loadAdminFAQs() {
+            try {
+                const res = await fetch('/api/faqs');
+                const result = await res.json();
+                const table = document.getElementById('adminFaqTable');
+                if(!table) return;
+                table.innerHTML = (result.data || []).map(f => `
+                    <tr>
+                        <td>${f.id}</td>
+                        <td style="font-weight:700;">${f.question}</td>
+                        <td style="max-width:300px; color:#94A3B8;">${(f.answer || '').substring(0, 100)}...</td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-act-yellow" onclick="editFAQ(${f.id}, '${f.question.replace(/'/g, "\\'")}', '${f.answer.replace(/'/g, "\\'").replace(/\n/g, "\\n")}')"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn-act-red" onclick="deleteFAQ(${f.id})"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (err) { console.error(err); }
+        }
+
+        function editFAQ(id, q, a) {
+            document.getElementById('faq_id').value = id;
+            document.getElementById('faq_question').value = q;
+            document.getElementById('faq_answer').value = a;
+        }
+
+        async function handleFAQSave(e) {
+            e.preventDefault();
+            const id = document.getElementById('faq_id').value;
+            const q = document.getElementById('faq_question').value;
+            const a = document.getElementById('faq_answer').value;
+            const url = id ? `/api/faqs/${id}` : '/api/faqs';
+            const method = id ? 'PUT' : 'POST';
+            await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: q, answer: a }) });
+            e.target.reset(); document.getElementById('faq_id').value = ''; loadAdminFAQs();
+        }
+
+        function toggleSelectAll(s) { document.querySelectorAll('.p-check').forEach(c => c.checked = s.checked); }
+        async function deleteSelected() {
+            const ids = Array.from(document.querySelectorAll('.p-check:checked')).map(c => parseInt(c.value));
+            if(ids.length === 0 || !confirm("Удалить выбранные?")) return;
+            await fetch('/api/products/bulk/delete', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids }) }); loadProducts();
+        }
+        async function deleteAll() { if(confirm("УДАЛИТЬ ВСЕ?")) await fetch('/api/products-all/delete', { method: 'DELETE' }); loadProducts(); }
+
+        function toggleSelectAllSpares(s) { document.querySelectorAll('.sp-check').forEach(c => c.checked = s.checked); }
+        async function deleteSelectedSpares() {
+            const ids = Array.from(document.querySelectorAll('.sp-check:checked')).map(c => parseInt(c.value));
+            if(ids.length === 0 || !confirm("Удалить выбранные запчасти?")) return;
+            await fetch('/api/spare-parts/bulk/delete', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ids }) }); loadSpareParts();
+        }
+        async function deleteAllSpares() { if(confirm("УДАЛИТЬ ВСЕ ЗАПЧАСТИ?")) await fetch('/api/spare-parts-all/delete', { method: 'DELETE' }); loadSpareParts(); }
+
+        // --- TEAM MANAGEMENT ---
+        async function loadTeam() {
+            try {
+                const res = await fetch('/api/team');
+                const data = await res.json();
+                const table = document.getElementById('teamTable');
+                if(!table) return;
+                const members = data.data || [];
+                members.forEach(m => store.team[m.id] = m);
+                table.innerHTML = members.map(m => `
+                    <tr>
+                        <td><img src="/${m.image_url}" class="prod-thumb" onerror="this.src='/uploads/team-placeholder.png'"></td>
+                        <td><b>${m.name}</b></td>
+                        <td>${m.role}</td>
+                        <td>${m.experience} лет</td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn-act-yellow" onclick="editTeamMember(${m.id})"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn-act-red" onclick="deleteTeamMember(${m.id})"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                `).join('');
+            } catch (e) { console.error(e); }
+        }
+
+        async function handleTeamSave(e) {
+            e.preventDefault();
+            const id = document.getElementById('t_id').value;
+            const formData = new FormData(e.target);
+            const url = id ? `/api/team/${id}` : '/api/team';
+            const method = id ? 'PUT' : 'POST';
+            try {
+                const res = await fetch(url, { method, body: formData });
+                if(res.ok) {
+                    alert("Успешно сохранено!");
+                    e.target.reset();
+                    document.getElementById('t_id').value = '';
+                    document.getElementById('teamFormTitle').innerText = "Добавить сотрудника";
+                    loadTeam();
+                }
+            } catch (e) { alert("Ошибка сохранения"); }
+        }
+
+        function editTeamMember(id) {
+            const m = store.team[id];
+            if(!m) return;
+            document.getElementById('teamFormTitle').innerText = "Редактировать: " + m.name;
+            document.getElementById('t_id').value = m.id;
+            document.getElementById('t_name').value = m.name;
+            document.getElementById('t_role').value = m.role;
+            document.getElementById('t_experience').value = m.experience;
+            document.getElementById('t_specialization').value = m.specialization || '';
+            document.getElementById('t_bio').value = m.bio || '';
+            document.getElementById('t_linkedin').value = m.linkedin_url || '';
+        }
+
+        async function deleteTeamMember(id) {
+            if(!confirm("Удалить этого сотрудника?")) return;
+            try {
+                await fetch(`/api/team/${id}`, { method: 'DELETE' });
+                loadTeam();
+            } catch (e) { console.error(e); }
+        }
+    </script>
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if(sidebar) sidebar.classList.toggle('open');
+            if(overlay) overlay.classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
