@@ -87,8 +87,10 @@ db.serialize(() => {
     db.run(`CREATE TABLE IF NOT EXISTS spare_parts (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT, category TEXT, compatibility TEXT, 
-        price REAL, image_url TEXT, stock_count INTEGER DEFAULT 0
+        price REAL, image_url TEXT, gallery_urls TEXT, stock_count INTEGER DEFAULT 0
     )`);
+    // Auto-migrate: add gallery_urls to existing installs silently
+    db.run(`ALTER TABLE spare_parts ADD COLUMN gallery_urls TEXT`, () => {});
 
     db.run(`CREATE TABLE IF NOT EXISTS users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -260,6 +262,14 @@ app.post('/api/faqs', (req, res) => {
     db.run("INSERT INTO faqs (question, answer) VALUES (?, ?)", [question, answer], function(err) {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ id: this.lastID, question, answer });
+    });
+});
+
+app.put('/api/faqs/:id', (req, res) => {
+    const { question, answer } = req.body;
+    db.run("UPDATE faqs SET question = ?, answer = ? WHERE id = ?", [question, answer, req.params.id], function(err) {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ message: 'updated', changes: this.changes });
     });
 });
 
@@ -569,25 +579,51 @@ app.get('/api/spare-parts', (req, res) => {
     });
 });
 
-app.post('/api/spare-parts', upload.single('image'), (req, res) => {
+app.post('/api/spare-parts', uploadProduct, (req, res) => {
     const p = req.body;
-    const imageUrl = req.file ? `uploads/${req.file.filename}` : 'uploads/parts-placeholder.png';
+    const imageFile = req.files && req.files['image'] ? req.files['image'][0] : null;
+    const galleryFiles = req.files && req.files['gallery'] ? req.files['gallery'] : [];
+    const imageUrl = imageFile ? `uploads/${imageFile.filename}` : 'uploads/parts-placeholder.png';
+    const galleryUrls = galleryFiles.map(f => `uploads/${f.filename}`).join(';');
     const price = parseFloat(p.price) || 0;
     const stock = parseInt(p.stock_count) || 0;
-    const sql = `INSERT INTO spare_parts (title, category, compatibility, price, image_url, stock_count) VALUES (?,?,?,?,?,?)`;
-    db.run(sql, [p.title, p.category, p.compatibility, price, imageUrl, stock], function(err) {
+    const sql = `INSERT INTO spare_parts (title, category, compatibility, price, image_url, gallery_urls, stock_count) VALUES (?,?,?,?,?,?,?)`;
+    db.run(sql, [p.title, p.category, p.compatibility, price, imageUrl, galleryUrls || null, stock], function(err) {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ message: "success", id: this.lastID });
     });
 });
 
-app.put('/api/spare-parts/:id', upload.single('image'), (req, res) => {
+app.put('/api/spare-parts/:id', uploadProduct, (req, res) => {
     const p = req.body;
+    const imageFile = req.files && req.files['image'] ? req.files['image'][0] : null;
+    const galleryFiles = req.files && req.files['gallery'] ? req.files['gallery'] : [];
     let sql = `UPDATE spare_parts SET title=?, category=?, compatibility=?, price=?, stock_count=?`;
     let params = [p.title, p.category, p.compatibility, p.price, p.stock_count];
-    if (req.file) {
+    if (imageFile) {
         sql += `, image_url=?`;
-        params.push(`uploads/${req.file.filename}`);
+        params.push(`uploads/${imageFile.filename}`);
+    }
+    if (galleryFiles.length > 0) {
+        const newGalleryUrls = galleryFiles.map(f => `uploads/${f.filename}`).join(';');
+        if (p.gallery_append === 'true') {
+            db.get('SELECT gallery_urls FROM spare_parts WHERE id=?', req.params.id, (err, row) => {
+                const existing = row && row.gallery_urls ? row.gallery_urls : '';
+                const combined = [existing, newGalleryUrls].filter(Boolean).join(';');
+                sql += `, gallery_urls=?`;
+                params.push(combined);
+                sql += ` WHERE id=?`;
+                params.push(req.params.id);
+                db.run(sql, params, function(err) {
+                    if (err) return res.status(500).json({ error: err.message });
+                    res.json({ message: "success" });
+                });
+            });
+            return;
+        } else {
+            sql += `, gallery_urls=?`;
+            params.push(newGalleryUrls);
+        }
     }
     sql += ` WHERE id=?`;
     params.push(req.params.id);
