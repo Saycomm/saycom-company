@@ -515,96 +515,66 @@
     </nav>
 
     <!-- Page Content -->
-    <section class="service-hero">
-        <div class="container">
-            <span class="badge" data-i18n="badge_premium">PREMIUM QUALITY</span>
-            <h1 style="color: white; font-size: 48px; margin-bottom: 20px;" data-i18n="nav_install">Installation
-                Services</h1>
-            <p style="max-width: 700px; margin: 0 auto; color: var(--text-muted);" data-i18n="about_subtitle">
-                Professional installation and maintenance by certified experts for your security and comfort.</p>
+    
+    <!-- Dynamic Installation Content -->
+    <section class="service-hero" style="padding: 60px 0; background: linear-gradient(rgba(11, 17, 32, 0.9), rgba(11, 17, 32, 0.95)), url('https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80'); background-size: cover; background-position: center;">
+        <div class="container" style="text-align: center;">
+            <span class="badge" style="background: rgba(16, 185, 129, 0.2); color: var(--primary); padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 15px; display: inline-block;">УСЛУГИ СЕРВИСА</span>
+            <h1 style="color: white; font-size: 42px; margin-bottom: 20px;">Установка автоматических ворот</h1>
         </div>
     </section>
 
-    <section class="section">
-        <div class="container">
-            <div class="section-title" data-i18n="val_2_title">Expert Engineering</div>
-            <div class="section-subtitle" data-i18n="team_subtitle">Comprehensive engineering solutions for home and
-                business</div>
-
-            <div class="service-grid">
-                <div class="service-card">
-                    <i class="fa-solid fa-wind"></i>
-                    <h3 data-i18n="service_hvac_title">HVAC Installation</h3>
-                    <p data-i18n="service_hvac_desc">Professional mounting of split systems, multi-zone VRF, and
-                        industrial air conditioning with full vacuuming and testing.</p>
+    <section class="section" style="padding: 60px 0; min-height: 50vh;">
+        <div class="container" style="max-width: 800px; margin: 0 auto;">
+            <p id="dyn_desc" style="color: var(--text-muted); font-size: 16px; line-height: 1.8; margin-bottom: 40px; text-align: center;">Загрузка описания...</p>
+            
+            <div style="background: rgba(255,255,255,0.02); padding: 40px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+                <h2 style="margin-bottom: 25px; font-size: 24px; color: white; display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-list-check" style="color: var(--primary);"></i> Прайс-лист на работы</h2>
+                
+                <div style="display: flex; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); align-items: center;">
+                    <strong style="font-size: 18px; color: white;">Базовая установка:</strong>
+                    <span id="dyn_base_price" style="font-size: 22px; color: var(--primary); font-weight: 800; background: rgba(16, 185, 129, 0.1); padding: 8px 16px; border-radius: 8px;">... ₸</span>
                 </div>
-                <div class="service-card">
-                    <i class="fa-solid fa-camera"></i>
-                    <h3 data-i18n="service_sec_title">Security Systems</h3>
-                    <p data-i18n="service_sec_desc">End-to-end CCTV setup, IP camera configuration, and remote
-                        monitoring integration on your smartphones.</p>
+                
+                <div id="dyn_options" style="margin-top: 30px;">
+                    <!-- Options will be loaded here -->
                 </div>
-                <div class="service-card">
-                    <i class="fa-solid fa-door-open"></i>
-                    <h3 data-i18n="service_gate_title">Gate Automation</h3>
-                    <p data-i18n="service_gate_desc">Installation of Italian motors for sliding and swing gates.
-                        Programming remotes and safety sensors.</p>
-                </div>
-                <div class="service-card">
-                    <i class="fa-solid fa-microchip"></i>
-                    <h3 data-i18n="service_main_title">Maintenance</h3>
-                    <p data-i18n="service_main_desc">Routine technical checks, filter cleaning, and system diagnostics
-                        to ensure 100% reliability of your equipment.</p>
-                </div>
-            </div>
-
-            <div class="booking-section">
-                <div class="booking-content">
-                    <h2 style="font-size: 32px; color: white; margin-bottom: 20px;" data-i18n="book_visit_title">Book a
-                        Technical Visit</h2>
-                    <p style="color: var(--text-muted); margin-bottom: 30px;" data-i18n="book_visit_desc">Our lead
-                        engineer will visit your site, perform measurements, and provide a detailed cost estimate for
-                        your project.</p>
-                    <div class="steps-grid">
-                        <div class="step-item">
-                            <div class="step-number">1</div>
-                            <span data-i18n="step_1">Заявка</span>
-                        </div>
-                        <div class="step-item">
-                            <div class="step-number">2</div>
-                            <span data-i18n="step_2">Выезд</span>
-                        </div>
-                        <div class="step-item">
-                            <div class="step-number">3</div>
-                            <span data-i18n="step_3">Смета</span>
-                        </div>
-                        <div class="step-item">
-                            <div class="step-number">4</div>
-                            <span data-i18n="step_4">Монтаж</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="booking-form">
-                    <form onsubmit="submitToWhatsApp(event)">
-                        <input type="text" id="visit-name" data-i18n-placeholder="form_name_placeholder"
-                            placeholder="Your Name" required="">
-                        <input type="tel" id="visit-phone" data-i18n-placeholder="form_phone_placeholder"
-                            placeholder="Phone Number" required="">
-                        <select id="visit-service" data-i18n-placeholder="form_service_select">
-                            <option value="Кондиционеры" data-i18n="nav_ac">Air Conditioning</option>
-                            <option value="Видеонаблюдение" data-i18n="nav_cctv">CCTV / Security</option>
-                            <option value="Автоматика ворот" data-i18n="nav_gates">Gate Automation</option>
-                            <option value="Домофоны" data-i18n="nav_intercom">Intercom Systems</option>
-                        </select>
-                        <button type="submit" class="btn btn-primary"
-                            style="width: 100%; justify-content: center; padding: 15px;"
-                            data-i18n="form_submit_visit">Submit Request</button>
-                    </form>
+                
+                <div style="margin-top: 40px; text-align: center;">
+                    <button class="btn btn-primary" style="width: 100%; justify-content: center; padding: 18px; font-size: 16px;" onclick="window.location.href='/contact.html'">Заказать выезд инженера</button>
                 </div>
             </div>
         </div>
     </section>
 
+    <script>
+        async function loadData() {
+            try {
+                const res = await fetch('/api/installations');
+                const result = await res.json();
+                const data = result.data['install_gates'] || {};
+                
+                document.getElementById('dyn_desc').innerText = data.description || 'Подробное описание услуги пока не добавлено. Свяжитесь с нами для уточнения деталей.';
+                document.getElementById('dyn_base_price').innerText = (data.base_price ? new Intl.NumberFormat('ru-RU').format(data.base_price) : '0') + ' ₸';
+                
+                if (data.options && data.options.length > 0) {
+                    const optsHtml = data.options.map(opt => `
+                        <div style="display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px dashed rgba(255,255,255,0.05); color: #94A3B8; align-items: center; transition: 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='transparent'">
+                            <span style="font-size: 15px;">${opt.name}</span>
+                            <span style="color: white; font-weight: 600; font-family: 'Courier New', monospace; font-size: 15px;">+${new Intl.NumberFormat('ru-RU').format(opt.price)} ₸</span>
+                        </div>
+                    `).join('');
+                    document.getElementById('dyn_options').innerHTML = '<h3 style="margin: 0 0 20px; font-size: 16px; color: #64748B; text-transform: uppercase; letter-spacing: 1px;">Дополнительные работы:</h3>' + optsHtml;
+                } else {
+                    document.getElementById('dyn_options').innerHTML = '';
+                }
+            } catch (err) {
+                console.error(err);
+                document.getElementById('dyn_desc').innerText = 'Ошибка при загрузке данных.';
+            }
+        }
+        loadData();
+    </script>
     <!-- Footer -->
     <footer class="footer"
         style="background: var(--bg-light); color: var(--text-dark); border-top: 1px solid var(--border-color); font-family: 'Inter', sans-serif;">

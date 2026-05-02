@@ -41,6 +41,7 @@ function updateTranslations() {
 
     // Optionals
     document.title = dict['site_title'] || document.title;
+    updateHeaderCounts();
 }
 
 document.getElementById('lang-switch')?.addEventListener('change', (e) => {
@@ -274,40 +275,59 @@ function toggleProjectVideo(card) {
 
     // Remove existing lightboxes
     const existing = document.getElementById('video-lightbox');
-    if (existing) existing.remove();
+    if (existing) { existing.querySelector('video')?.pause(); existing.remove(); }
 
     const lightbox = document.createElement('div');
     lightbox.id = 'video-lightbox';
     lightbox.style.cssText = `
         position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: rgba(0,0,0,0.9); backdrop-filter: blur(15px);
+        background: rgba(0,0,0,0.92); backdrop-filter: blur(15px);
         display: flex; align-items: center; justify-content: center;
         z-index: 10000; cursor: zoom-out;
     `;
 
-    const videoClone = video.cloneNode(true);
-    videoClone.style.cssText = `
+    // Create a FRESH video element — never clone (cloning inherits muted attribute)
+    const freshVideo = document.createElement('video');
+    freshVideo.src = video.src || video.currentSrc;
+    freshVideo.style.cssText = `
         max-width: 90vw; max-height: 85vh; border-radius: 20px;
         box-shadow: 0 30px 100px rgba(0,0,0,0.8), 0 0 50px rgba(16, 185, 129, 0.2);
         cursor: default; object-fit: contain;
     `;
-    videoClone.controls = true;
-    videoClone.muted = false;
-    videoClone.play();
+    freshVideo.controls = true;
+    freshVideo.playsInline = true;
+    freshVideo.muted = false;      // explicitly unmute
+    freshVideo.volume = 1;         // max volume
 
     const closeBtn = document.createElement('div');
     closeBtn.innerHTML = '×';
     closeBtn.style.cssText = `
         position: absolute; top: 40px; right: 40px; color: white;
-        font-size: 50px; cursor: pointer; line-height: 1;
+        font-size: 50px; cursor: pointer; line-height: 1; z-index: 2;
+        width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
+        background: rgba(255,255,255,0.1); border-radius: 50%;
     `;
 
-    lightbox.appendChild(videoClone);
+    // Append to DOM FIRST, then play (browser requires element in document for audio)
+    lightbox.appendChild(freshVideo);
     lightbox.appendChild(closeBtn);
     document.body.appendChild(lightbox);
 
-    lightbox.onclick = (e) => { if(e.target !== videoClone) lightbox.remove(); };
-    closeBtn.onclick = () => lightbox.remove();
+    // Play after metadata loaded to ensure audio works
+    freshVideo.addEventListener('loadedmetadata', () => {
+        freshVideo.muted = false;
+        freshVideo.volume = 1;
+        freshVideo.play().catch(() => {});
+    }, { once: true });
+
+    // Fallback: try playing immediately too
+    freshVideo.play().catch(() => {});
+
+    const cleanup = () => { freshVideo.pause(); lightbox.remove(); document.removeEventListener('keydown', keyClose); };
+    lightbox.onclick = (e) => { if (e.target !== freshVideo) cleanup(); };
+    closeBtn.onclick = cleanup;
+    const keyClose = (e) => { if (e.key === 'Escape') cleanup(); };
+    document.addEventListener('keydown', keyClose);
 }
 
 function initGlobalSearch() {

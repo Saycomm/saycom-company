@@ -130,6 +130,7 @@ db.serialize(() => {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         project_id INTEGER,
         user_name TEXT,
+        user_email TEXT,
         comment TEXT,
         parent_id INTEGER DEFAULT NULL,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -179,6 +180,8 @@ db.serialize(() => {
     db.run("ALTER TABLE users ADD COLUMN cart TEXT DEFAULT '[]'", (err) => {});
     db.run("ALTER TABLE users ADD COLUMN wishlist TEXT DEFAULT '[]'", (err) => {});
     db.run("ALTER TABLE users ADD COLUMN language TEXT DEFAULT 'ru'", (err) => {});
+    db.run("ALTER TABLE user_activity ADD COLUMN user_email TEXT", (err) => {});
+    db.run("ALTER TABLE project_comments ADD COLUMN user_email TEXT", (err) => {});
 });
 
 // Admin OTP storage (temp)
@@ -369,6 +372,27 @@ app.delete('/api/projects/:id', (req, res) => {
     db.run("DELETE FROM projects WHERE id = ?", req.params.id, (err) => {
         if (err) return res.status(500).json({ error: err.message });
         res.json({ message: "Deleted successfully" });
+    });
+});
+
+// --- INSTALLATIONS APIs ---
+app.get('/api/installations', (req, res) => {
+    db.all("SELECT key, value FROM admin_config WHERE key LIKE 'install_%'", [], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        const config = {};
+        rows.forEach(r => {
+            try { config[r.key] = JSON.parse(r.value); } catch(e) { config[r.key] = {}; }
+        });
+        res.json({ data: config });
+    });
+});
+
+app.put('/api/installations/:key', (req, res) => {
+    const key = `install_${req.params.key}`;
+    const value = JSON.stringify(req.body);
+    db.run("INSERT INTO admin_config (key, value) VALUES (?, ?) ON CONFLICT(key) DO UPDATE SET value=excluded.value", [key, value], function(err) {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json({ message: "success" });
     });
 });
 

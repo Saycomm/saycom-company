@@ -210,6 +210,7 @@
             <div class="nav-item active" onclick="switchTab('products', this)"><i class="fa-solid fa-box"></i> Товары</div>
             <div class="nav-item" onclick="switchTab('users', this)"><i class="fa-solid fa-users"></i> Пользователи</div>
             <div class="nav-item" onclick="switchTab('spare-parts', this)"><i class="fa-solid fa-gears"></i> Запчасти</div>
+            <div class="nav-item" onclick="switchTab('installations', this)"><i class="fa-solid fa-tools"></i> Установка (Монтаж)</div>
             <div class="nav-item" onclick="switchTab('team', this)"><i class="fa-solid fa-user-tie"></i> Команда</div>
             <div class="nav-item" onclick="switchTab('projects', this)"><i class="fa-solid fa-video"></i> Проекты (Видео)</div>
             <div class="nav-item" onclick="switchTab('vip', this)"><i class="fa-solid fa-crown"></i> VIP Клуб</div>
@@ -683,7 +684,35 @@
                 </div>
             </div>
         </div>
-    </main>
+
+        <div id="installations-tab" class="tab-content">
+            <div class="settings-layout">
+                <div class="settings-nav" id="install-nav-items">
+                    <div class="s-nav-item active" onclick="loadInstallForm('ac')"><i class="fa-solid fa-wind"></i> Кондиционеры</div>
+                    <div class="s-nav-item" onclick="loadInstallForm('cctv')"><i class="fa-solid fa-camera"></i> Видеонаблюдение</div>
+                    <div class="s-nav-item" onclick="loadInstallForm('gates')"><i class="fa-solid fa-door-open"></i> Автоматические ворота</div>
+                    <div class="s-nav-item" onclick="loadInstallForm('intercom')"><i class="fa-solid fa-phone"></i> Домофоны</div>
+                </div>
+                
+                <div class="settings-main" id="install-form-container" style="display:none;">
+                <div class="form-panel" style="width: 100%;">
+                    <div class="form-title" id="installTitle">Настройки услуги</div>
+                    <form id="installForm" onsubmit="handleInstallSave(event)">
+                        <input type="hidden" id="inst_key">
+                        <div class="form-group"><label>Описание (основной текст)</label><textarea id="inst_desc" rows="4"></textarea></div>
+                        <div class="form-group"><label>Базовая цена (₸)</label><input type="number" id="inst_base_price"></div>
+                        
+                        <div class="form-title" style="margin-top: 20px;">Дополнительные работы / Опции</div>
+                        <div id="inst_options_container"></div>
+                        <button type="button" class="btn-add-spec" onclick="addInstallOptionRow()">+ Добавить опцию</button>
+                        
+                        <button type="submit" class="btn-save" style="margin-top: 20px;" id="btnInstallSave">СОХРАНИТЬ НАСТРОЙКИ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 
     <script>
         // --- Admin Password Security ---
@@ -894,7 +923,104 @@
             document.body.appendChild(lb);
         }
 
+        
+        // --- INSTALLATIONS JS ---
+        function addInstallOptionRow(name='', price='') {
+            const div = document.createElement('div');
+            div.style.display = 'flex'; div.style.gap = '15px'; div.style.marginBottom = '15px';
+            div.style.alignItems = 'center';
+            div.style.background = 'rgba(255,255,255,0.02)';
+            div.style.padding = '10px';
+            div.style.borderRadius = '8px';
+            div.style.border = '1px dashed rgba(255,255,255,0.1)';
+            
+            div.innerHTML = `
+                <input type="text" placeholder="Название (напр: Метр магистрали)" value="${name}" style="flex:2; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: white; padding: 12px; border-radius: 8px; font-family: 'Inter', sans-serif;">
+                <div style="flex:1; position: relative;">
+                    <input type="number" placeholder="Цена" value="${price}" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--border-color); color: white; padding: 12px 35px 12px 12px; border-radius: 8px; font-family: 'Inter', sans-serif;">
+                    <span style="position: absolute; right: 12px; top: 12px; color: var(--text-muted); font-weight: 700;">₸</span>
+                </div>
+                <button type="button" onclick="this.parentElement.remove()" style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; color: #EF4444; width: 44px; height: 44px; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='#EF4444'; this.style.color='white'" onmouseout="this.style.background='rgba(239, 68, 68, 0.1)'; this.style.color='#EF4444'"><i class="fa-solid fa-trash"></i></button>
+            `;
+            const container = document.getElementById('inst_options_container');
+            if(container) container.appendChild(div);
+        }
+
+        async function loadInstallForm(key) {
+            document.getElementById('install-form-container').style.display = 'block';
+            document.getElementById('inst_key').value = key;
+            const titles = {
+                'ac': 'Установка кондиционеров',
+                'cctv': 'Установка видеонаблюдения',
+                'gates': 'Установка автоматических ворот',
+                'intercom': 'Установка домофонов'
+            };
+            document.getElementById('installTitle').innerText = titles[key].toUpperCase();
+            
+            // Highlight active button
+            const items = document.querySelectorAll('#install-nav-items .s-nav-item');
+            items.forEach(item => item.classList.remove('active'));
+            const activeItem = Array.from(items).find(item => item.getAttribute('onclick').includes(`'${key}'`));
+            if (activeItem) {
+                activeItem.classList.add('active');
+            }
+            
+            // Clear form
+            document.getElementById('inst_desc').value = '';
+            document.getElementById('inst_base_price').value = '';
+            document.getElementById('inst_options_container').innerHTML = '';
+            
+            try {
+                const res = await fetch('/api/installations');
+                const result = await res.json();
+                const data = result.data[`install_${key}`] || {};
+                
+                document.getElementById('inst_desc').value = data.description || '';
+                document.getElementById('inst_base_price').value = data.base_price || '';
+                if (data.options && Array.isArray(data.options)) {
+                    data.options.forEach(opt => addInstallOptionRow(opt.name, opt.price));
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        async function handleInstallSave(e) {
+            e.preventDefault();
+            const key = document.getElementById('inst_key').value;
+            const description = document.getElementById('inst_desc').value;
+            const base_price = document.getElementById('inst_base_price').value;
+            
+            const options = [];
+            document.querySelectorAll('#inst_options_container div').forEach(row => {
+                const inputs = row.querySelectorAll('input');
+                if(inputs.length >= 2 && inputs[0].value) {
+                    options.push({ name: inputs[0].value, price: inputs[1].value });
+                }
+            });
+            
+            const payload = { description, base_price, options };
+            const btn = document.getElementById('btnInstallSave');
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> СОХРАНЕНИЕ...';
+            
+            try {
+                const res = await fetch(`/api/installations/${key}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (res.ok) alert("Настройки сохранены!");
+                else alert("Ошибка сохранения");
+            } catch (err) {
+                alert("Ошибка соединения");
+            } finally {
+                btn.innerHTML = 'СОХРАНИТЬ НАСТРОЙКИ';
+            }
+        }
+
+>>>>>>> d308dab (feat: finish installation services module, fix translation gaps, and fix missing products rendering bug)
         // --- TAB SWITCHING LOGIC ---
+
         function switchTab(tab, el) {
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
@@ -902,6 +1028,10 @@
             const targetTab = document.getElementById(tab + '-tab');
             if (targetTab) targetTab.classList.add('active');
             if (el) el.classList.add('active');
+            
+            if (tab === 'installations') {
+                loadInstallForm('ac');
+            }
             
             console.log(`Switching to tab: ${tab}`);
 
@@ -1134,9 +1264,12 @@
                     loadProducts();
                 } else {
                     const err = await res.json();
-                    alert('Ошибка: ' + (err.error || 'Неизвестная ошибка'));
+                    alert('Ошибка сервера: ' + (err.error || 'Неизвестная ошибка'));
                 }
-            } catch (err) { alert("Ошибка соединения"); }
+            } catch (err) { 
+                alert("Ошибка соединения: " + err.message); 
+                console.error("Save Product Error:", err);
+            }
         }
 
         async function deleteProduct(id) { if(!confirm("Удалить товар?")) return; await fetch(`/api/products/${id}`, { method: 'DELETE' }); loadProducts(); }
@@ -1282,8 +1415,14 @@
                     document.getElementById('sp_existing_gallery').innerHTML = ''; // Clear server gallery preview
                     clearGallery('sp'); // Reset gallery preview
                     loadSpareParts(); 
+                } else {
+                    const err = await res.json();
+                    alert('Ошибка сервера: ' + (err.error || 'Неизвестная ошибка'));
                 }
-            } catch (err) { alert("Ошибка"); }
+            } catch (err) { 
+                alert("Ошибка соединения: " + err.message); 
+                console.error("Save Spare Part Error:", err);
+            }
         }
 
         async function deleteSparePart(id) { if(!confirm("Удалить?")) return; await fetch(`/api/spare-parts/${id}`, { method: 'DELETE' }); loadSpareParts(); }
@@ -1374,8 +1513,31 @@
             const formData = new FormData(e.target);
             const url = id ? `/api/projects/${id}` : '/api/projects';
             const method = id ? 'PUT' : 'POST';
-            await fetch(url, { method, body: formData });
-            e.target.reset(); document.getElementById('proj_id').value = ''; loadAdminProjects();
+            
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalBtnText = btn.innerHTML;
+            
+            try {
+                btn.disabled = true;
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> СОХРАНЯЕМ...';
+                
+                const res = await fetch(url, { method, body: formData });
+                if (res.ok) {
+                    alert(id ? "Проект обновлен!" : "Проект добавлен!");
+                    e.target.reset();
+                    document.getElementById('proj_id').value = '';
+                    loadAdminProjects();
+                } else {
+                    const err = await res.json();
+                    alert('Ошибка сервера: ' + (err.error || 'Неизвестная ошибка'));
+                }
+            } catch (err) {
+                alert("Ошибка соединения: " + err.message);
+                console.error("Save Project Error:", err);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalBtnText;
+            }
         }
 
         async function deleteProject(id) { if(!confirm('Удалить?')) return; await fetch(`/api/projects/${id}`, { method: 'DELETE' }); loadAdminProjects(); }

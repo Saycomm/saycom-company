@@ -1,5 +1,10 @@
 const translations = {
     en: {
+        "subnav_intercom": "Intercom Installation",
+        "subnav_gates": "Gate Automation",
+        "subnav_cctv": "CCTV Installation",
+        "subnav_ac": "AC Installation",
+        "top_bar_delivery": "Free Delivery for orders over ",
         "nav_wholesale": "Wholesale",
         "wholesale_title": "B2B & Wholesale - SAYCOM",
         "wholesale_badge": "B2B Partnership",
@@ -957,6 +962,11 @@ const translations = {
     },
     
     ru: {
+        "subnav_intercom": "Установка домофонов",
+        "subnav_gates": "Установка автоматических ворот",
+        "subnav_cctv": "Установка видеонаблюдения",
+        "subnav_ac": "Установка кондиционеров",
+        "top_bar_delivery": "Бесплатная доставка при заказе от ",
         "nav_wholesale": "Оптом",
         "wholesale_title": "Оптовые продажи и B2B - SAYCOM",
         "wholesale_badge": "B2B Партнерство",
@@ -1915,6 +1925,11 @@ const translations = {
     },
 
     kz: {
+        "subnav_intercom": "Домофон орнату",
+        "subnav_gates": "Автоматты қақпа орнату",
+        "subnav_cctv": "Бейнебақылау орнату",
+        "subnav_ac": "Кондиционер орнату",
+        "top_bar_delivery": "Тегін жеткізу: ",
         "nav_wholesale": "Көтерме",
         "wholesale_title": "Көтерме сауда және B2B - SAYCOM",
         "wholesale_badge": "B2B Серіктестік",
