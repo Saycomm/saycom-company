@@ -11,11 +11,14 @@
         body { background: var(--bg); color: white; font-family: 'Inter', sans-serif; margin: 0; display: flex; min-height: 100vh; }
         
         /* Sidebar */
-        .sidebar { width: 220px; background: var(--sidebar); border-right: 1px solid var(--border); padding: 25px 15px; display: flex; flex-direction: column; flex-shrink: 0; }
+        .sidebar { width: 220px; background: var(--sidebar); border-right: 1px solid var(--border); padding: 25px 15px; display: flex; flex-direction: column; flex-shrink: 0; height: 100vh; position: sticky; top: 0; box-sizing: border-box; }
         .logo { display:flex; align-items:center; gap:8px; margin-bottom: 30px; text-decoration: none; color: white; font-weight: 800; font-size: 16px; }
         .logo-box { background:var(--primary); width:30px; height:30px; border-radius:6px; display:flex; align-items:center; justify-content:center; }
         .nav-item { display: flex; align-items: center; gap: 12px; padding: 10px 15px; border-radius: 8px; color: #94A3B8; text-decoration: none; font-weight: 600; margin-bottom: 4px; cursor: pointer; font-size: 13px; }
         .nav-item.active { background: rgba(16, 185, 129, 0.1); color: var(--primary); }
+        .sidebar nav { flex: 1; display: flex; flex-direction: column; overflow-y: auto; padding-right: 5px; }
+        .sidebar nav::-webkit-scrollbar { width: 4px; }
+        .sidebar nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
 
         /* Main Content */
         .main { flex: 1; padding: 20px; overflow-y: auto; }
@@ -215,7 +218,21 @@
             <div class="nav-item" onclick="switchTab('settings', this)"><i class="fa-solid fa-cog"></i> Настройки</div>
             
             <div style="margin-top:auto;">
-                <a href="/index" class="nav-item" style="color:#EF4444;"><i class="fa-solid fa-right-from-bracket"></i> Выход</a>
+                <!-- Widgets -->
+                <div class="sidebar-widgets" style="background: rgba(15, 23, 42, 0.6); border-radius: 12px; padding: 15px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+                    <!-- Timer -->
+                    <div style="margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 10px;">
+                        <div style="font-size: 10px; color: #64748B; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; font-weight: 700;">Блокировка через</div>
+                        <div id="admin-timer" style="font-family: 'Courier New', Courier, monospace; font-size: 22px; font-weight: 800; color: #10B981; text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);">--m:--s</div>
+                    </div>
+                    <!-- Clock -->
+                    <div>
+                        <div id="admin-clock" style="font-family: 'Courier New', Courier, monospace; font-size: 18px; font-weight: 700; color: white;">--:--</div>
+                        <div id="admin-date" style="font-size: 11px; color: #94A3B8; margin-top: 2px; font-weight: 600;">--.--.----</div>
+                    </div>
+                </div>
+                
+                <a href="/index" class="nav-item" style="color:#EF4444; justify-content:center; background: rgba(239,68,68,0.1);"><i class="fa-solid fa-right-from-bracket"></i> Выйти</a>
             </div>
         </nav>
     </aside>
@@ -270,8 +287,21 @@
                             <div class="form-group"><label>Продано</label><input type="number" id="p_sold" value="234"></div>
                         </div>
 
-                        <div class="form-group"><label>Главное изображение</label><input type="file" id="p_file"></div>
-                        <div class="form-group"><label>Галерея (до 10 шт)</label><input type="file" multiple id="p_gallery"></div>
+                        <div class="form-group">
+                            <label>Главное изображение</label>
+                            <input type="file" id="p_file" onchange="handleMainImagePreview(event, 'p_main_preview')">
+                            <div id="p_main_preview"></div>
+                        </div>
+                        <div class="form-group"><label>Галерея (до 10 шт)</label>
+                            <input type="file" multiple id="p_gallery" onchange="handleGalleryFiles(event, 'p')">
+                            <div id="p_existing_gallery" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;"></div>
+                            <div id="p_gallery_actions" style="display:none; margin-top:10px; gap:10px; align-items:center;">
+                                <label style="display:flex; align-items:center; gap:5px; margin:0; font-size:12px; color:#94A3B8;"><input type="checkbox" id="p_gal_select_all" onchange="toggleGallerySelectAll('p', this.checked)"> Выбрать все</label>
+                                <button type="button" class="btn-act-red-outline" style="padding:4px 8px;" onclick="deleteSelectedGallery('p')">Удалить выбранные</button>
+                                <button type="button" class="btn-act-red-full" style="padding:4px 8px;" onclick="clearGallery('p')">Удалить все</button>
+                            </div>
+                            <div id="p_gallery_preview" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;"></div>
+                        </div>
 
                         <button type="submit" class="btn-save">СОХРАНИТЬ ТОВАР</button>
                     </form>
@@ -335,7 +365,21 @@
                             <div class="form-group"><label>Цена (₸)</label><input type="number" id="sp_price" name="price" required></div>
                             <div class="form-group"><label>В наличии (шт.)</label><input type="number" id="sp_stock" name="stock_count" required></div>
                         </div>
-                        <div class="form-group"><label>Изображение</label><input type="file" id="sp_file" name="image"></div>
+                        <div class="form-group">
+                            <label>Главное изображение</label>
+                            <input type="file" id="sp_file" name="image" onchange="handleMainImagePreview(event, 'sp_main_preview')">
+                            <div id="sp_main_preview"></div>
+                        </div>
+                        <div class="form-group"><label>Галерея (до 10 шт)</label>
+                            <input type="file" multiple id="sp_gallery" onchange="handleGalleryFiles(event, 'sp')">
+                            <div id="sp_existing_gallery" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;"></div>
+                            <div id="sp_gallery_actions" style="display:none; margin-top:10px; gap:10px; align-items:center;">
+                                <label style="display:flex; align-items:center; gap:5px; margin:0; font-size:12px; color:#94A3B8;"><input type="checkbox" id="sp_gal_select_all" onchange="toggleGallerySelectAll('sp', this.checked)"> Выбрать все</label>
+                                <button type="button" class="btn-act-red-outline" style="padding:4px 8px;" onclick="deleteSelectedGallery('sp')">Удалить выбранные</button>
+                                <button type="button" class="btn-act-red-full" style="padding:4px 8px;" onclick="clearGallery('sp')">Удалить все</button>
+                            </div>
+                            <div id="sp_gallery_preview" style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;"></div>
+                        </div>
                         <button type="submit" class="btn-save">СОХРАНИТЬ ЗАПЧАСТЬ</button>
                     </form>
                 </div>
@@ -650,6 +694,12 @@
             const toggle = document.getElementById('togglePass');
             const error = document.getElementById('loginError');
 
+            // Session check (10 minutes = 600,000 ms)
+            const authTime = sessionStorage.getItem('admin_auth_time');
+            if (authTime && (Date.now() - parseInt(authTime)) < 600000) {
+                modal.style.display = 'none'; // Bypass login if within 10 mins
+            }
+
             // Toggle Password Visibility
             toggle.onclick = () => {
                 const isPass = input.type === 'password';
@@ -668,9 +718,12 @@
                     });
                     
                     if (res.ok) {
+                        sessionStorage.setItem('admin_auth_time', Date.now().toString()); // Save session time
                         modal.style.opacity = '0';
                         modal.style.transition = '0.3s ease';
                         setTimeout(() => modal.style.display = 'none', 300);
+                        // Force immediate update to timer to avoid 1s delay
+                        if (typeof updateWidgets === 'function') updateWidgets();
                     } else {
                         throw new Error();
                     }
@@ -688,6 +741,70 @@
             };
         })();
 
+        // --- Admin Session Timer & Clock ---
+        function updateWidgets() {
+            const timerEl = document.getElementById('admin-timer');
+            const clockEl = document.getElementById('admin-clock');
+            const dateEl = document.getElementById('admin-date');
+            const modal = document.getElementById('adminLoginModal');
+
+            if (!timerEl || !clockEl || !dateEl) return;
+
+            // Clock Update
+            const now = new Date();
+            const d = String(now.getDate()).padStart(2, '0');
+            const m = String(now.getMonth() + 1).padStart(2, '0');
+            const y = now.getFullYear();
+            const hh = String(now.getHours()).padStart(2, '0');
+            const mm = String(now.getMinutes()).padStart(2, '0');
+            
+            clockEl.innerText = `${hh}:${mm}`;
+            dateEl.innerText = `${d}.${m}.${y}`;
+
+            // Timer Update
+            const authTime = sessionStorage.getItem('admin_auth_time');
+            if (authTime) {
+                const elapsed = Date.now() - parseInt(authTime);
+                const remaining = 600000 - elapsed; // 10 minutes
+                
+                if (remaining > 0) {
+                    const rMin = Math.floor(remaining / 60000);
+                    const rSec = Math.floor((remaining % 60000) / 1000);
+                    timerEl.innerText = `${String(rMin).padStart(2, '0')}m:${String(rSec).padStart(2, '0')}s`;
+                    
+                    // Warning colors based on time left
+                    if (remaining < 60000) {
+                        timerEl.style.color = '#EF4444'; // Red if < 1 min
+                        timerEl.style.textShadow = '0 0 10px rgba(239, 68, 68, 0.4)';
+                    } else if (remaining < 180000) {
+                        timerEl.style.color = '#F59E0B'; // Orange if < 3 mins
+                        timerEl.style.textShadow = '0 0 10px rgba(245, 158, 11, 0.4)';
+                    } else {
+                        timerEl.style.color = '#10B981'; // Green
+                        timerEl.style.textShadow = '0 0 10px rgba(16, 185, 129, 0.3)';
+                    }
+                } else {
+                    timerEl.innerText = `00m:00s`;
+                    timerEl.style.color = '#EF4444';
+                    // Auto-lock panel when time expires
+                    if (modal && modal.style.display === 'none') {
+                        modal.style.display = 'flex';
+                        setTimeout(() => modal.style.opacity = '1', 10);
+                        sessionStorage.removeItem('admin_auth_time'); // Clear expired session
+                    }
+                }
+            } else {
+                timerEl.innerText = `--m:--s`;
+                timerEl.style.color = '#64748B';
+                timerEl.style.textShadow = 'none';
+            }
+        }
+        
+        // Init and set interval for widgets
+        updateWidgets();
+        setInterval(updateWidgets, 1000);
+
+
         // --- GLOBAL STATE ---
         const store = {
             products: {},
@@ -695,6 +812,87 @@
             projects: {},
             team: {}
         };
+
+        const galleryState = { p: [], sp: [] };
+
+        function handleMainImagePreview(e, previewId) {
+            const file = e.target.files[0];
+            const previewContainer = document.getElementById(previewId);
+            if (file) {
+                previewContainer.innerHTML = `
+                    <div style="position:relative; width:60px; height:60px; border-radius:6px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); margin-top:10px;">
+                        <img src="${URL.createObjectURL(file)}" style="width:100%; height:100%; object-fit:cover; cursor:zoom-in;" onclick="openAdminLightbox(this.src)">
+                    </div>
+                `;
+            } else {
+                previewContainer.innerHTML = '';
+            }
+        }
+
+        function handleGalleryFiles(e, type) {
+            const files = Array.from(e.target.files);
+            galleryState[type].push(...files);
+            renderGalleryPreview(type);
+            e.target.value = ''; // clear input so same files can be re-selected
+        }
+
+        function renderGalleryPreview(type) {
+            const preview = document.getElementById(type + '_gallery_preview');
+            const actions = document.getElementById(type + '_gallery_actions');
+            if (galleryState[type].length === 0) {
+                preview.innerHTML = '';
+                actions.style.display = 'none';
+                return;
+            }
+            actions.style.display = 'flex';
+            preview.innerHTML = galleryState[type].map((file, i) => `
+                <div style="position:relative; width:60px; height:60px; border-radius:6px; overflow:hidden; border:1px solid rgba(255,255,255,0.1);">
+                    <input type="checkbox" class="${type}-gal-check" value="${i}" style="position:absolute; top:2px; left:2px; width:12px; height:12px; z-index:2; cursor:pointer;" onclick="event.stopPropagation()">
+                    <img src="${URL.createObjectURL(file)}" style="width:100%; height:100%; object-fit:cover; cursor:zoom-in;" onclick="openAdminLightbox(this.src)">
+                    <button type="button" onclick="removeGalleryItem('${type}', ${i})" style="position:absolute; top:2px; right:2px; background:rgba(239,68,68,0.9); border:none; border-radius:4px; color:white; width:16px; height:16px; font-size:10px; cursor:pointer; display:flex; align-items:center; justify-content:center; z-index:2;"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            `).join('');
+            document.getElementById(type + '_gal_select_all').checked = false;
+        }
+
+        function removeGalleryItem(type, index) {
+            galleryState[type].splice(index, 1);
+            renderGalleryPreview(type);
+        }
+
+        function toggleGallerySelectAll(type, checked) {
+            document.querySelectorAll(`.${type}-gal-check`).forEach(c => c.checked = checked);
+        }
+
+        function deleteSelectedGallery(type) {
+            const checkboxes = Array.from(document.querySelectorAll(`.${type}-gal-check`));
+            for (let i = checkboxes.length - 1; i >= 0; i--) {
+                if (checkboxes[i].checked) {
+                    galleryState[type].splice(i, 1);
+                }
+            }
+            renderGalleryPreview(type);
+        }
+
+        function clearGallery(type) {
+            galleryState[type] = [];
+            renderGalleryPreview(type);
+        }
+
+        function openAdminLightbox(src) {
+            const existing = document.getElementById('admin-lightbox');
+            if (existing) existing.remove();
+            const lb = document.createElement('div');
+            lb.id = 'admin-lightbox';
+            lb.style.cssText = 'position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:10000; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(10px); cursor:zoom-out;';
+            lb.innerHTML = `
+                <img src="${src}" style="max-width:90vw; max-height:90vh; object-fit:contain; border-radius:10px; box-shadow:0 10px 50px rgba(0,0,0,0.8);" onclick="event.stopPropagation()">
+                <button style="position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.1); border:none; color:white; font-size:24px; width:44px; height:44px; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center;"><i class="fa-solid fa-xmark"></i></button>
+            `;
+            lb.onclick = () => lb.remove();
+            lb.querySelector('button').onclick = () => lb.remove();
+            document.body.appendChild(lb);
+        }
 
         // --- TAB SWITCHING LOGIC ---
         function switchTab(tab, el) {
@@ -865,6 +1063,29 @@
                     });
                 }
             }
+            
+            // Show existing main image
+            document.getElementById('p_main_preview').innerHTML = p.image_url ? `
+                <div style="margin-top:10px; color:#94A3B8; font-size:12px;">Текущее:</div>
+                <div style="position:relative; width:60px; height:60px; border-radius:6px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); margin-top:5px;">
+                    <img src="${p.image_url}" style="width:100%; height:100%; object-fit:cover; cursor:zoom-in;" onclick="openAdminLightbox(this.src)">
+                </div>
+            ` : '';
+            
+            // Show existing gallery images
+            clearGallery('p'); // clear unsaved selections
+            const existingGal = p.gallery_urls ? p.gallery_urls.split(';').filter(Boolean) : [];
+            const exContainer = document.getElementById('p_existing_gallery');
+            if(existingGal.length > 0) {
+                exContainer.innerHTML = `
+                    <div style="width:100%; color:#94A3B8; font-size:12px; margin-bottom:5px;">Текущая галерея на сервере (будут сохранены):</div>
+                    ${existingGal.map(url => `
+                        <div style="position:relative; width:60px; height:60px; border-radius:6px; overflow:hidden; border:1px solid rgba(255,255,255,0.1);">
+                            <img src="${url}" style="width:100%; height:100%; object-fit:cover; cursor:zoom-in;" onclick="openAdminLightbox(this.src)">
+                        </div>
+                    `).join('')}
+                `;
+            } else { exContainer.innerHTML = ''; }
         }
 
         async function handleSave(e) {
@@ -892,12 +1113,10 @@
             formData.append('specifications', specs.join(';'));
             const file = document.getElementById('p_file').files[0];
             if(file) formData.append('image', file);
-            // Append gallery images
-            const galleryFiles = document.getElementById('p_gallery').files;
-            for (let i = 0; i < galleryFiles.length; i++) {
-                formData.append('gallery', galleryFiles[i]);
-            }
-            if (id && galleryFiles.length > 0) formData.append('gallery_append', 'true');
+            // Append gallery images from state
+            galleryState.p.forEach(file => formData.append('gallery', file));
+            if (id && galleryState.p.length > 0) formData.append('gallery_append', 'true');
+            
             const url = id ? `/api/products/${id}` : '/api/products';
             const method = id ? 'PUT' : 'POST';
             try {
@@ -909,6 +1128,9 @@
                     document.getElementById('formTitle').innerText = "Добавить новый товар";
                     const sc = document.getElementById('spec-container');
                     if(sc) sc.innerHTML = '';
+                    document.getElementById('p_main_preview').innerHTML = ''; // Reset main image preview
+                    document.getElementById('p_existing_gallery').innerHTML = ''; // Clear server gallery preview
+                    clearGallery('p'); // Reset gallery preview
                     loadProducts();
                 } else {
                     const err = await res.json();
@@ -1014,17 +1236,53 @@
             document.getElementById('sp_compatibility').value = sp.compatibility || '';
             document.getElementById('sp_price').value = sp.price;
             document.getElementById('sp_stock').value = sp.stock_count;
+            
+            // Show existing main image
+            document.getElementById('sp_main_preview').innerHTML = sp.image_url ? `
+                <div style="margin-top:10px; color:#94A3B8; font-size:12px;">Текущее:</div>
+                <div style="position:relative; width:60px; height:60px; border-radius:6px; overflow:hidden; border:1px solid rgba(255,255,255,0.1); margin-top:5px;">
+                    <img src="${sp.image_url}" style="width:100%; height:100%; object-fit:cover; cursor:zoom-in;" onclick="openAdminLightbox(this.src)">
+                </div>
+            ` : '';
+            
+            // Show existing gallery images
+            clearGallery('sp'); // clear unsaved selections
+            const existingGal = sp.gallery_urls ? sp.gallery_urls.split(';').filter(Boolean) : [];
+            const exContainer = document.getElementById('sp_existing_gallery');
+            if(existingGal.length > 0) {
+                exContainer.innerHTML = `
+                    <div style="width:100%; color:#94A3B8; font-size:12px; margin-bottom:5px;">Текущая галерея на сервере (будут сохранены):</div>
+                    ${existingGal.map(url => `
+                        <div style="position:relative; width:60px; height:60px; border-radius:6px; overflow:hidden; border:1px solid rgba(255,255,255,0.1);">
+                            <img src="${url}" style="width:100%; height:100%; object-fit:cover; cursor:zoom-in;" onclick="openAdminLightbox(this.src)">
+                        </div>
+                    `).join('')}
+                `;
+            } else { exContainer.innerHTML = ''; }
         }
 
         async function handleSpareSave(e) {
             e.preventDefault();
             const id = document.getElementById('sp_id').value;
             const formData = new FormData(e.target);
+            
+            // Append gallery images from state
+            galleryState.sp.forEach(file => formData.append('gallery', file));
+            if (id && galleryState.sp.length > 0) formData.append('gallery_append', 'true');
+
             const url = id ? `/api/spare-parts/${id}` : '/api/spare-parts';
             const method = id ? 'PUT' : 'POST';
             try {
                 const res = await fetch(url, { method, body: formData });
-                if(res.ok) { alert("Сохранено!"); e.target.reset(); document.getElementById('sp_id').value = ''; loadSpareParts(); }
+                if(res.ok) { 
+                    alert("Сохранено!"); 
+                    e.target.reset(); 
+                    document.getElementById('sp_id').value = ''; 
+                    document.getElementById('sp_main_preview').innerHTML = ''; // Reset main image preview
+                    document.getElementById('sp_existing_gallery').innerHTML = ''; // Clear server gallery preview
+                    clearGallery('sp'); // Reset gallery preview
+                    loadSpareParts(); 
+                }
             } catch (err) { alert("Ошибка"); }
         }
 
@@ -1147,18 +1405,38 @@
         function editFAQ(id, q, a) {
             document.getElementById('faq_id').value = id;
             document.getElementById('faq_question').value = q;
-            document.getElementById('faq_answer').value = a;
+            document.getElementById('faq_answer').value = a.replace(/\\n/g, '\n');
+            document.getElementById('faqFormTitle').innerText = 'Редактировать FAQ #' + id;
+            document.getElementById('faqForm').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.getElementById('faq_question').focus();
+        }
+
+        async function deleteFAQ(id) {
+            if (!confirm('Удалить этот FAQ?')) return;
+            try {
+                const res = await fetch(`/api/faqs/${id}`, { method: 'DELETE' });
+                if (res.ok) { loadAdminFAQs(); }
+                else { alert('Ошибка при удалении'); }
+            } catch (err) { alert('Ошибка соединения'); }
         }
 
         async function handleFAQSave(e) {
             e.preventDefault();
             const id = document.getElementById('faq_id').value;
-            const q = document.getElementById('faq_question').value;
-            const a = document.getElementById('faq_answer').value;
+            const q = document.getElementById('faq_question').value.trim();
+            const a = document.getElementById('faq_answer').value.trim();
+            if (!q || !a) return alert('Заполните все поля!');
             const url = id ? `/api/faqs/${id}` : '/api/faqs';
             const method = id ? 'PUT' : 'POST';
-            await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: q, answer: a }) });
-            e.target.reset(); document.getElementById('faq_id').value = ''; loadAdminFAQs();
+            try {
+                const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ question: q, answer: a }) });
+                if (res.ok) {
+                    e.target.reset();
+                    document.getElementById('faq_id').value = '';
+                    document.getElementById('faqFormTitle').innerText = 'Добавить вопрос (FAQ)';
+                    loadAdminFAQs();
+                } else { alert('Ошибка сохранения'); }
+            } catch (err) { alert('Ошибка соединения'); }
         }
 
         function toggleSelectAll(s) { document.querySelectorAll('.p-check').forEach(c => c.checked = s.checked); }
