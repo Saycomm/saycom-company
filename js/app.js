@@ -613,7 +613,7 @@ function updateHeaderCounts() {
         // Update UI
         const cabinetText = currentLang === 'ru' ? 'Личный кабинет' : (currentLang === 'kz' ? 'Жеке кабинет' : 'Personal Cabinet');
         userAction.innerHTML = `
-            <div style="width: 32px; height: 32px; border-radius: 50%; background: ${randomColor}; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:white; margin-right:8px; box-shadow: 0 0 15px ${randomColor}44;">${initials}</div>
+            <div class="user-avatar-initials" style="width: 32px; height: 32px; border-radius: 50%; background: ${randomColor}; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; color:white; margin-right:8px; box-shadow: 0 0 15px ${randomColor}44;">${initials}</div>
             <div style="text-align: left; line-height:1.2;">
                 <div style="font-size:13px; font-weight:700; color:white;">${(user.display_name || user.full_name).toUpperCase()}</div>
                 <div style="font-size:11px; color:var(--text-muted); font-weight: 500;">${cabinetText}</div>

@@ -329,6 +329,77 @@
             }
         }
     </style>
+    
+
+    <!-- Mobile Nav Fix -->
+    <style>
+        /* --- Mobile Responsiveness Improved --- */
+        @media (max-width: 768px) {
+            /* Scrollable Navigation */
+            
+            
+            
+
+            
+            
+
+            /* Category Hero resizing */
+            .category-hero {
+                flex-direction: column !important;
+                text-align: center !important;
+                padding-bottom: 20px !important;
+            }
+            .cat-hero-text h1 {
+                font-size: 28px !important;
+                margin: 10px 0 !important;
+            }
+            .cat-hero-img {
+                width: 100% !important;
+                height: 150px !important;
+                margin-top: 20px;
+            }
+
+            /* Shop Layout */
+            .shop-layout {
+                flex-direction: column !important;
+            }
+            .shop-sidebar {
+                width: 100% !important;
+                margin-bottom: 30px;
+            }
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
+                gap: 15px !important;
+            }
+            .product-card {
+                padding: 15px !important;
+            }
+            .p-title {
+                font-size: 14px !important;
+            }
+            .p-price {
+                font-size: 16px !important;
+            }
+            
+            /* Footer stacking */
+            .footer .container {
+                flex-direction: column !important;
+            }
+            .footer-left, .footer-right {
+                width: 100% !important;
+                padding: 20px !important;
+                border: none !important;
+            }
+            .footer-right > div {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 20px !important;
+            }
+        }
+    </style>
+
+            <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2">
+    <link rel="icon" type="image/png" href="/uploads/icon_premium_v2.png">
+    <link rel="apple-touch-icon" href="/uploads/icon_premium_v2.png">
 </head>
 
 <body>
@@ -528,12 +599,12 @@
         <div class="container" style="max-width: 800px; margin: 0 auto;">
             <p id="dyn_desc" style="color: var(--text-muted); font-size: 16px; line-height: 1.8; margin-bottom: 40px; text-align: center;">Загрузка описания...</p>
             
-            <div style="background: rgba(255,255,255,0.02); padding: 40px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
-                <h2 style="margin-bottom: 25px; font-size: 24px; color: white; display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-list-check" style="color: var(--primary);"></i> Прайс-лист на работы</h2>
+            <div class="price-list-card">
+                <h2 class="price-list-title"><i class="fa-solid fa-list-check" style="color: var(--primary);"></i> Прайс-лист на работы</h2>
                 
-                <div style="display: flex; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); align-items: center;">
+                <div class="price-item-main">
                     <strong style="font-size: 18px; color: white;">Базовая установка:</strong>
-                    <span id="dyn_base_price" style="font-size: 22px; color: var(--primary); font-weight: 800; background: rgba(16, 185, 129, 0.1); padding: 8px 16px; border-radius: 8px;">... ₸</span>
+                    <span id="dyn_base_price" class="price-badge">... ₸</span>
                 </div>
                 
                 <div id="dyn_options" style="margin-top: 30px;">
@@ -541,7 +612,7 @@
                 </div>
                 
                 <div style="margin-top: 40px; text-align: center;">
-                    <button class="btn btn-primary" style="width: 100%; justify-content: center; padding: 18px; font-size: 16px;" onclick="window.location.href='/contact.html'">Заказать выезд инженера</button>
+                    <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="window.location.href='contact.html'">ЗАКАЗАТЬ ВЫЕЗД ИНЖЕНЕРА</button>
                 </div>
             </div>
         </div>
@@ -559,12 +630,12 @@
                 
                 if (data.options && data.options.length > 0) {
                     const optsHtml = data.options.map(opt => `
-                        <div style="display: flex; justify-content: space-between; padding: 16px 0; border-bottom: 1px dashed rgba(255,255,255,0.05); color: #94A3B8; align-items: center; transition: 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='transparent'">
-                            <span style="font-size: 15px;">${opt.name}</span>
-                            <span style="color: white; font-weight: 600; font-family: 'Courier New', monospace; font-size: 15px;">+${new Intl.NumberFormat('ru-RU').format(opt.price)} ₸</span>
+                        <div class="price-option-row">
+                            <span class="price-option-name">${opt.name}</span>
+                            <span class="price-option-val">+${new Intl.NumberFormat('ru-RU').format(opt.price)} ₸</span>
                         </div>
                     `).join('');
-                    document.getElementById('dyn_options').innerHTML = '<h3 style="margin: 0 0 20px; font-size: 16px; color: #64748B; text-transform: uppercase; letter-spacing: 1px;">Дополнительные работы:</h3>' + optsHtml;
+                    document.getElementById('dyn_options').innerHTML = '<h3 class="price-options-title">Дополнительные работы:</h3>' + optsHtml;
                 } else {
                     document.getElementById('dyn_options').innerHTML = '';
                 }

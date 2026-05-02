@@ -1,10 +1,14 @@
-<!DOCTYPE html><html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="site_title">SAYCOM - Product Details</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <style>
@@ -104,6 +108,17 @@
             margin-bottom: 15px;
             line-height: 1.2;
             letter-spacing: -0.5px;
+        }
+
+        @media (max-width: 768px) {
+            .p-name {
+                font-size: 22px !important;
+                letter-spacing: -0.3px !important;
+            }
+
+            .p-price-big {
+                font-size: 24px !important;
+            }
         }
 
         .p-meta {
@@ -373,235 +388,266 @@
 
         /* Mobile Responsiveness for Product Page "WOW" factor */
         @media (max-width: 768px) {
-            .top-bar, .header, .main-nav, footer {
+
+            .top-bar,
+            .header,
+            .main-nav,
+            .sub-nav,
+            footer {
                 display: none !important;
             }
+
             .mobile-app-header {
-                display: flex;
+                display: flex !important;
                 justify-content: space-between;
                 align-items: center;
                 padding: 10px 20px;
-                background: rgba(13, 20, 33, 0.85); 
+                background: rgba(13, 20, 33, 0.85);
                 backdrop-filter: blur(25px);
                 -webkit-backdrop-filter: blur(25px);
                 position: sticky;
                 top: 0;
                 z-index: 9999;
-                border-bottom: 1px dotted rgba(255,255,255,0.1);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             }
+
             .app-back-btn {
-                width: 44px;
-                height: 44px;
-                border-radius: 14px;
-                background: rgba(255,255,255,0.05);
+                width: 40px;
+                height: 40px;
+                border-radius: 12px;
+                background: rgba(255, 255, 255, 0.05);
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 color: white;
-                font-size: 16px;
-                border: 1px solid rgba(255,255,255,0.05);
-                transition: 0.2s;
             }
+
             .app-logo {
                 display: flex;
                 align-items: center;
                 gap: 8px;
             }
-            .app-logo .logo-icon {
-                background: var(--primary);
-                color: white;
-                width: 32px;
-                height: 32px;
-                border-radius: 8px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                font-weight: 800;
-                font-size: 14px;
-                box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-            }
+
             .app-logo .logo-title {
                 color: white;
                 font-weight: 800;
                 font-size: 16px;
-                letter-spacing: 0.5px;
             }
+
             .app-home-btn {
-                width: 44px;
-                height: 44px;
-                border-radius: 14px;
-                background: transparent;
+                width: 40px;
+                height: 40px;
+                color: var(--text-muted);
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                color: var(--text-muted);
-                font-size: 16px;
             }
-            
+
             .product-page {
-                padding-top: 15px !important;
-                padding-bottom: 120px !important;
-                overflow-x: hidden;
-                padding-left: 20px !important;
-                padding-right: 20px !important;
-            }
-            .breadcrumb {
                 padding-top: 10px !important;
-                margin-bottom: 20px !important;
-                flex-wrap: nowrap !important;
-                white-space: nowrap;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                padding-bottom: 5px;
-                scrollbar-width: none;
+                padding-bottom: 100px !important;
+                padding-left: 15px !important;
+                padding-right: 15px !important;
             }
-            .breadcrumb::-webkit-scrollbar {
-                display: none;
+
+            .breadcrumb {
+                padding-top: 5px !important;
+                margin-bottom: 15px !important;
+                font-size: 11px !important;
             }
+
             .product-main-grid {
+                display: block;
                 grid-template-columns: 1fr;
                 gap: 20px;
-                margin-bottom: 20px;
-                padding: 0;
             }
-            .gallery-container {
-                width: 100%;
-                max-width: 100%;
-            }
+
             .main-img-wrap {
-                width: 100% !important;
-                height: 320px;
-                padding: 20px;
-                border-radius: 20px;
-                background: rgba(255, 255, 255, 0.02);
-                border: 1px solid rgba(255, 255, 255, 0.05);
-            }
-            .thumb-grid {
-                width: 100% !important;
-                padding: 10px 0;
+                height: 300px !important;
+                padding: 15px !important;
+                border-radius: 20px !important;
+                background: rgba(255, 255, 255, 0.04) !important;
+                border: 1px solid rgba(255, 255, 255, 0.08) !important;
                 display: flex !important;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                gap: 12px;
-                scrollbar-width: none;
-                justify-content: flex-start;
+                align-items: center;
+                justify-content: center;
             }
+
+            .main-img-wrap img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+                filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+            }
+
+            .thumb-grid {
+                display: flex !important;
+                overflow-x: auto !important;
+                gap: 10px !important;
+                padding: 5px 0 15px !important;
+                scrollbar-width: none;
+            }
+
             .thumb-grid::-webkit-scrollbar {
                 display: none;
             }
+
             .thumb {
-                flex: 0 0 70px;
-                height: 70px;
-                border-radius: 12px;
+                flex: 0 0 65px !important;
+                height: 65px !important;
+                border-radius: 10px !important;
             }
+
             .p-name {
-                font-size: 26px;
-                margin-bottom: 15px;
-                line-height: 1.25;
+                font-size: 24px !important;
+                margin-bottom: 10px !important;
             }
-            .p-meta {
-                flex-wrap: wrap;
-                gap: 12px;
-                font-size: 13px;
-                margin-bottom: 20px;
-                padding-bottom: 20px;
-                border-bottom: 1px solid rgba(255,255,255,0.05);
-            }
+
             .p-price-big {
-                font-size: 34px;
-                margin-bottom: 15px;
-                letter-spacing: -1px;
+                font-size: 26px !important;
+                margin-bottom: 15px !important;
             }
+
             .qty-row {
-                background: rgba(255,255,255,0.02);
-                border: 1px solid var(--border-color);
-                border-radius: 12px;
-                padding: 15px;
-                justify-content: space-between;
-                margin-bottom: 30px;
+                margin-bottom: 20px !important;
             }
-            .qty-input {
-                background: transparent;
-                border: none;
-            }
-            .qty-btn {
-                background: rgba(255,255,255,0.05);
-                border-radius: 8px;
-            }
-            .qty-num {
-                font-size: 16px;
-            }
+
             .action-btns {
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                padding: 15px 20px 25px;
-                background: rgba(13, 20, 33, 0.85);
-                backdrop-filter: blur(25px);
-                -webkit-backdrop-filter: blur(25px);
-                border-top: 1px solid rgba(255,255,255,0.08);
-                z-index: 9999;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                background: rgba(13, 20, 33, 0.9) !important;
+                backdrop-filter: blur(25px) !important;
+                -webkit-backdrop-filter: blur(25px) !important;
+                padding: 15px 20px 25px !important;
+                display: flex !important;
+                flex-direction: row !important;
+                /* Keep horizontal on mobile if possible, or stack */
+                gap: 12px !important;
+                z-index: 10000 !important;
+                border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+                box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5) !important;
             }
+
             .btn-buy {
-                flex: 1;
-                font-size: 16px;
-                padding: 16px;
-                border-radius: 14px;
-                box-shadow: 0 5px 20px rgba(16, 185, 129, 0.3);
+
+                font-size: 12px !important;
+                font-weight: 700 !important;
+                border-radius: 12px !important;
             }
+
             .action-btns .btn-outline {
-                width: 54px !important;
-                height: 54px !important;
-                border-radius: 14px !important;
-                flex-shrink: 0;
-                background: rgba(255,255,255,0.05) !important;
-                border-color: rgba(255,255,255,0.1) !important;
+                width: 50px !important;
+                height: 50px !important;
+                border-radius: 12px !important;
+                flex-shrink: 0 !important;
             }
+
             .tab-nav {
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                padding-bottom: 12px;
-                gap: 25px;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
+                display: flex !important;
+                overflow-x: auto !important;
+                white-space: nowrap !important;
+                gap: 20px !important;
+                padding-bottom: 10px !important;
+                border-bottom: 1px solid var(--border-color) !important;
             }
+
             .tab-nav::-webkit-scrollbar {
                 display: none;
             }
+
             .tab-link {
-                white-space: nowrap;
-                font-size: 15px;
+                font-size: 13px !important;
+                padding: 8px 0 !important;
             }
+
             .specs-grid {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            .spec-item {
-                padding: 12px 18px;
-            }
-            .reviews-summary {
-                flex-direction: column;
-                gap: 20px;
-                padding: 24px;
-            }
-            .rv-big-score {
-                border-right: none;
-                border-bottom: 1px dotted rgba(255,255,255,0.1);
-                padding-right: 0;
-                padding-bottom: 25px;
-            }
-            #shareMenu > div {
-                margin: 20px;
-                padding: 25px;
-                width: calc(100% - 40px);
+                grid-template-columns: 1fr !important;
             }
         }
     </style>
+
+
+    <!-- Mobile Nav Fix -->
+    <style>
+        /* --- Mobile Responsiveness Improved --- */
+        @media (max-width: 768px) {
+            /* Scrollable Navigation */
+
+
+
+
+
+
+
+            /* Category Hero resizing */
+            .category-hero {
+                flex-direction: column !important;
+                text-align: center !important;
+                padding-bottom: 20px !important;
+            }
+
+            .cat-hero-text h1 {
+                font-size: 28px !important;
+                margin: 10px 0 !important;
+            }
+
+            .cat-hero-img {
+                width: 100% !important;
+                height: 150px !important;
+                margin-top: 20px;
+            }
+
+            /* Shop Layout */
+            .shop-layout {
+                flex-direction: column !important;
+            }
+
+            .shop-sidebar {
+                width: 100% !important;
+                margin-bottom: 30px;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
+                gap: 15px !important;
+            }
+
+            .product-card {
+                padding: 15px !important;
+            }
+
+            .p-title {
+                font-size: 14px !important;
+            }
+
+            .p-price {
+                font-size: 16px !important;
+            }
+
+            /* Footer stacking */
+            .footer .container {
+                flex-direction: column !important;
+            }
+
+            .footer-left,
+            .footer-right {
+                width: 100% !important;
+                padding: 20px !important;
+                border: none !important;
+            }
+
+            .footer-right>div {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 20px !important;
+            }
+        }
+    </style>
+
+            <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2">
+    <link rel="icon" type="image/png" href="/uploads/icon_premium_v2.png">
+    <link rel="apple-touch-icon" href="/uploads/icon_premium_v2.png">
 </head>
 
 <body>
@@ -611,7 +657,8 @@
             <i class="fa-solid fa-chevron-left"></i>
         </a>
         <div class="app-logo">
-            <img src="uploads/icon_premium_v2.png" alt="SAYCOM Logo" style="width: 40px; height: 40px; border-radius: 8px; object-fit: contain;">
+            <img src="uploads/icon_premium_v2.png" alt="SAYCOM Logo"
+                style="width: 40px; height: 40px; border-radius: 8px; object-fit: contain;">
             <div class="logo-title" data-i18n="auto_product_0">SAYCOM</div>
         </div>
         <a href="/index" class="app-home-btn">
@@ -620,14 +667,19 @@
     </div>
 
     <!-- Top Bar -->
-    <div class="top-bar" style="background: var(--bg-light); border-bottom: 1px solid var(--border-color); padding: 12px 0; font-size: 13px; color: var(--text-muted);">
-        <div class="container top-bar-container" style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-weight: 500;"><i class="fa-solid fa-truck" style="color: var(--primary); margin-right:4px;"></i> <span data-i18n="top_bar_delivery">Бесплатная
-                    доставка при заказе от <span style="color: var(--primary); font-weight: 700;" data-i18n="auto_product_1">250 000
+    <div class="top-bar"
+        style="background: var(--bg-light); border-bottom: 1px solid var(--border-color); padding: 12px 0; font-size: 13px; color: var(--text-muted);">
+        <div class="container top-bar-container"
+            style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-weight: 500;"><i class="fa-solid fa-truck"
+                    style="color: var(--primary); margin-right:4px;"></i> <span data-i18n="top_bar_delivery">Бесплатная
+                    доставка при заказе от <span style="color: var(--primary); font-weight: 700;"
+                        data-i18n="auto_product_1">250 000
                         ₸</span></span></div>
             <div class="top-lang" style="display: flex; align-items: center; gap: 6px;">
                 <i class="fa-solid fa-globe" style="color: var(--text-muted); font-size: 12px;"></i>
-                <select class="lang-select" id="lang-switch" onchange="setLanguage(this.value)" style="background: transparent; border: none; color: white; outline: none; cursor: pointer; font-weight: 600; font-family: 'Inter', sans-serif;">
+                <select class="lang-select" id="lang-switch" onchange="setLanguage(this.value)"
+                    style="background: transparent; border: none; color: white; outline: none; cursor: pointer; font-weight: 600; font-family: 'Inter', sans-serif;">
                     <option value="ru" data-i18n="auto_product_2">Русский</option>
                     <option value="en" data-i18n="auto_product_3">English</option>
                     <option value="kz" data-i18n="auto_product_4">Қазақша</option>
@@ -637,39 +689,58 @@
     </div>
 
     <!-- Header -->
-    <header class="header" style="background: var(--bg-light); border-bottom: 1px solid var(--border-color); padding: 20px 0;">
-        <div class="container header-container" style="display: flex; justify-content: space-between; align-items: center;">
-            <div class="logo" style="display: flex; align-items: center; gap: 12px; cursor: pointer;" onclick="window.location.href='index.html'">
-                <img src="uploads/icon_premium_v2.png" alt="SAYCOM Logo" style="width: 40px; height: 40px; border-radius: 8px; object-fit: contain;">
+    <header class="header"
+        style="background: var(--bg-light); border-bottom: 1px solid var(--border-color); padding: 20px 0;">
+        <div class="container header-container"
+            style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo" style="display: flex; align-items: center; gap: 12px; cursor: pointer;"
+                onclick="window.location.href='index.html'">
+                <img src="uploads/icon_premium_v2.png" alt="SAYCOM Logo"
+                    style="width: 40px; height: 40px; border-radius: 8px; object-fit: contain;">
                 <div class="logo-text">
-                    <div class="logo-title" style="font-weight: 700; font-size: 18px; color: white;" data-i18n="auto_product_5">SAYCOM</div>
-                    <div class="logo-subtitle" data-i18n="premium_solutions" style="font-size: 12px; color: var(--text-muted); font-weight: 500;">Премиум Решения</div>
+                    <div class="logo-title" style="font-weight: 700; font-size: 18px; color: white;"
+                        data-i18n="auto_product_5">SAYCOM</div>
+                    <div class="logo-subtitle" data-i18n="premium_solutions"
+                        style="font-size: 12px; color: var(--text-muted); font-weight: 500;">Премиум Решения</div>
                 </div>
             </div>
 
             <div class="search-wrap" style="position: relative; width: 500px; flex-shrink: 1;">
-                <div class="search-bar" style="width: 100%; border: 1px solid var(--border-color); background: rgba(255,255,255,0.03); border-radius: 8px; padding: 10px 16px; display: flex; align-items: center; gap: 12px;">
+                <div class="search-bar"
+                    style="width: 100%; border: 1px solid var(--border-color); background: rgba(255,255,255,0.03); border-radius: 8px; padding: 10px 16px; display: flex; align-items: center; gap: 12px;">
                     <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted); font-size: 14px;"></i>
-                    <input type="text" id="global-search" data-i18n-placeholder="search_placeholder" placeholder="Поиск товаров..." style="border:none; background:transparent; width:100%; outline:none; color: white; font-size: 13.5px; font-weight: 500; font-family: 'Inter', sans-serif;">
-                    <span style="font-size: 11px; color: var(--text-muted); border: 1px solid var(--border-color); padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.02); font-weight: 600; white-space: nowrap;" data-i18n="auto_product_6">Ctrl
+                    <input type="text" id="global-search" data-i18n-placeholder="search_placeholder"
+                        placeholder="Поиск товаров..."
+                        style="border:none; background:transparent; width:100%; outline:none; color: white; font-size: 13.5px; font-weight: 500; font-family: 'Inter', sans-serif;">
+                    <span
+                        style="font-size: 11px; color: var(--text-muted); border: 1px solid var(--border-color); padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.02); font-weight: 600; white-space: nowrap;"
+                        data-i18n="auto_product_6">Ctrl
                         /</span>
                 </div>
             </div>
 
             <div class="header-actions" style="display: flex; gap: 12px; align-items: center;">
-                <div class="action-btn" style="display:flex; align-items:center; gap:12px; background: rgba(255,255,255,0.04); padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.2s; border: 1px solid transparent;">
+                <div class="action-btn"
+                    style="display:flex; align-items:center; gap:12px; background: rgba(255,255,255,0.04); padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.2s; border: 1px solid transparent;">
                     <i class="fa-regular fa-user" style="font-size:16px; color: white;"></i>
                     <div style="text-align: left; line-height:1.2;">
-                        <div style="font-size:13px; font-weight:700; color:white;"><span data-i18n="auto_mixed_product_0">Личный кабинет </span><i class="fa-solid fa-chevron-down" style="font-size:10px; margin-left:2px; color: var(--text-muted);"></i></div>
-                        <div style="font-size:11px; color:var(--text-muted); font-weight: 500;" data-i18n="auto_product_7">Войти</div>
+                        <div style="font-size:13px; font-weight:700; color:white;"><span
+                                data-i18n="auto_mixed_product_0">Личный кабинет </span><i
+                                class="fa-solid fa-chevron-down"
+                                style="font-size:10px; margin-left:2px; color: var(--text-muted);"></i></div>
+                        <div style="font-size:11px; color:var(--text-muted); font-weight: 500;"
+                            data-i18n="auto_product_7">Войти</div>
                     </div>
                 </div>
-                <div class="action-btn" style="width: 40px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; color: white;">
+                <div class="action-btn"
+                    style="width: 40px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; color: white;">
                     <i class="fa-regular fa-heart" style="font-size:16px;"></i>
                 </div>
-                <div class="action-btn" style="position: relative; width: 40px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; color: white;">
+                <div class="action-btn"
+                    style="position: relative; width: 40px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; color: white;">
                     <i class="fa-solid fa-cart-shopping" style="font-size:16px;"></i>
-                    <span style="position: absolute; top: -6px; right: -6px; background: var(--primary); color: white; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; border: 2px solid var(--bg-light);">2</span>
+                    <span
+                        style="position: absolute; top: -6px; right: -6px; background: var(--primary); color: white; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; border: 2px solid var(--bg-light);">2</span>
                 </div>
             </div>
         </div>
@@ -680,49 +751,84 @@
         <div class="container mobile-search" style="display: none; margin-bottom: 20px;">
             <div class="search-bar" style="width: 100%; max-width: none;">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="mobile-global-search" placeholder="Search..." data-i18n-placeholder="auto_product_45">
+                <input type="text" id="mobile-global-search" placeholder="Search..."
+                    data-i18n-placeholder="auto_product_45">
             </div>
         </div>
         <div class="container nav-container" style="display:flex; gap: 35px; font-size: 14px; font-weight: 500;">
-            <a href="/all-products" data-i18n="nav_all_products" class="nav-link" data-filename="all-products.html" style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Все товары</a>
-            <a href="/wholesale" data-i18n="nav_wholesale" class="nav-link" data-filename="wholesale.html" style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Оптом</a>
-            <a href="/air-conditioners" data-i18n="nav_ac" class="nav-link" data-filename="air-conditioners.html" style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Кондиционеры</a>
-            <a href="/cctv-systems" data-i18n="nav_cctv" class="nav-link" data-filename="cctv-systems.html" style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Видеонаблюдение</a>
-            <a href="/automatic-gates" data-i18n="nav_gates" class="nav-link" data-filename="automatic-gates.html" style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Автоматические ворота</a>
-            <a href="/intercom-systems" data-i18n="nav_intercom" class="nav-link" data-filename="intercom-systems.html" style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Домофоны</a>
-            <a href="/spare-parts" data-i18n="nav_spare_parts" class="nav-link" data-filename="spare-parts.html" style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Запчасти</a>
-            <a href="/installation-services" data-i18n="nav_install" class="nav-link" data-filename="installation-services.html" style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Услуги монтажа</a>
-            <a href="/about-us" data-i18n="nav_about" class="nav-link" data-filename="about-us.html" style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">О нас</a>
-            <a href="/contact" data-i18n="nav_contact" class="nav-link" data-filename="contact.html" style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Контакты</a>
+            <a href="/all-products" data-i18n="nav_all_products" class="nav-link" data-filename="all-products.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Все
+                товары</a>
+            <a href="/wholesale" data-i18n="nav_wholesale" class="nav-link" data-filename="wholesale.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Оптом</a>
+            <a href="/air-conditioners" data-i18n="nav_ac" class="nav-link" data-filename="air-conditioners.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Кондиционеры</a>
+            <a href="/cctv-systems" data-i18n="nav_cctv" class="nav-link" data-filename="cctv-systems.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Видеонаблюдение</a>
+            <a href="/automatic-gates" data-i18n="nav_gates" class="nav-link" data-filename="automatic-gates.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Автоматические
+                ворота</a>
+            <a href="/intercom-systems" data-i18n="nav_intercom" class="nav-link" data-filename="intercom-systems.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Домофоны</a>
+            <a href="/spare-parts" data-i18n="nav_spare_parts" class="nav-link" data-filename="spare-parts.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Запчасти</a>
+            <a href="/installation-services" data-i18n="nav_install" class="nav-link"
+                data-filename="installation-services.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Услуги
+                монтажа</a>
+            <a href="/about-us" data-i18n="nav_about" class="nav-link" data-filename="about-us.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">О
+                нас</a>
+            <a href="/contact" data-i18n="nav_contact" class="nav-link" data-filename="contact.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Контакты</a>
         </div>
     </nav>
 
     <!-- Sub Navigation for Installations -->
-    <nav class="sub-nav" style="background: rgba(13, 20, 33, 0.5); border-bottom: 1px solid var(--border-color); padding: 10px 0;">
-        <div class="container" style="display: flex; gap: 20px; font-size: 13px; font-weight: 500; justify-content: center;">
-            <a href="/install-ac.html" data-i18n="subnav_ac" style="color: var(--text-muted); text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Установка кондиционеров</a>
+    <nav class="sub-nav"
+        style="background: rgba(13, 20, 33, 0.5); border-bottom: 1px solid var(--border-color); padding: 10px 0;">
+        <div class="container"
+            style="display: flex; gap: 20px; font-size: 13px; font-weight: 500; justify-content: center;">
+            <a href="/install-ac.html" data-i18n="subnav_ac"
+                style="color: var(--text-muted); text-decoration: none; transition: 0.2s;"
+                onmouseover="this.style.color='var(--primary)'"
+                onmouseout="this.style.color='var(--text-muted)'">Установка кондиционеров</a>
             <span style="color: var(--border-color);">|</span>
-            <a href="/install-cctv.html" data-i18n="subnav_cctv" style="color: var(--text-muted); text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Установка видеонаблюдения</a>
+            <a href="/install-cctv.html" data-i18n="subnav_cctv"
+                style="color: var(--text-muted); text-decoration: none; transition: 0.2s;"
+                onmouseover="this.style.color='var(--primary)'"
+                onmouseout="this.style.color='var(--text-muted)'">Установка видеонаблюдения</a>
             <span style="color: var(--border-color);">|</span>
-            <a href="/install-gates.html" data-i18n="subnav_gates" style="color: var(--text-muted); text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Установка автоматических ворот</a>
+            <a href="/install-gates.html" data-i18n="subnav_gates"
+                style="color: var(--text-muted); text-decoration: none; transition: 0.2s;"
+                onmouseover="this.style.color='var(--primary)'"
+                onmouseout="this.style.color='var(--text-muted)'">Установка автоматических ворот</a>
             <span style="color: var(--border-color);">|</span>
-            <a href="/install-intercom.html" data-i18n="subnav_intercom" style="color: var(--text-muted); text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Установка домофонов</a>
+            <a href="/install-intercom.html" data-i18n="subnav_intercom"
+                style="color: var(--text-muted); text-decoration: none; transition: 0.2s;"
+                onmouseover="this.style.color='var(--primary)'"
+                onmouseout="this.style.color='var(--text-muted)'">Установка домофонов</a>
         </div>
     </nav>
 
     <main class="container product-page">
-        <div class="breadcrumb" style="font-size: 13px; color: var(--text-muted); padding-top: 40px; margin-bottom: 40px; display: flex; align-items: center; gap: 8px;">
-            <a href="/index" style="color: inherit; transition:0.2s;" data-i18n="nav_home">Главная</a> <span style="margin: 0 5px; opacity: 0.5;">/</span>
-            <a id="bread-category-link" href="#" style="color: inherit; transition:0.2s;"><span id="bread-category" data-i18n="auto_product_8">Категория</span></a> <span style="margin: 0 5px; opacity: 0.5;">/</span>
+        <div class="breadcrumb"
+            style="font-size: 13px; color: var(--text-muted); padding-top: 40px; margin-bottom: 40px; display: flex; align-items: center; gap: 8px;">
+            <a href="/index" style="color: inherit; transition:0.2s;" data-i18n="nav_home">Главная</a> <span
+                style="margin: 0 5px; opacity: 0.5;">/</span>
+            <a id="bread-category-link" href="#" style="color: inherit; transition:0.2s;"><span id="bread-category"
+                    data-i18n="auto_product_8">Категория</span></a> <span style="margin: 0 5px; opacity: 0.5;">/</span>
             <span id="bread-title" style="color: white; font-weight: 600;" data-i18n="auto_product_9">Название</span>
         </div>
 
         <div class="product-main-grid">
             <!-- Left: Gallery -->
             <div class="gallery-container">
-                <div class="main-img-wrap" id="mainImageContainer" style="cursor:zoom-in;" onclick="openLightbox(document.getElementById('mainImage').src)">
+                <div class="main-img-wrap" id="mainImageContainer" style="cursor:zoom-in;"
+                    onclick="openLightbox(document.getElementById('mainImage').src)">
                     <img id="mainImage" src="" alt="Product">
-                    <div style="position:absolute; bottom:12px; right:12px; background:rgba(0,0,0,0.4); padding:5px 9px; border-radius:8px; font-size:11px; color:white; display:flex; align-items:center; gap:5px; pointer-events:none;">
+                    <div
+                        style="position:absolute; bottom:12px; right:12px; background:rgba(0,0,0,0.4); padding:5px 9px; border-radius:8px; font-size:11px; color:white; display:flex; align-items:center; gap:5px; pointer-events:none;">
                         <i class="fa-solid fa-magnifying-glass-plus"></i> Нажмите чтобы увеличить
                     </div>
                 </div>
@@ -732,15 +838,31 @@
             </div>
 
             <!-- Lightbox -->
-            <div id="lightbox" onclick="closeLightbox()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); backdrop-filter:blur(20px); z-index:99999; align-items:center; justify-content:center; padding:20px; cursor:zoom-out;">
-                <button onclick="closeLightbox()" style="position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.1); border:none; color:white; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px; z-index:2; display:flex; align-items:center; justify-content:center; transition:0.2s; backdrop-filter:blur(10px);">
+            <div id="lightbox" onclick="closeLightbox()"
+                style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92); backdrop-filter:blur(20px); z-index:99999; align-items:center; justify-content:center; padding:20px; cursor:zoom-out;">
+                <button onclick="closeLightbox()"
+                    style="position:absolute; top:20px; right:20px; background:rgba(255,255,255,0.1); border:none; color:white; width:44px; height:44px; border-radius:50%; cursor:pointer; font-size:20px; z-index:2; display:flex; align-items:center; justify-content:center; transition:0.2s; backdrop-filter:blur(10px);">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
-                <img id="lightboxImg" src="" onclick="event.stopPropagation()" style="max-width:95vw; max-height:90vh; object-fit:contain; border-radius:12px; box-shadow:0 30px 80px rgba(0,0,0,0.8); animation:lbFade 0.25s ease;">
+                <img id="lightboxImg" src="" onclick="event.stopPropagation()"
+                    style="max-width:95vw; max-height:90vh; object-fit:contain; border-radius:12px; box-shadow:0 30px 80px rgba(0,0,0,0.8); animation:lbFade 0.25s ease;">
             </div>
             <style>
-                @keyframes lbFade { from { opacity:0; transform:scale(0.93); } to { opacity:1; transform:scale(1); } }
-                .main-img-wrap { position: relative; }
+                @keyframes lbFade {
+                    from {
+                        opacity: 0;
+                        transform: scale(0.93);
+                    }
+
+                    to {
+                        opacity: 1;
+                        transform: scale(1);
+                    }
+                }
+
+                .main-img-wrap {
+                    position: relative;
+                }
             </style>
 
             <!-- Right: Details -->
@@ -749,24 +871,33 @@
                 <h1 id="pName" class="p-name" data-i18n="auto_product_11">Product Name</h1>
 
                 <div class="p-meta">
-                    <div class="rv-stars" id="pStars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></div>
+                    <div class="rv-stars" id="pStars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                            class="fa-solid fa-star-half-stroke"></i></div>
                     <span id="pRatingCount" data-i18n="auto_product_12">4.8 (142 reviews)</span>
-                    <span id="pSold" style="color: var(--primary); font-weight: 600;" data-i18n="auto_product_13">234 sold</span>
+                    <span id="pSold" style="color: var(--primary); font-weight: 600;" data-i18n="auto_product_13">234
+                        sold</span>
                 </div>
 
                 <div class="p-price-big">
                     <span id="pPrice" data-i18n="auto_product_14">0 ₸</span>
                     <span id="pOldPrice" class="p-old-price"></span>
-                    <span id="pSave" style="background: #EF4444; font-size: 11px; padding: 4px 8px; border-radius: 4px; color: white; font-weight: 700;" data-i18n="auto_product_15">SAVE
+                    <span id="pSave"
+                        style="background: #EF4444; font-size: 11px; padding: 4px 8px; border-radius: 4px; color: white; font-weight: 700;"
+                        data-i18n="auto_product_15">SAVE
                         15%</span>
                 </div>
 
-                <p id="pShortDesc" class="p-desc" data-i18n="auto_product_16">Профессиональное оборудование для вашей безопасности и комфорта.</p>
+                <p id="pShortDesc" class="p-desc" data-i18n="auto_product_16">Профессиональное оборудование для вашей
+                    безопасности и комфорта.</p>
 
                 <ul class="p-features">
-                    <li><i class="fa-solid fa-truck"></i><span data-i18n="auto_mixed_product_1"> Бесплатная доставка при заказе от 250 000 ₸</span></li>
-                    <li><i class="fa-solid fa-shield-check"></i><span data-i18n="auto_mixed_product_2"> Гарантия от производителя 3 года</span></li>
-                    <li><i class="fa-solid fa-clock"></i><span data-i18n="auto_mixed_product_3"> Доступны услуги профессионального монтажа</span></li>
+                    <li><i class="fa-solid fa-truck"></i><span data-i18n="auto_mixed_product_1"> Бесплатная доставка при
+                            заказе от 250 000 ₸</span></li>
+                    <li><i class="fa-solid fa-shield-halved"></i><span data-i18n="auto_mixed_product_2"> Гарантия от
+                            производителя 3 года</span></li>
+                    <li><i class="fa-solid fa-clock"></i><span data-i18n="auto_mixed_product_3"> Доступны услуги
+                            профессионального монтажа</span></li>
                 </ul>
 
                 <hr style="border: 0; border-top: 1px solid var(--border-color); margin-bottom: 30px;">
@@ -777,49 +908,74 @@
                         <div class="qty-num" id="qtyVal">1</div>
                         <div class="qty-btn" onclick="updateQty(1)"><i class="fa-solid fa-plus"></i></div>
                     </div>
-                    <div id="pStock" style="font-size: 14px; color: var(--text-muted); font-weight: 500;" data-i18n="auto_product_17">15 шт. в
+                    <div id="pStock" style="font-size: 14px; color: var(--text-muted); font-weight: 500;"
+                        data-i18n="auto_product_17">15 шт. в
                         наличии</div>
                 </div>
 
                 <div class="action-btns">
-                    <button class="btn btn-primary btn-buy" id="addToCartBtn"><i class="fa-solid fa-cart-shopping"></i><span data-i18n="auto_mixed_product_4">
-                        Добавить в корзину</span></button>
-                    <button class="btn btn-outline" id="wishlistBtn" style="width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; padding: 0;"><i class="fa-regular fa-heart" style="font-size: 20px;"></i></button>
-                    <button class="btn btn-outline" onclick="openShareMenu()" style="width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; padding: 0;"><i class="fa-solid fa-share-nodes" style="font-size: 20px;"></i></button>
+                    <button class="btn btn-primary btn-buy" id="addToCartBtn"><i
+                            class="fa-solid fa-cart-shopping"></i><span data-i18n="auto_mixed_product_4">
+                            Добавить в корзину</span></button>
+                    <button class="btn btn-outline" id="wishlistBtn"
+                        style="width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; padding: 0;"><i
+                            class="fa-regular fa-heart" style="font-size: 20px;"></i></button>
+                    <button class="btn btn-outline" onclick="openShareMenu()"
+                        style="width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; padding: 0;"><i
+                            class="fa-solid fa-share-nodes" style="font-size: 20px;"></i></button>
                 </div>
 
                 <!-- Custom Share Menu (Hidden by default) -->
-                <div id="shareMenu" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
-                    <div style="background:#101827; border:1px solid var(--border-color); border-radius:20px; padding:30px; width:100%; max-width:400px; position:relative;">
-                        <button onclick="closeShareMenu()" style="position:absolute; top:15px; right:15px; background:none; border:none; color:white; font-size:20px; cursor:pointer;">×</button>
-                        <h3 style="margin-bottom:25px; font-size:20px;" data-i18n="auto_product_18">Поделиться товаром</h3>
+                <div id="shareMenu"
+                    style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:1000; align-items:center; justify-content:center;">
+                    <div
+                        style="background:#101827; border:1px solid var(--border-color); border-radius:20px; padding:30px; width:100%; max-width:400px; position:relative;">
+                        <button onclick="closeShareMenu()"
+                            style="position:absolute; top:15px; right:15px; background:none; border:none; color:white; font-size:20px; cursor:pointer;">×</button>
+                        <h3 style="margin-bottom:25px; font-size:20px;" data-i18n="auto_product_18">Поделиться товаром
+                        </h3>
                         <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:15px; margin-bottom:25px;">
-                            <a id="share-tg" href="#" target="_blank" style="display:flex; flex-direction:column; align-items:center; gap:8px; text-decoration:none; color:white;">
-                                <div style="width:50px; height:50px; background:#229ED9; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px;">
-                                    <i class="fa-brands fa-telegram"></i></div>
+                            <a id="share-tg" href="#" target="_blank"
+                                style="display:flex; flex-direction:column; align-items:center; gap:8px; text-decoration:none; color:white;">
+                                <div
+                                    style="width:50px; height:50px; background:#229ED9; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px;">
+                                    <i class="fa-brands fa-telegram"></i>
+                                </div>
                                 <span style="font-size:11px;" data-i18n="auto_product_19">Telegram</span>
                             </a>
-                            <a id="share-wa" href="#" target="_blank" style="display:flex; flex-direction:column; align-items:center; gap:8px; text-decoration:none; color:white;">
-                                <div style="width:50px; height:50px; background:#25D366; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px;">
-                                    <i class="fa-brands fa-whatsapp"></i></div>
+                            <a id="share-wa" href="#" target="_blank"
+                                style="display:flex; flex-direction:column; align-items:center; gap:8px; text-decoration:none; color:white;">
+                                <div
+                                    style="width:50px; height:50px; background:#25D366; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px;">
+                                    <i class="fa-brands fa-whatsapp"></i>
+                                </div>
                                 <span style="font-size:11px;" data-i18n="auto_product_20">WhatsApp</span>
                             </a>
-                            <a id="share-ig" href="#" target="_blank" style="display:flex; flex-direction:column; align-items:center; gap:8px; text-decoration:none; color:white;">
-                                <div style="width:50px; height:50px; background:linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px;">
-                                    <i class="fa-brands fa-instagram"></i></div>
+                            <a id="share-ig" href="#" target="_blank"
+                                style="display:flex; flex-direction:column; align-items:center; gap:8px; text-decoration:none; color:white;">
+                                <div
+                                    style="width:50px; height:50px; background:linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px;">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </div>
                                 <span style="font-size:11px;" data-i18n="auto_product_21">Instagram</span>
                             </a>
-                            <div onclick="copyLink()" style="display:flex; flex-direction:column; align-items:center; gap:8px; cursor:pointer;">
-                                <div style="width:50px; height:50px; background:rgba(255,255,255,0.05); border:1px solid var(--border-color); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px;">
-                                    <i class="fa-solid fa-link"></i></div>
+                            <div onclick="copyLink()"
+                                style="display:flex; flex-direction:column; align-items:center; gap:8px; cursor:pointer;">
+                                <div
+                                    style="width:50px; height:50px; background:rgba(255,255,255,0.05); border:1px solid var(--border-color); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px;">
+                                    <i class="fa-solid fa-link"></i>
+                                </div>
                                 <span style="font-size:11px;" data-i18n="auto_product_22">Ссылка</span>
                             </div>
                         </div>
-                        <input type="text" id="share-url-input" readonly="" style="width:100%; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:8px; padding:10px; color:var(--text-muted); font-size:12px;">
+                        <input type="text" id="share-url-input" readonly=""
+                            style="width:100%; background:rgba(255,255,255,0.02); border:1px solid var(--border-color); border-radius:8px; padding:10px; color:var(--text-muted); font-size:12px;">
                     </div>
                 </div>
 
-                <button class="btn btn-outline" style="width: 100%; margin-top: 15px; border-radius: 12px; font-weight: 700; background: rgba(255,255,255,0.02); justify-content: center;" data-i18n="auto_product_23">Заказать
+                <button class="btn btn-outline"
+                    style="width: 100%; margin-top: 15px; border-radius: 12px; font-weight: 700; background: rgba(255,255,255,0.02); justify-content: center;"
+                    data-i18n="auto_product_23">Заказать
                     услугу монтажа</button>
             </div>
         </div>
@@ -829,7 +985,8 @@
             <div class="tab-nav">
                 <div class="tab-link active" onclick="switchTab('desc')" data-i18n="auto_product_24">Описание</div>
                 <div class="tab-link" onclick="switchTab('specs')" data-i18n="auto_product_25">Характеристики</div>
-                <div class="tab-link" onclick="switchTab('reviews')"><span data-i18n="auto_mixed_product_5">Отзывы </span><span id="reviewCount" data-i18n="auto_product_26">(0)</span></div>
+                <div class="tab-link" onclick="switchTab('reviews')"><span data-i18n="auto_mixed_product_5">Отзывы
+                    </span><span id="reviewCount" data-i18n="auto_product_26">(0)</span></div>
                 <div class="tab-link" onclick="switchTab('install')" data-i18n="auto_product_27">Монтаж</div>
             </div>
 
@@ -853,13 +1010,16 @@
                 </div>
 
                 <!-- Add Review Form -->
-                <div style="margin-top: 50px; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 20px; padding: 30px;">
+                <div
+                    style="margin-top: 50px; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 20px; padding: 30px;">
                     <h3 style="margin-bottom: 25px; font-size: 20px;" data-i18n="auto_product_30">Оставить отзыв</h3>
                     <form id="addReviewForm" onsubmit="submitReview(event)">
                         <div style="margin-bottom: 20px;">
-                            <label style="display:block; margin-bottom:10px; font-size:14px; color:var(--text-muted);" data-i18n="auto_product_31">Ваша
+                            <label style="display:block; margin-bottom:10px; font-size:14px; color:var(--text-muted);"
+                                data-i18n="auto_product_31">Ваша
                                 оценка</label>
-                            <div id="star-rating" style="font-size: 24px; color: #4B5563; cursor: pointer; display: flex; gap: 5px;">
+                            <div id="star-rating"
+                                style="font-size: 24px; color: #4B5563; cursor: pointer; display: flex; gap: 5px;">
                                 <i class="fa-solid fa-star" data-val="1"></i>
                                 <i class="fa-solid fa-star" data-val="2"></i>
                                 <i class="fa-solid fa-star" data-val="3"></i>
@@ -869,12 +1029,17 @@
                             <input type="hidden" id="p_rating_val" value="0">
                         </div>
                         <div style="margin-bottom: 20px;">
-                            <input type="text" id="p_user_name" placeholder="Ваше имя" required="" style="width:100%; background:rgba(255,255,255,0.03); border:1px solid var(--border-color); border-radius:8px; padding:12px; color:white; outline:none;" data-i18n-placeholder="auto_product_46">
+                            <input type="text" id="p_user_name" placeholder="Ваше имя" required=""
+                                style="width:100%; background:rgba(255,255,255,0.03); border:1px solid var(--border-color); border-radius:8px; padding:12px; color:white; outline:none;"
+                                data-i18n-placeholder="auto_product_46">
                         </div>
                         <div style="margin-bottom: 20px;">
-                            <textarea id="p_comment" placeholder="Ваш комментарий..." required="" style="width:100%; height:100px; background:rgba(255,255,255,0.03); border:1px solid var(--border-color); border-radius:8px; padding:12px; color:white; outline:none; resize:none; font-family:inherit;" data-i18n-placeholder="auto_product_47"></textarea>
+                            <textarea id="p_comment" placeholder="Ваш комментарий..." required=""
+                                style="width:100%; height:100px; background:rgba(255,255,255,0.03); border:1px solid var(--border-color); border-radius:8px; padding:12px; color:white; outline:none; resize:none; font-family:inherit;"
+                                data-i18n-placeholder="auto_product_47"></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary" style="padding:12px 30px;" data-i18n="auto_product_32">Отправить
+                        <button type="submit" class="btn btn-primary" style="padding:12px 30px;"
+                            data-i18n="auto_product_32">Отправить
                             отзыв</button>
                     </form>
                 </div>
@@ -891,11 +1056,12 @@
                 Наши сертифицированные специалисты обеспечат правильную установку и тестирование.
             </div>
         </div>
-        
+
 
         <!-- Related Products -->
         <div style="margin-top: 100px;">
-            <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 40px;" data-i18n="auto_product_35">Похожие товары</h2>
+            <h2 style="font-size: 28px; font-weight: 800; margin-bottom: 40px;" data-i18n="auto_product_35">Похожие
+                товары</h2>
             <div class="product-grid" id="relatedGrid">
                 <!-- Content -->
             </div>
@@ -903,30 +1069,38 @@
     </main>
 
     <!-- Footer Section -->
-    <footer style="background: var(--bg-light); border-top: 1px solid var(--border-color); padding: 80px 0 40px; margin-top: 100px;">
+    <footer
+        style="background: var(--bg-light); border-top: 1px solid var(--border-color); padding: 80px 0 40px; margin-top: 100px;">
         <div class="container" style="display: grid; grid-template-columns: 1fr 2fr; gap: 100px;">
             <!-- Left Side: Logo and Social -->
             <div>
                 <div class="logo" style="display: flex; align-items: center; gap: 12px; margin-bottom: 25px;">
-                    <img src="uploads/icon_premium_v2.png" alt="SAYCOM Logo" style="width: 44px; height: 44px; border-radius: 10px; object-fit: contain;">
+                    <img src="uploads/icon_premium_v2.png" alt="SAYCOM Logo"
+                        style="width: 44px; height: 44px; border-radius: 10px; object-fit: contain;">
                     <div class="logo-text">
-                        <div class="logo-title" style="font-weight: 700; font-size: 20px; color: white;" data-i18n="auto_product_37">SAYCOM</div>
-                        <div class="logo-subtitle" style="font-size: 13px; color: var(--text-muted); font-weight: 500;" data-i18n="auto_product_38">
+                        <div class="logo-title" style="font-weight: 700; font-size: 20px; color: white;"
+                            data-i18n="auto_product_37">SAYCOM</div>
+                        <div class="logo-subtitle" style="font-size: 13px; color: var(--text-muted); font-weight: 500;"
+                            data-i18n="auto_product_38">
                             Premium Solutions</div>
                     </div>
                 </div>
-                <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 30px; font-weight: 500;" data-i18n="auto_product_39">
+                <p style="color: var(--text-muted); font-size: 14px; line-height: 1.6; margin-bottom: 30px; font-weight: 500;"
+                    data-i18n="auto_product_39">
                     Your trusted partner for smart home security, CCTV systems, and climate control solutions. Quality
                     and innovation since 2012.
                 </p>
                 <div class="social-links" style="display: flex; gap: 15px;">
-                    <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; transition: 0.2s; border: 1px solid var(--border-color);">
+                    <div
+                        style="width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; transition: 0.2s; border: 1px solid var(--border-color);">
                         <i class="fa-brands fa-facebook-f"></i>
                     </div>
-                    <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; transition: 0.2s; border: 1px solid var(--border-color);">
+                    <div
+                        style="width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; transition: 0.2s; border: 1px solid var(--border-color);">
                         <i class="fa-brands fa-instagram"></i>
                     </div>
-                    <div style="width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; transition: 0.2s; border: 1px solid var(--border-color);">
+                    <div
+                        style="width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.03); display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; transition: 0.2s; border: 1px solid var(--border-color);">
                         <i class="fa-brands fa-telegram"></i>
                     </div>
                 </div>
@@ -936,44 +1110,65 @@
             <div style="display:flex; flex-direction:column; gap:50px;">
                 <div class="footer-links-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;">
                     <div style="display:flex; flex-direction:column; gap:12px;">
-                        <h4 data-i18n="footer_explore" style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Explore</h4>
-                        <a href="/all-products" data-i18n="nav_all_products" style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">All
+                        <h4 data-i18n="footer_explore"
+                            style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Explore</h4>
+                        <a href="/all-products" data-i18n="nav_all_products"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">All
                             Products</a>
-                        <a href="/air-conditioners" data-i18n="nav_ac" style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Climate
+                        <a href="/air-conditioners" data-i18n="nav_ac"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Climate
                             Control</a>
-                        <a href="/cctv-systems" data-i18n="nav_cctv" style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Security
+                        <a href="/cctv-systems" data-i18n="nav_cctv"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Security
                             Systems</a>
-                        <a href="/automatic-gates" data-i18n="nav_gates" style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Gate
+                        <a href="/automatic-gates" data-i18n="nav_gates"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Gate
                             Automation</a>
                     </div>
 
                     <div style="display:flex; flex-direction:column; gap:12px;">
-                        <h4 data-i18n="footer_services" style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Services</h4>
-                        <a href="/installation-services" data-i18n="nav_install" style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Installation</a>
-                        <a href="#" style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;" data-i18n="auto_product_40">Maintenance</a>
-                        <a href="#" style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;" data-i18n="auto_product_41">Repair
+                        <h4 data-i18n="footer_services"
+                            style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Services</h4>
+                        <a href="/installation-services" data-i18n="nav_install"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Installation</a>
+                        <a href="#"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;"
+                            data-i18n="auto_product_40">Maintenance</a>
+                        <a href="#"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;"
+                            data-i18n="auto_product_41">Repair
                             Services</a>
                     </div>
 
                     <div>
-                        <h4 style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 12px;" data-i18n="auto_product_42">Newsletter
+                        <h4 style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 12px;"
+                            data-i18n="auto_product_42">Newsletter
                         </h4>
-                        <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 15px; font-weight: 500;" data-i18n="auto_product_43">Get
+                        <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 15px; font-weight: 500;"
+                            data-i18n="auto_product_43">Get
                             updates on new products.</p>
-                        <form style="display: flex; height: 42px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color);">
-                            <input type="email" placeholder="Email" required="" style="border: none; background: transparent; color: white; padding: 0 15px; width: 100%; outline: none; font-size: 13px;" data-i18n-placeholder="auto_product_48">
-                            <button type="submit" style="background: var(--primary); color: white; border: none; padding: 0 20px; cursor: pointer;"><i class="fa-solid fa-arrow-right"></i></button>
+                        <form
+                            style="display: flex; height: 42px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color);">
+                            <input type="email" placeholder="Email" required=""
+                                style="border: none; background: transparent; color: white; padding: 0 15px; width: 100%; outline: none; font-size: 13px;"
+                                data-i18n-placeholder="auto_product_48">
+                            <button type="submit"
+                                style="background: var(--primary); color: white; border: none; padding: 0 20px; cursor: pointer;"><i
+                                    class="fa-solid fa-arrow-right"></i></button>
                         </form>
                     </div>
                 </div>
 
                 <!-- Divider & Bottom -->
                 <div style="height: 1px; background: var(--border-color);"></div>
-                <div style="display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 11px;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; color: var(--text-muted); font-size: 11px;">
                     <span data-i18n="auto_product_44">© 2026 SAYCOM. All rights reserved.</span>
                     <div style="display: flex; gap: 30px;">
-                        <div><i class="fa-solid fa-truck"></i><span data-i18n="auto_mixed_product_6"> Бесплатная доставка 250 000₸+</span></div>
-                        <div><i class="fa-solid fa-truck"></i><span data-i18n="auto_mixed_product_7"> Free Delivery $500+</span></div>
+                        <div><i class="fa-solid fa-truck"></i><span data-i18n="auto_mixed_product_6"> Бесплатная
+                                доставка 250 000₸+</span></div>
+                        <div><i class="fa-solid fa-truck"></i><span data-i18n="auto_mixed_product_7"> Free Delivery
+                                $500+</span></div>
                     </div>
                 </div>
             </div>
@@ -1349,4 +1544,6 @@
     </script>
 
 
-</body></html>
+</body>
+
+</html>
