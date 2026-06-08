@@ -4,13 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="nav_install">Installation Services - SAYCOM</title>
+    <title data-i18n="nav_install">Установка домофонов в Казахстане | Saycom</title>
+    <meta name="description" content="Установка и настройка домофонов для квартир, домов и офисов. Современные решения безопасности от Saycom.">
+    <meta name="keywords" content="кондиционеры, установка кондиционеров, видеонаблюдение, камеры, домофоны, автоматические ворота, Астана, Казахстан">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=2.2">
+    <link rel="stylesheet" href="css/style.css?v=3.0">
+    <!-- Theme Init (prevents flash of wrong theme) -->
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('saycom_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     <style>
         .service-hero {
             background: linear-gradient(rgba(11, 17, 32, 0.8), rgba(11, 17, 32, 0.9)), url('https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=80');
@@ -322,7 +331,6 @@
             }
 
             .service-hero h1 {
-                font-size: 42px !important;
                 background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.7) 100%);
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
@@ -514,6 +522,13 @@
                     <span
                         style="position: absolute; top: -6px; right: -6px; background: var(--primary); color: white; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; border: 2px solid var(--bg-light);">0</span>
                 </div>
+
+                <!-- Theme Toggle Button -->
+                <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Switch theme" aria-label="Toggle light/dark mode">
+                    <i class="fa-solid fa-sun icon-sun"></i>
+                    <i class="fa-solid fa-moon icon-moon"></i>
+                </button>
+
                 <div class="action-btn user-btn-desktop"
                     style="display:flex; align-items:center; gap:12px; background: rgba(255,255,255,0.04); padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.2s; border: 1px solid transparent;">
                     <i class="fa-regular fa-user" style="font-size:16px; color: white;"></i>

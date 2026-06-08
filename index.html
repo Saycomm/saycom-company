@@ -4,12 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="site_title">SAYCOM | Премиальные системы кондиционирования, безопасности и автоматизации в
-        Казахстане</title>
+    <title data-i18n="site_title">Кондиционеры, видеонаблюдение, ворота и домофоны — продажа и установка | Saycom</title>
     <meta name="description"
-        content="SAYCOM - ведущий поставщик и инсталлятор премиальных систем кондиционирования, видеонаблюдения, автоматических ворот и домофонов в Узбекистане. Профессиональный монтаж Daikin, Gree, Hikvision.">
+        content="Saycom — надежная компания по продаже и установке кондиционеров, видеонаблюдения, автоматических ворот и домофонов в Казахстане. Мы предлагаем полный спектр услуг: подбор оборудования, доставка, профессиональный монтаж, настройка и техническая поддержка. Работаем быстро, качественно и с гарантией. Наши решения подходят для квартир, домов, офисов и бизнеса. Выбирайте Saycom — безопасность и комфорт под ключ.">
     <meta name="keywords"
-        content="кондиционеры ташкент, видеонаблюдение узбекистан, автоматические ворота, установка кондиционеров, Hikvision, Daikin, Gree, SAYCOM">
+        content="кондиционеры, установка кондиционеров, продажа кондиционеров, видеонаблюдение, камеры видеонаблюдения, установка видеонаблюдения, автоматические ворота, установка ворот, домофоны, установка домофонов, безопасность, монтаж систем безопасности, Saycom">
     <meta property="og:title" content="SAYCOM | Премиальные инженерные решения">
     <meta property="og:description"
         content="Профессиональный монтаж и поставка систем кондиционирования и безопасности.">
@@ -23,7 +22,20 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=3.0">
+
+    <!-- Theme Init (must be before body renders to avoid flash) -->
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('saycom_theme');
+            // Default: light mode on first visit
+            if (!savedTheme) {
+                savedTheme = 'light';
+                localStorage.setItem('saycom_theme', 'light');
+            }
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     
 
     <!-- Mobile Nav Fix -->
@@ -97,122 +109,393 @@
     <link rel="apple-touch-icon" href="/uploads/icon_premium_v2.png">
 </head>
 
-<body>
+<body class="page-home">
 
     <!-- Premium Logo Preloader -->
     <div id="preloader"
-        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #060B15; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 1s cubic-bezier(0.65, 0, 0.35, 1);">
-        <div class="loader-content" style="text-align: center; position: relative;">
-            <div class="logo-animation-wrapper" style="position: relative; margin-bottom: 30px;">
-                <!-- Glowing effect behind logo -->
-                <div
-                    style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 120px; height: 120px; background: var(--primary); filter: blur(40px); border-radius: 50%; opacity: 0; animation: pulseGlow 2.5s ease-in-out infinite;">
-                </div>
+        style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #060B15; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 1.6s cubic-bezier(0.16, 1, 0.3, 1); transform: scale(1); filter: blur(0px); overflow: hidden;">
+        <!-- Background Canvas for Plexus Network -->
+        <canvas id="preloader-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; opacity: 0.6;"></canvas>
+        
+        <!-- Grid overlay scanlines for tech aesthetic -->
+        <div class="preloader-grid-overlay" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.15) 50%), linear-gradient(90deg, rgba(16, 185, 129, 0.02), rgba(6, 182, 212, 0.01), rgba(16, 185, 129, 0.02)); background-size: 100% 4px, 6px 100%; z-index: 2; pointer-events: none; opacity: 0.4;"></div>
+        
+        <!-- Ambient radial glow behind content -->
+        <div class="preloader-radial-glow" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%); z-index: 2; pointer-events: none; filter: blur(50px);"></div>
 
+        <div class="loader-content" style="text-align: center; position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+            <!-- Dynamic HUD System -->
+            <div class="hud-scanner-wrapper" style="position: relative; width: 220px; height: 220px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; transition: all 0.3s ease;">
+                <!-- Cyber HUD Outer Ring (Clockwise rotation) -->
+                <svg class="hud-ring-outer" viewBox="0 0 100 100" style="position: absolute; width: 100%; height: 100%; transform-origin: center; animation: rotateCW 10s linear infinite;">
+                    <circle cx="50" cy="50" r="46" fill="none" stroke="var(--primary)" stroke-width="1.5" stroke-dasharray="15 80 50 10 5 15" stroke-opacity="0.6" />
+                    <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(255, 255, 255, 0.08)" stroke-width="0.8" stroke-dasharray="1 5" />
+                </svg>
+
+                <!-- Cyber HUD Inner Ring (Counter-clockwise rotation) -->
+                <svg class="hud-ring-inner" viewBox="0 0 100 100" style="position: absolute; width: 85%; height: 85%; transform-origin: center; animation: rotateCCW 8s linear infinite;">
+                    <circle cx="50" cy="50" r="44" fill="none" stroke="#06b6d4" stroke-width="1.2" stroke-dasharray="40 10 5 10 15 20" stroke-opacity="0.5" />
+                </svg>
+
+                <!-- Corner HUD Bracket Lines -->
+                <div class="hud-bracket top-left" style="position: absolute; top: 0; left: 0; width: 20px; height: 20px; border-top: 2px solid var(--primary); border-left: 2px solid var(--primary); opacity: 0.7;"></div>
+                <div class="hud-bracket top-right" style="position: absolute; top: 0; right: 0; width: 20px; height: 20px; border-top: 2px solid var(--primary); border-right: 2px solid var(--primary); opacity: 0.7;"></div>
+                <div class="hud-bracket bottom-left" style="position: absolute; bottom: 0; left: 0; width: 20px; height: 20px; border-bottom: 2px solid var(--primary); border-left: 2px solid var(--primary); opacity: 0.7;"></div>
+                <div class="hud-bracket bottom-right" style="position: absolute; bottom: 0; right: 0; width: 20px; height: 20px; border-bottom: 2px solid var(--primary); border-right: 2px solid var(--primary); opacity: 0.7;"></div>
+
+                <!-- Laser scanning line -->
+                <div class="hud-scan-laser" style="position: absolute; width: 80%; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), #06b6d4, var(--primary), transparent); top: 10%; left: 10%; z-index: 4; opacity: 0.8; box-shadow: 0 0 10px var(--primary); animation: laserSweep 3s ease-in-out infinite;"></div>
+
+                <!-- Central Logo with Neon Drop Shadow -->
                 <img src="uploads/icon_premium_v2.png" alt="SAYCOM" class="loader-logo"
-                    style="width: 100px; height: 100px; position: relative; z-index: 2; opacity: 0; transform: scale(0.8); animation: logoEntry 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;">
+                    style="width: 110px; height: 110px; z-index: 5; filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.45)); transform: scale(0.9); animation: logoPulse 2.5s ease-in-out infinite;">
             </div>
 
-            <div class="loader-text"
-                style="color: white; font-family: 'Inter', sans-serif; opacity: 0; transform: translateY(20px); animation: textEntry 0.8s ease-out 0.8s forwards;">
-                <div style="font-size: 32px; font-weight: 800; letter-spacing: 4px; margin-bottom: 8px;">SAYCOM</div>
-                <div style="font-size: 12px; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 5px;"
-                    data-i18n="premium_solutions">Premium Solutions</div>
+            <!-- Saycom Title & Subtitle with letter-spacing tracking reveal -->
+            <div class="loader-text-wrapper" style="color: white; font-family: 'Inter', sans-serif;">
+                <div class="saycom-title" style="font-size: 38px; font-weight: 900; letter-spacing: 12px; text-indent: 12px; margin-bottom: 6px; background: linear-gradient(135deg, #ffffff 50%, #8b9bb4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 20px rgba(255,255,255,0.15); animation: titleGlitch 4s infinite;">SAYCOM</div>
+                <div class="saycom-subtitle" style="font-size: 13px; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 7px; text-indent: 7px; margin-bottom: 30px;" data-i18n="premium_solutions">Premium Solutions</div>
             </div>
 
-            <!-- Minimal Progress Bar -->
-            <div
-                style="width: 200px; height: 2px; background: rgba(255,255,255,0.05); border-radius: 4px; margin-top: 40px; overflow: hidden; position: relative;">
-                <div id="loader-progress"
-                    style="position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: var(--primary); transition: width 4s linear; box-shadow: 0 0 10px var(--primary);">
-                </div>
+            <!-- High Tech Loading Progress and Percentage -->
+            <div class="loading-stats-wrapper" style="display: flex; align-items: center; justify-content: space-between; width: 280px; margin-bottom: 8px; font-family: 'Courier New', Courier, monospace; font-size: 12px; color: var(--text-muted); transition: all 0.3s ease;">
+                <div class="status-mode" style="text-transform: uppercase; letter-spacing: 1px;"><span style="color: var(--primary); animation: blink 1s infinite;">●</span> System Sync</div>
+                <div id="loader-percentage" style="font-weight: 700; color: #ffffff; letter-spacing: 1px; font-size: 14px;">00%</div>
+            </div>
+
+            <!-- Futuristic Progress Bar -->
+            <div style="width: 280px; height: 4px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; overflow: hidden; position: relative; margin-bottom: 30px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.5); transition: all 0.3s ease;">
+                <div id="loader-progress" style="position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: linear-gradient(90deg, var(--primary), #06b6d4); box-shadow: 0 0 12px var(--primary); transition: width 0.1s ease-out;"></div>
+            </div>
+
+            <!-- Terminal Diagnostics Log -->
+            <div class="terminal-logs" style="width: 320px; height: 50px; background: rgba(0, 0, 0, 0.45); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 10px 12px; font-family: 'Courier New', Courier, monospace; font-size: 10px; color: #34d399; text-align: left; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; box-shadow: inset 0 2px 8px rgba(0,0,0,0.8); line-height: 1.4; transition: all 0.3s ease;">
+                <div id="terminal-log-line-1" style="opacity: 0.3; height: 14px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"></div>
+                <div id="terminal-log-line-2" style="opacity: 0.6; height: 14px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"></div>
+                <div id="terminal-log-line-3" style="color: #6ee7b7; text-shadow: 0 0 4px rgba(110, 231, 183, 0.4); height: 14px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">[SYS] Initializing...</div>
             </div>
         </div>
 
         <style>
-            @keyframes logoEntry {
-                0% {
-                    opacity: 0;
-                    transform: scale(0.5) rotate(-10deg);
-                }
-
-                100% {
-                    opacity: 1;
-                    transform: scale(1) rotate(0);
-                }
+            @keyframes rotateCW {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            @keyframes rotateCCW {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(-360deg); }
+            }
+            @keyframes laserSweep {
+                0%, 100% { top: 10%; opacity: 0.3; }
+                50% { top: 88%; opacity: 0.9; }
+            }
+            @keyframes logoPulse {
+                0%, 100% { transform: scale(0.9); filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.4)); }
+                50% { transform: scale(0.94); filter: drop-shadow(0 0 25px rgba(6, 182, 212, 0.55)); }
+            }
+            @keyframes titleGlitch {
+                0%, 95%, 100% { transform: skewX(0deg); }
+                96% { transform: skewX(8deg) scaleY(1.03); filter: hue-rotate(45deg); }
+                97% { transform: skewX(-8deg) scaleY(0.97); filter: hue-rotate(90deg); }
+                98% { transform: skewX(4deg) scaleY(1.01); filter: hue-rotate(180deg); }
+                99% { transform: skewX(-4deg) scaleY(0.99); }
+            }
+            @keyframes blink {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.3; }
+            }
+            @keyframes logUpdateGlow {
+                0% { color: #ffffff; text-shadow: 0 0 8px #ffffff; transform: translateX(3px); }
+                100% { color: #6ee7b7; text-shadow: 0 0 4px rgba(110, 231, 183, 0.4); transform: translateX(0); }
             }
 
-            @keyframes textEntry {
-                0% {
-                    opacity: 0;
-                    transform: translateY(20px);
-                }
-
-                100% {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-
-            @keyframes pulseGlow {
-
-                0%,
-                100% {
-                    opacity: 0.15;
-                    transform: translate(-50%, -50%) scale(0.8);
-                }
-
-                50% {
-                    opacity: 0.4;
-                    transform: translate(-50%, -50%) scale(1.1);
-                }
-            }
-
+            /* Main site entrance transition */
             body.loading {
                 overflow: hidden !important;
+                height: 100vh !important;
+            }
+            #page-wrapper {
+                transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1), filter 1.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                transform-origin: center center;
+                width: 100%;
+            }
+            body.loading #page-wrapper {
+                filter: blur(12px) !important;
+                transform: scale(0.95) !important;
             }
 
+            /* Cinematic Scale Portal Exit Transition for Preloader */
             .preloader-hidden {
                 opacity: 0 !important;
                 visibility: hidden !important;
                 pointer-events: none !important;
+                transform: scale(2.2) !important;
+                filter: blur(25px) !important;
+            }
+
+            /* Responsive overrides for smaller phone sizes */
+            @media (max-width: 400px) {
+                .hud-scanner-wrapper {
+                    width: 170px !important;
+                    height: 170px !important;
+                    margin-bottom: 20px !important;
+                }
+                .loader-logo {
+                    width: 85px !important;
+                    height: 85px !important;
+                }
+                .saycom-title {
+                    font-size: 28px !important;
+                    letter-spacing: 8px !important;
+                    text-indent: 8px !important;
+                }
+                .saycom-subtitle {
+                    font-size: 11px !important;
+                    letter-spacing: 4px !important;
+                    text-indent: 4px !important;
+                    margin-bottom: 25px !important;
+                }
+                .loading-stats-wrapper, 
+                .terminal-logs, 
+                div[style*="width: 280px"] {
+                    width: 230px !important;
+                }
+                .terminal-logs {
+                    height: 44px !important;
+                }
+                .terminal-logs > div {
+                    height: 12px !important;
+                    font-size: 9px !important;
+                }
             }
         </style>
     </div>
 
     <script>
-        // Preloader Logic
+        // High-Tech Cybernetic Preloader Logic
         (function () {
             const preloader = document.getElementById('preloader');
             const progressBar = document.getElementById('loader-progress');
+            const percentageText = document.getElementById('loader-percentage');
+            const logLine1 = document.getElementById('terminal-log-line-1');
+            const logLine2 = document.getElementById('terminal-log-line-2');
+            const logLine3 = document.getElementById('terminal-log-line-3');
+            const canvas = document.getElementById('preloader-canvas');
 
             // Check if this is the first visit in this session
+            const urlParams = new URLSearchParams(window.location.search);
+            const forcePreload = urlParams.get('preload') === 'true';
             const hasSeenLoader = sessionStorage.getItem('saycom_preloader_seen');
 
-            if (hasSeenLoader) {
-                // If already seen, remove loader immediately
+            if (hasSeenLoader && !forcePreload) {
                 preloader.style.display = 'none';
-            } else {
-                // Add loading class to body to prevent scroll
-                document.body.classList.add('loading');
-
-                // Start progress bar animation
-                setTimeout(() => {
-                    if (progressBar) progressBar.style.width = '100%';
-                }, 100);
-
-                // Hide loader after 5 seconds
-                setTimeout(() => {
-                    preloader.classList.add('preloader-hidden');
-                    document.body.classList.remove('loading');
-                    sessionStorage.setItem('saycom_preloader_seen', 'true');
-
-                    // Remove from DOM after transition
-                    setTimeout(() => {
-                        preloader.style.display = 'none';
-                    }, 1000);
-                }, 5000);
+                return;
             }
+
+            document.body.classList.add('loading');
+
+            // --- Canvas Particles Plexus ---
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let particleCount = window.innerWidth < 768 ? 40 : 100;
+            let connectionDistance = window.innerWidth < 768 ? 85 : 135;
+            let width = canvas.width = window.innerWidth;
+            let height = canvas.height = window.innerHeight;
+            let mouse = { x: null, y: null, radius: 120 };
+
+            window.addEventListener('resize', () => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                particleCount = window.innerWidth < 768 ? 40 : 100;
+                connectionDistance = window.innerWidth < 768 ? 85 : 135;
+                initParticles();
+            });
+
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+
+            window.addEventListener('mouseout', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+
+            window.addEventListener('touchmove', (e) => {
+                if (e.touches.length > 0) {
+                    mouse.x = e.touches[0].clientX;
+                    mouse.y = e.touches[0].clientY;
+                }
+            }, { passive: true });
+
+            window.addEventListener('touchend', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.7;
+                    this.vy = (Math.random() - 0.5) * 0.7;
+                    this.size = Math.random() * 2 + 1.2;
+                    this.originalSize = this.size;
+                    this.gravityScale = 0;
+                }
+
+                update(progress) {
+                    // Pull to center when loading progress is advanced (above 60%)
+                    if (progress > 60) {
+                        const centerX = width / 2;
+                        const centerY = height / 2;
+                        const dx = centerX - this.x;
+                        const dy = centerY - this.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist > 80) {
+                            this.gravityScale = Math.min(1, this.gravityScale + 0.008);
+                            this.vx += (dx / dist) * 0.035 * this.gravityScale;
+                            this.vy += (dy / dist) * 0.035 * this.gravityScale;
+                            this.vx *= 0.94;
+                            this.vy *= 0.94;
+                        }
+                    }
+
+                    // Mouse push/repulsion
+                    if (mouse.x !== null && mouse.y !== null) {
+                        const dx = this.x - mouse.x;
+                        const dy = this.y - mouse.y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < mouse.radius) {
+                            const force = (mouse.radius - dist) / mouse.radius;
+                            this.vx += (dx / dist) * force * 1.2;
+                            this.vy += (dy / dist) * force * 1.2;
+                        }
+                    }
+
+                    // Speed limit
+                    const speed = Math.sqrt(this.vx * this.vx + this.vy * this.vy);
+                    const maxSpeed = 2.2;
+                    if (speed > maxSpeed) {
+                        this.vx = (this.vx / speed) * maxSpeed;
+                        this.vy = (this.vy / speed) * maxSpeed;
+                    }
+
+                    this.x += this.vx;
+                    this.y += this.vy;
+
+                    // Boundaries bounce
+                    if (this.x < 0 || this.x > width) this.vx *= -1;
+                    if (this.y < 0 || this.y > height) this.vy *= -1;
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(16, 185, 129, 0.8)';
+                    ctx.fill();
+                }
+            }
+
+            function initParticles() {
+                particles = [];
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(new Particle());
+                }
+            }
+
+            function connectParticles() {
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < connectionDistance) {
+                            const alpha = (1 - dist / connectionDistance) * 0.16;
+                            ctx.strokeStyle = `rgba(16, 185, 129, ${alpha})`;
+                            ctx.lineWidth = 0.8;
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            initParticles();
+
+            // --- Dynamic Loader & Log Tickers ---
+            const totalDuration = 3500; // 3.5 seconds
+            const startTime = performance.now();
+            let currentProgress = 0;
+
+            const logDatabase = [
+                { limit: 12, text: '[SYS] INITIALIZING CORE PROTOCOLS...' },
+                { limit: 25, text: '[SYS] CONSTRUCTING QUANTUM CHANNELS...' },
+                { limit: 40, text: '[SYS] DETECTING SECURE APPLIANCES...' },
+                { limit: 55, text: '[SYS] LINKING SAYCOM CLOUD SYSTEM...' },
+                { limit: 70, text: '[SYS] BOOTING NEURAL NETWORKS...' },
+                { limit: 85, text: '[SYS] SHIELD ONLINE & CALIBRATING...' },
+                { limit: 95, text: '[SYS] ENCRYPTING TERMINAL SESSIONS...' },
+                { limit: 100, text: '[SYS] SAYCOM PLATFORM IS READY.' }
+            ];
+
+            let activeLogs = ['[SYS] Booting...', '[SYS] Scanning Node Config...'];
+
+            function updateLogs(progress) {
+                let changed = false;
+                for (let item of logDatabase) {
+                    if (progress >= item.limit && !activeLogs.includes(item.text)) {
+                        activeLogs.push(item.text);
+                        changed = true;
+                    }
+                }
+                if (changed) {
+                    const len = activeLogs.length;
+                    logLine1.textContent = activeLogs[len - 3] || '';
+                    logLine2.textContent = activeLogs[len - 2] || '';
+                    logLine3.textContent = activeLogs[len - 1] || '';
+                    
+                    logLine3.style.animation = 'none';
+                    void logLine3.offsetWidth; // Force layout recalculation
+                    logLine3.style.animation = 'logUpdateGlow 0.3s ease-out';
+                }
+            }
+
+            function animate(now) {
+                const elapsed = now - startTime;
+                currentProgress = Math.min(100, (elapsed / totalDuration) * 100);
+
+                if (progressBar) progressBar.style.width = `${currentProgress}%`;
+                if (percentageText) percentageText.innerText = `${Math.floor(currentProgress).toString().padStart(2, '0')}%`;
+
+                updateLogs(currentProgress);
+
+                ctx.clearRect(0, 0, width, height);
+                for (let p of particles) {
+                    p.update(currentProgress);
+                    p.draw();
+                }
+                connectParticles();
+
+                if (currentProgress < 100) {
+                    requestAnimationFrame(animate);
+                } else {
+                    setTimeout(() => {
+                        preloader.classList.add('preloader-hidden');
+                        document.body.classList.remove('loading');
+                        sessionStorage.setItem('saycom_preloader_seen', 'true');
+
+                        setTimeout(() => {
+                            preloader.style.display = 'none';
+                        }, 1600);
+                    }, 400);
+                }
+            }
+
+            requestAnimationFrame(animate);
         })();
     </script>
 
@@ -234,6 +517,7 @@
         </div>
     </div>
 
+    <div id="page-wrapper">
     <!-- Top Bar -->
     <div class="top-bar"
         style="background: var(--bg-light); border-bottom: 1px solid var(--border-color); padding: 12px 0; font-size: 13px; color: var(--text-muted);">
@@ -344,6 +628,13 @@
                     <span
                         style="position: absolute; top: -6px; right: -6px; background: var(--primary); color: white; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; border: 2px solid var(--bg-light);">0</span>
                 </div>
+
+                <!-- Theme Toggle Button -->
+                <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Switch theme" aria-label="Toggle light/dark mode">
+                    <i class="fa-solid fa-sun icon-sun"></i>
+                    <i class="fa-solid fa-moon icon-moon"></i>
+                </button>
+
                 <div class="action-btn" onclick="window.location.href='auth.html'"
                     style="display:flex; align-items:center; gap:12px; background: rgba(255,255,255,0.04); padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.2s; border: 1px solid transparent;">
                     <i class="fa-regular fa-user" style="font-size:16px; color: white;"></i>
@@ -417,8 +708,46 @@
                 </div>
             </div>
             <div class="hero-image">
-                <!-- Air conditioner icon to represent the image block -->
-                <i class="fa-solid fa-window-maximize" style="font-size: 150px;"></i>
+                <div class="hero-image-showcase">
+                    <!-- Main glass card -->
+                    <div class="showcase-main-card">
+                        <div class="showcase-bg-image" style="background: url('img/cat-ac-bg.png') center/cover;"></div>
+                        <div class="showcase-glass-overlay"></div>
+                        <div class="showcase-logo-stamp">
+                            <img src="uploads/icon_premium_v2.png" alt="SAYCOM">
+                        </div>
+                    </div>
+                    
+                    <!-- Floating Widget 1: Climate -->
+                    <div class="floating-widget widget-climate">
+                        <div class="widget-icon"><i class="fa-solid fa-snowflake"></i></div>
+                        <div class="widget-details">
+                            <span class="widget-label" data-i18n="widget_climate">Климат-контроль</span>
+                            <span class="widget-value" data-i18n="widget_climate_val">21°C • Активно</span>
+                        </div>
+                        <span class="pulse-indicator green"></span>
+                    </div>
+                    
+                    <!-- Floating Widget 2: Security -->
+                    <div class="floating-widget widget-security">
+                        <div class="widget-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                        <div class="widget-details">
+                            <span class="widget-label" data-i18n="widget_security">Безопасность</span>
+                            <span class="widget-value" data-i18n="widget_security_val">Мониторинг 24/7</span>
+                        </div>
+                        <span class="pulse-indicator red"></span>
+                    </div>
+                    
+                    <!-- Floating Widget 3: Automation -->
+                    <div class="floating-widget widget-gates">
+                        <div class="widget-icon"><i class="fa-solid fa-door-open"></i></div>
+                        <div class="widget-details">
+                            <span class="widget-label" data-i18n="widget_access">Умный доступ</span>
+                            <span class="widget-value" data-i18n="widget_access_val">Ворота закрыты</span>
+                        </div>
+                        <span class="pulse-indicator blue"></span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -456,6 +785,33 @@
     </section>
 
     <!-- NEW: Brands Showcase - Infinity Marquee -->
+    <style>
+        .brands-marquee-section { background: var(--bg-light) !important; }
+        .brand-pill { transition: all 0.6s ease !important; }
+        [data-theme="light"] .brand-pill {
+            color: rgba(15,23,42,0.5) !important;
+            background: rgba(15,23,42,0.05) !important;
+            border-color: rgba(15,23,42,0.12) !important;
+            filter: none !important;
+            transform: scale(0.95) !important;
+        }
+        [data-theme="light"] .brand-pill.in-light {
+            color: #047857 !important;
+            background: rgba(16,185,129,0.15) !important;
+            border-color: rgba(16,185,129,0.4) !important;
+            text-shadow: none !important;
+            transform: scale(1.1) !important;
+        }
+        [data-theme="light"] .cta-section {
+            background: #F0FDF4 !important;
+            border-top: 1px solid #D1FAE5 !important;
+        }
+        [data-theme="light"] .cta-section .section-title {
+            color: #0F172A !important;
+            -webkit-text-fill-color: #0F172A !important;
+            background: none !important;
+        }
+    </style>
     <section class="section brands-marquee-section">
         <div class="container">
             <h2 class="section-title" data-i18n="brands_title">Наши люксовые партнеры</h2>
@@ -482,6 +838,7 @@
             </div>
         </div>
     </section>
+
 
     <!-- Features & Stats -->
     <section class="section">
@@ -869,6 +1226,33 @@
                         margin: 0 auto 30px;
                     }
                 }
+
+                [data-theme="light"] .creative-card {
+                    background: #FFFFFF !important;
+                    border-color: #E2E8F0 !important;
+                    box-shadow: 0 8px 40px rgba(0,0,0,0.08) !important;
+                }
+
+                [data-theme="light"] .creative-info h2 {
+                    color: #0F172A !important;
+                }
+
+                [data-theme="light"] .smart-capsule {
+                    background: #F1F5F9 !important;
+                    border-color: #CBD5E1 !important;
+                }
+
+                [data-theme="light"] .smart-capsule input {
+                    color: #0F172A !important;
+                }
+
+                [data-theme="light"] .smart-capsule input:-webkit-autofill {
+                    -webkit-text-fill-color: #0F172A !important;
+                }
+
+                [data-theme="light"] .creative-info p {
+                    color: #475569 !important;
+                }
             </style>
             <div class="creative-card">
                 <div class="creative-info">
@@ -1126,7 +1510,7 @@
         });
     </script>
 
-
+    </div>
 </body>
 
 </html>

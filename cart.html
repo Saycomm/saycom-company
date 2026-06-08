@@ -6,7 +6,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=2.2">
+    <link rel="stylesheet" href="css/style.css?v=3.0">
+    <!-- Theme Init (prevents flash of wrong theme) -->
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('saycom_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     <style>
         .cart-item {
             background: var(--bg-light);
@@ -156,7 +163,160 @@
 </head>
 
 <body>
-    <div id="header-placeholder"></div>
+    <!-- Top Bar -->
+    <div class="top-bar"
+        style="background: var(--bg-light); border-bottom: 1px solid var(--border-color); padding: 12px 0; font-size: 13px; color: var(--text-muted);">
+        <div class="container top-bar-container"
+            style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-weight: 500;"><i class="fa-solid fa-truck"
+                    style="color: var(--primary); margin-right:4px;"></i> <span data-i18n="top_bar_delivery">Бесплатная
+                    доставка при заказе от <span style="color: var(--primary); font-weight: 700;"
+                        data-i18n="auto_spare-parts_0">250 000 ₸</span></span></div>
+            <div class="top-lang" style="display: flex; align-items: center; gap: 6px;">
+                <i class="fa-solid fa-globe" style="color: var(--text-muted); font-size: 12px;"></i>
+                <select class="lang-select" id="lang-switch" onchange="setLanguage(this.value)"
+                    style="background: transparent; border: none; color: white; outline: none; cursor: pointer; font-weight: 600; font-family: 'Inter', sans-serif;">
+                    <option value="ru" data-i18n="auto_spare-parts_1">Русский</option>
+                    <option value="en" data-i18n="auto_spare-parts_2">English</option>
+                    <option value="kz" data-i18n="auto_spare-parts_3">Қазақша</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header"
+        style="background: var(--bg-light); border-bottom: 1px solid var(--border-color); padding: 20px 0;">
+        <div class="container header-container"
+            style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="logo" style="display: flex; align-items: center; gap: 12px; cursor: pointer;"
+                onclick="window.location.href='index.html'">
+                <img src="uploads/icon_premium_v2.png" alt="SAYCOM Logo"
+                    style="width: 40px; height: 40px; border-radius: 8px; object-fit: contain;">
+                <div class="logo-text">
+                    <div class="logo-title" style="font-weight: 700; font-size: 18px; color: white;"
+                        data-i18n="auto_spare-parts_4">SAYCOM</div>
+                    <div class="logo-subtitle" data-i18n="premium_solutions"
+                        style="font-size: 11px; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 2px;">
+                        Premium Solutions</div>
+                </div>
+            </div>
+
+            <div class="search-wrap" style="position: relative; width: 500px; flex-shrink: 1;">
+                <div class="search-bar"
+                    style="width: 100%; border: 1px solid var(--border-color); background: rgba(255,255,255,0.03); border-radius: 8px; padding: 10px 16px; display: flex; align-items: center; gap: 12px; transition: 0.3s; z-index: 101;">
+                    <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted); font-size: 14px;"></i>
+                    <input type="text" id="global-search" data-i18n-placeholder="search_placeholder"
+                        placeholder="Search for products, brands..."
+                        style="border:none; background:transparent; width:100%; outline:none; color: white; font-size: 13.5px; font-weight: 500; font-family: 'Inter', sans-serif;">
+                    <button id="search-submit-btn" data-i18n="auto_spare-parts_5">Search</button>
+                </div>
+
+                <!-- Search Suggestions (Premium Glassmorphism) -->
+                <div id="search-suggestions"
+                    style="position: absolute; top: 110%; left: 0; width: 100%; background: rgba(13, 20, 33, 0.95); backdrop-filter: blur(20px); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; display: none; z-index: 100; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: translateY(-10px); opacity: 0; transition: all 0.3s ease;">
+                    <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px;"
+                        data-i18n="auto_spare-parts_6">Популярные запросы</div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                        <span class="suggestion-tag" onclick="quickSearch('Daikin')"
+                            data-i18n="auto_spare-parts_7">Daikin</span>
+                        <span class="suggestion-tag" onclick="quickSearch('CCTV Hikvision')"
+                            data-i18n="auto_spare-parts_8">CCTV Hikvision</span>
+                        <span class="suggestion-tag" onclick="quickSearch('Inverter AC')"
+                            data-i18n="auto_spare-parts_9">Inverter AC</span>
+                        <span class="suggestion-tag" onclick="quickSearch('Gree')"
+                            data-i18n="auto_spare-parts_10">Gree</span>
+                        <span class="suggestion-tag" onclick="quickSearch('Gate Motor')"
+                            data-i18n="auto_spare-parts_11">Gate Motor</span>
+                        <span class="suggestion-tag" onclick="quickSearch('Intercom')"
+                            data-i18n="auto_spare-parts_12">Intercom</span>
+                        <span class="suggestion-tag" onclick="quickSearch('SAYCOM')"
+                            data-i18n="auto_spare-parts_13">SAYCOM</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-actions" style="display: flex; gap: 12px; align-items: center;">
+                <div class="action-btn"
+                    style="width: 40px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; color: white;">
+                    <i class="fa-regular fa-heart" style="font-size:16px;"></i>
+                </div>
+                <div class="action-btn"
+                    style="position: relative; width: 40px; height: 40px; background: rgba(255,255,255,0.04); border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; color: white;">
+                    <i class="fa-solid fa-cart-shopping" style="font-size:16px;"></i>
+                    <span
+                        style="position: absolute; top: -6px; right: -6px; background: var(--primary); color: white; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; border: 2px solid var(--bg-light);">0</span>
+                </div>
+
+                <!-- Theme Toggle Button -->
+                <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Switch theme" aria-label="Toggle light/dark mode">
+                    <i class="fa-solid fa-sun icon-sun"></i>
+                    <i class="fa-solid fa-moon icon-moon"></i>
+                </button>
+
+                <div class="action-btn user-btn-desktop"
+                    style="display:flex; align-items:center; gap:12px; background: rgba(255,255,255,0.04); padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.2s; border: 1px solid transparent;">
+                    <i class="fa-regular fa-user" style="font-size:16px; color: white;"></i>
+                    <div style="text-align: left; line-height:1.2;">
+                        <div style="font-size:13px; font-weight:700; color:white;"><span
+                                data-i18n="auto_mixed_spare-parts_0">Мой аккаунт </span><i
+                                class="fa-solid fa-chevron-down"
+                                style="font-size:10px; margin-left:2px; color: var(--text-muted);"></i></div>
+                        <div style="font-size:11px; color:var(--text-muted); font-weight: 500;"
+                            data-i18n="auto_spare-parts_14">Войти</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="main-nav" id="main-nav">
+        <div class="container mobile-search" style="display: none; margin-bottom: 20px;">
+            <div class="search-bar" style="width: 100%; max-width: none;">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="mobile-global-search" placeholder="Search..."
+                    data-i18n-placeholder="auto_spare-parts_26">
+            </div>
+        </div>
+        <div class="container nav-container">
+            <a href="/all-products" data-i18n="nav_all_products" class="nav-link" data-filename="all-products.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Все
+                товары</a>
+            <a href="/wholesale" data-i18n="nav_wholesale" class="nav-link" data-filename="wholesale.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Оптом</a>
+            <a href="/air-conditioners" data-i18n="nav_ac" class="nav-link" data-filename="air-conditioners.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Кондиционеры</a>
+            <a href="/cctv-systems" data-i18n="nav_cctv" class="nav-link" data-filename="cctv-systems.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Видеонаблюдение</a>
+            <a href="/automatic-gates" data-i18n="nav_gates" class="nav-link" data-filename="automatic-gates.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Автоматические
+                ворота</a>
+            <a href="/intercom-systems" data-i18n="nav_intercom" class="nav-link" data-filename="intercom-systems.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Домофоны</a>
+            <a href="/spare-parts" data-i18n="nav_spare_parts" class="nav-link" data-filename="spare-parts.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Запчасти</a>
+            <a href="/installation-services" data-i18n="nav_install" class="nav-link" data-filename="installation-services.html" style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Услуги монтажа</a>
+            <a href="/about-us" data-i18n="nav_about" class="nav-link" data-filename="about-us.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">О
+                нас</a>
+            <a href="/contact" data-i18n="nav_contact" class="nav-link" data-filename="contact.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Контакты</a>
+        </div>
+    </nav>
+
+    <!-- Sub Navigation for Installations -->
+    <nav class="sub-nav" style="background: rgba(13, 20, 33, 0.5); border-bottom: 1px solid var(--border-color); padding: 10px 0;">
+        <div class="container" style="display: flex; gap: 20px; font-size: 13px; font-weight: 500; justify-content: center;">
+            <a href="/install-ac.html" data-i18n="subnav_ac" style="color: var(--text-muted); text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Установка кондиционеров</a>
+            <span style="color: var(--border-color);">|</span>
+            <a href="/install-cctv.html" data-i18n="subnav_cctv" style="color: var(--text-muted); text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Установка видеонаблюдения</a>
+            <span style="color: var(--border-color);">|</span>
+            <a href="/install-gates.html" data-i18n="subnav_gates" style="color: var(--text-muted); text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Установка автоматических ворот</a>
+            <span style="color: var(--border-color);">|</span>
+            <a href="/install-intercom.html" data-i18n="subnav_intercom" style="color: var(--text-muted); text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-muted)'">Установка домофонов</a>
+        </div>
+    </nav>
 
     <main class="container" style="padding-top: 40px; padding-bottom: 80px;">
         <div class="page-title-wrap" style="margin-bottom: 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px;">
@@ -208,10 +368,150 @@
         </div>
     </main>
 
-    <div id="footer-placeholder"></div>
+    <!-- Footer -->
+    <footer class="footer"
+        style="background: var(--bg-light); color: var(--text-dark); border-top: 1px solid var(--border-color); font-family: 'Inter', sans-serif;">
+        <div class="container" style="max-width: 1400px; margin: 0 auto; display: flex;">
+
+            <!-- Left Column -->
+            <div class="footer-left"
+                style="width: 30%; padding: 40px 40px 40px 0; border-right: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <div class="logo footer-logo"
+                        style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+                        <img src="uploads/icon_premium_v2.png" alt="SAYCOM Logo"
+                            style="width: 40px; height: 40px; border-radius: 8px; object-fit: contain;">
+                        <div class="logo-text">
+                            <div class="logo-title" style="color: white; font-weight: 700; font-size: 18px;"
+                                data-i18n="auto_spare-parts_21">SAYCOM</div>
+                            <div class="logo-subtitle"
+                                style="color: var(--text-muted); font-size: 12px; font-weight: 500;"
+                                data-i18n="premium_solutions">Premium Solutions</div>
+                        </div>
+                    </div>
+                    <p class="footer-desc" data-i18n="footer_desc"
+                        style="color: var(--text-muted); font-size: 13px; line-height: 1.6; margin-bottom: 30px;">
+                        Leading provider of premium HVAC systems, security solutions, and smart home automation in
+                        Central Asia. Quality installation and maintenance services.</p>
+                </div>
+                <div class="social-links" style="display: flex; gap: 12px;">
+                    <a href="#"
+                        style="width: 36px; height: 36px; background: rgba(255,255,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 15px; transition: 0.2s;"><i
+                            class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"
+                        style="width: 36px; height: 36px; background: rgba(255,255,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 15px; transition: 0.2s;"><i
+                            class="fa-brands fa-instagram"></i></a>
+                    <a href="#"
+                        style="width: 36px; height: 36px; background: rgba(255,255,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 15px; transition: 0.2s;"><i
+                            class="fa-brands fa-twitter"></i></a>
+                    <a href="#"
+                        style="width: 36px; height: 36px; background: rgba(255,255,255,0.05); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-size: 15px; transition: 0.2s;"><i
+                            class="fa-brands fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <!-- Right Column Container -->
+            <div class="footer-right"
+                style="width: 70%; padding: 40px 0 30px 40px; display: flex; flex-direction: column; justify-content: space-between;">
+
+                <!-- Links Grid -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 2fr; gap: 30px; margin-bottom: 40px;">
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <h4 data-i18n="footer_products"
+                            style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Products</h4>
+                        <a href="/air-conditioners" data-i18n="nav_ac"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Air
+                            Conditioners</a>
+                        <a href="/cctv-systems" data-i18n="nav_cctv"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">CCTV
+                            Systems</a>
+                        <a href="/automatic-gates" data-i18n="nav_gates"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Automatic
+                            Gates</a>
+                        <a href="/intercom-systems" data-i18n="nav_intercom"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Intercom
+                            Systems</a>
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <h4 data-i18n="footer_services"
+                            style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Services</h4>
+                        <a href="/installation-services" data-i18n="nav_install"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Installation</a>
+                        <a href="/installation-services" data-i18n="footer_maintenance"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Maintenance</a>
+                        <a href="/installation-services" data-i18n="footer_repair"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Repair
+                            Services</a>
+                        <a href="/contact" data-i18n="footer_support"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Support
+                            Center</a>
+                    </div>
+
+                    <div style="display:flex; flex-direction:column; gap:12px;">
+                        <h4 data-i18n="footer_company"
+                            style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 8px;">Company</h4>
+                        <a href="/about-us" data-i18n="nav_about"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">About
+                            Us</a>
+                        <a href="/wholesale" data-i18n="nav_wholesale"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Wholesale</a>
+                        <a href="/all-products" data-i18n="footer_blog"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Blog</a>
+                        <a href="/contact" data-i18n="footer_faq"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">FAQ</a>
+                        <a href="/contact" data-i18n="nav_contact"
+                            style="color: var(--text-muted); font-size: 13px; font-weight: 500; text-decoration: none;">Contact</a>
+                    </div>
+
+                    <div>
+                        <h4 data-i18n="footer_newsletter"
+                            style="color: white; font-size: 14px; font-weight: 600; margin-bottom: 12px;">Subscribe to
+                            Newsletter</h4>
+                        <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 15px; font-weight: 500;"
+                            data-i18n="auto_spare-parts_22">Get updates on new products and exclusive offers</p>
+                        <form class="newsletter-form" onsubmit="event.preventDefault()"
+                            style="display: flex; height: 42px; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.03); border: 1px solid var(--border-color);">
+                            <input type="email" placeholder="Enter your email" required=""
+                                style="border: none; background: transparent; color: white; padding: 0 15px; width: 100%; outline: none; font-size: 13px; font-family: 'Inter', sans-serif;"
+                                data-i18n-placeholder="auto_spare-parts_30">
+                            <button type="submit"
+                                style="background: var(--primary); color: white; border: none; padding: 0 20px; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i
+                                    class="fa-solid fa-arrow-right"></i></button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Horizontal Divider -->
+                <div style="height: 1px; background: var(--border-color); margin-bottom: 25px;"></div>
+
+                <!-- Footer Right Bottom -->
+                <div class="footer-right-bottom">
+                    <div class="footer-copyright-links">
+                        <span data-i18n="auto_spare-parts_23">© 2026 SAYCOM. All rights reserved.</span>
+                        <a href="#" style="color: var(--text-muted); text-decoration: none;"
+                            data-i18n="auto_spare-parts_24">Privacy Policy</a>
+                        <a href="#" style="color: var(--text-muted); text-decoration: none;"
+                            data-i18n="auto_spare-parts_25">Terms of Service</a>
+                    </div>
+                    <div class="footer-trust-icons">
+                        <div class="trust-item"><i class="fa-solid fa-shield-halved"></i><span
+                                data-i18n="auto_mixed_spare-parts_2"> 2 Year
+                                Warranty</span></div>
+                        <div class="trust-item"><i class="fa-solid fa-truck"></i><span
+                                data-i18n="auto_mixed_spare-parts_3"> Бесплатная
+                                доставка 250 000₸+</span></div>
+                        <div class="trust-item"><i class="fa-solid fa-headphones"></i><span
+                                data-i18n="auto_mixed_spare-parts_4"> 24/7
+                                Support</span></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
 
     <script src="js/translations.js"></script>
-    <script src="js/theme.js">
     <script src="js/app.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {

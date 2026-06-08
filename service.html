@@ -2,7 +2,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-i18n="auto_service_0">SAYCOM - Услуги монтажа</title>
-    <link rel="stylesheet" href="css/style.css?v=2.2">
+    <link rel="stylesheet" href="css/style.css?v=3.0">
+    <!-- Theme Init (prevents flash of wrong theme) -->
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('saycom_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .service-header { padding: 100px 0 60px; text-align: center; background: linear-gradient(180deg, rgba(16, 185, 129, 0.05) 0%, transparent 100%); }
@@ -187,6 +194,13 @@
                     <i class="fa-solid fa-cart-shopping" style="font-size:16px;"></i>
                     <span style="position: absolute; top: -6px; right: -6px; background: var(--primary); color: white; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; border: 2px solid var(--bg-light);">0</span>
                 </div>
+
+                <!-- Theme Toggle Button -->
+                <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Switch theme" aria-label="Toggle light/dark mode">
+                    <i class="fa-solid fa-sun icon-sun"></i>
+                    <i class="fa-solid fa-moon icon-moon"></i>
+                </button>
+
                 <div class="action-btn user-btn-desktop" style="display:flex; align-items:center; gap:12px; background: rgba(255,255,255,0.04); padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.2s; border: 1px solid transparent;">
                     <i class="fa-regular fa-user" style="font-size:16px; color: white;"></i>
                     <div style="text-align: left; line-height:1.2;">

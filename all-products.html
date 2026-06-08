@@ -1,15 +1,23 @@
 <!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="auto_all-products_38">Каталог товаров | SAYCOM - Кондиционеры, Видеонаблюдение, Ворота</title>
-    <meta name="description" content="Широкий выбор премиальных систем для вашего дома: кондиционеры, камеры видеонаблюдения, автоматика для ворот и домофоны. Лучшие цены в Узбекистане.">
+    <title data-i18n="auto_all-products_38">Все товары — кондиционеры, видеонаблюдение, ворота и домофоны | Saycom</title>
+    <meta name="description" content="Все товары от компании Saycom: кондиционеры, системы видеонаблюдения, автоматические ворота и домофоны в Казахстане. В нашем каталоге представлены современные и надежные решения для дома, офиса и бизнеса. Мы предлагаем продажу, профессиональный монтаж, настройку и обслуживание оборудования под ключ. Гарантия качества, доступные цены и индивидуальный подход к каждому клиенту. Выбирайте лучшее оборудование вместе с Saycom."> 
+    <meta name="keywords" content="все товары, каталог товаров, кондиционеры, купить кондиционер, видеонаблюдение, камеры видеонаблюдения, автоматические ворота, домофоны, системы безопасности, оборудование для дома и бизнеса, Астана, Казахстан, Saycom">
     <meta property="og:title" content="Каталог товаров | SAYCOM">
     <meta property="og:image" content="uploads/icon_premium_v2.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=2.2">
+    <link rel="stylesheet" href="css/style.css?v=3.0">
+    <!-- Theme Init (prevents flash of wrong theme) -->
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('saycom_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     
 
     <!-- Mobile Nav Fix -->
@@ -49,8 +57,6 @@
                 margin-bottom: 30px;
             }
             .product-grid {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
-                gap: 15px !important;
             }
             .product-card {
                 padding: 15px !important;
@@ -72,7 +78,7 @@
                 border: none !important;
             }
             .footer-right > div {
-                grid-template-columns: 1fr 1fr !important;
+		grid-template-columns: 1fr 1fr !important;
                 gap: 20px !important;
             }
         }
@@ -83,7 +89,7 @@
     <link rel="apple-touch-icon" href="/uploads/icon_premium_v2.png">
 </head>
 
-<body>
+<body class="page-shop-all">
 
     <!-- Top Bar -->
     <div class="top-bar" style="background: var(--bg-light); border-bottom: 1px solid var(--border-color); padding: 12px 0; font-size: 13px; color: var(--text-muted);">
@@ -165,6 +171,13 @@
                     <i class="fa-solid fa-cart-shopping" style="font-size:16px;"></i>
                     <span style="position: absolute; top: -6px; right: -6px; background: var(--primary); color: white; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; border: 2px solid var(--bg-light);">0</span>
                 </div>
+
+                <!-- Theme Toggle Button -->
+                <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Switch theme" aria-label="Toggle light/dark mode">
+                    <i class="fa-solid fa-sun icon-sun"></i>
+                    <i class="fa-solid fa-moon icon-moon"></i>
+                </button>
+
                 <div class="action-btn user-btn-desktop" style="display:flex; align-items:center; gap:12px; background: rgba(255,255,255,0.04); padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.2s; border: 1px solid transparent;">
                     <i class="fa-regular fa-user" style="font-size:16px; color: white;"></i>
                     <div style="text-align: left; line-height:1.2;">

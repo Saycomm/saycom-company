@@ -4,25 +4,223 @@
     <title data-i18n="auto_auth_7">SAYCOM - Вход и Регистрация</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=2.2">
+    <link rel="stylesheet" href="css/style.css?v=3.0">
+    <!-- Theme Init (prevents flash of wrong theme) -->
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('saycom_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     <style>
-        body { background: #060B15; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-        .auth-container { width: 100%; max-width: 480px; background: #0D1421; padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
-        .auth-header { text-align: center; margin-bottom: 30px; }
-        .auth-header h2 { font-size: 26px; font-weight: 800; color: white; margin-bottom: 8px; }
-        .auth-header p { color: #94A3B8; font-size: 14px; }
-        .auth-form { display: flex; flex-direction: column; gap: 18px; }
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .form-group { display: flex; flex-direction: column; gap: 8px; }
-        .form-group label { font-size: 12px; font-weight: 700; color: #64748B; text-transform: uppercase; letter-spacing: 0.5px; }
-        .form-group input { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 12px 16px; border-radius: 10px; color: white; font-family: inherit; outline: none; transition: 0.2s; }
-        .form-group input:focus { border-color: var(--primary); background: rgba(16,185,129,0.05); box-shadow: 0 0 15px rgba(16,185,129,0.1); }
-        .btn-auth { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: 0.2s; margin-top: 10px; }
-        .btn-auth:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(16,185,129,0.2); }
-        .auth-footer { text-align: center; margin-top: 25px; font-size: 14px; color: #64748B; }
-        .auth-footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
-        .back-home { position: absolute; top: 30px; left: 30px; color: #64748B; text-decoration: none; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; transition: 0.23s; }
-        .back-home:hover { color: white; }
+        body { 
+            background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 60%), #060B15; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: background 0.3s ease;
+        }
+        
+        .auth-container { 
+            width: 100%; 
+            max-width: 440px; 
+            background: rgba(13, 20, 33, 0.75); 
+            backdrop-filter: blur(20px);
+            padding: 40px; 
+            border-radius: 24px; 
+            border: 1px solid rgba(255,255,255,0.06); 
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4); 
+            transition: all 0.3s ease;
+        }
+        
+        .auth-header { 
+            text-align: center; 
+            margin-bottom: 35px; 
+        }
+        
+        .auth-header h2 { 
+            font-size: 28px; 
+            font-weight: 800; 
+            color: white; 
+            margin-bottom: 10px; 
+            letter-spacing: -0.5px;
+        }
+        
+        .auth-header p { 
+            color: #94A3B8; 
+            font-size: 14.5px; 
+            line-height: 1.5;
+        }
+        
+        .auth-form { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 20px; 
+        }
+        
+        .form-row { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; 
+        }
+        
+        .form-group { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px; 
+            text-align: left;
+        }
+        
+        .form-group label { 
+            font-size: 11px; 
+            font-weight: 700; 
+            color: #94A3B8; 
+            text-transform: uppercase; 
+            letter-spacing: 0.8px; 
+        }
+        
+        .form-group input { 
+            background: rgba(255,255,255,0.03); 
+            border: 1px solid rgba(255,255,255,0.08); 
+            padding: 14px 18px; 
+            border-radius: 12px; 
+            color: white; 
+            font-family: inherit; 
+            font-size: 14.5px;
+            outline: none; 
+            transition: all 0.25s ease; 
+            width: 100%;
+            box-sizing: border-box;
+        }
+        
+        .form-group input:focus { 
+            border-color: var(--primary); 
+            background: rgba(16,185,129,0.02); 
+            box-shadow: 0 0 0 3px rgba(16,185,129,0.15); 
+        }
+        
+        .btn-auth { 
+            background: linear-gradient(135deg, var(--primary) 0%, #059669 100%); 
+            color: white; 
+            border: none; 
+            padding: 16px; 
+            border-radius: 14px; 
+            font-size: 15.5px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            margin-top: 12px; 
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.25);
+        }
+        
+        .btn-auth:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4); 
+            filter: brightness(1.05);
+        }
+        
+        .btn-auth:active {
+            transform: translateY(0);
+        }
+        
+        .auth-footer { 
+            text-align: center; 
+            margin-top: 30px; 
+            font-size: 14px; 
+            color: #94A3B8; 
+        }
+        
+        .auth-footer a { 
+            color: var(--primary); 
+            text-decoration: none; 
+            font-weight: 700; 
+            margin-left: 6px;
+            transition: color 0.2s ease;
+        }
+        
+        .auth-footer a:hover {
+            color: #34d399;
+            text-decoration: underline;
+        }
+        
+        .back-home { 
+            position: absolute; 
+            top: 40px; 
+            left: 40px; 
+            color: #94A3B8; 
+            text-decoration: none; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            font-size: 14.5px; 
+            font-weight: 600; 
+            transition: all 0.25s ease; 
+        }
+        
+        .back-home:hover { 
+            color: white; 
+            transform: translateX(-3px);
+        }
+
+        /* ===== LIGHT MODE ADJUSTMENTS ===== */
+        [data-theme="light"] body {
+            background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 60%), #F8FAFC; 
+        }
+
+        [data-theme="light"] .auth-container {
+            background: #FFFFFF;
+            border-color: #E2E8F0;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
+        }
+
+        [data-theme="light"] .auth-header h2 {
+            color: #0F172A;
+        }
+
+        [data-theme="light"] .auth-header p {
+            color: #64748B;
+        }
+
+        [data-theme="light"] .form-group label {
+            color: #475569;
+        }
+
+        [data-theme="light"] .form-group input {
+            background: #F8FAFC;
+            border-color: #E2E8F0;
+            color: #0F172A;
+        }
+
+        [data-theme="light"] .form-group input:focus {
+            background: #FFFFFF;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(16,185,129,0.1);
+        }
+
+        [data-theme="light"] .auth-footer {
+            color: #64748B;
+        }
+
+        [data-theme="light"] .auth-footer a {
+            color: var(--primary);
+        }
+
+        [data-theme="light"] .auth-footer a:hover {
+            color: var(--primary-dark);
+        }
+
+        [data-theme="light"] .back-home {
+            color: #64748B;
+        }
+
+        [data-theme="light"] .back-home:hover {
+            color: #0F172A;
+        }
     </style>
     
 
@@ -116,7 +314,7 @@
             </div>
             <button type="submit" class="btn-auth" data-i18n="auto_auth_13">Войти в аккаунт</button>
         </form>
-        <div class="auth-footer"><span data-i18n="auto_auth_14">У вас еще нет аккаунта?</span><a href="javascript:void(0)" onclick="toggleAuth()" data-i18n="auto_auth_15">Регистрация</a>
+        <div class="auth-footer"><span data-i18n="auto_auth_14">У вас еще нет аккаунта?</span> <a href="javascript:void(0)" onclick="toggleAuth()" data-i18n="auto_auth_15">Регистрация</a>
         </div>
     </div>
 
@@ -151,7 +349,7 @@
             </div>
             <button type="submit" class="btn-auth" data-i18n="auto_auth_23">Зарегистрироваться</button>
         </form>
-        <div class="auth-footer"><span data-i18n="auto_auth_24">Уже зарегистрированы?</span><a href="javascript:void(0)" onclick="toggleAuth()" data-i18n="auto_auth_25">Войти</a>
+        <div class="auth-footer"><span data-i18n="auto_auth_24">Уже зарегистрированы?</span> <a href="javascript:void(0)" onclick="toggleAuth()" data-i18n="auto_auth_25">Войти</a>
         </div>
     </div>
 

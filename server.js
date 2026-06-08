@@ -44,7 +44,18 @@ app.use((req, res, next) => {
             '/air-conditioning': 'air-conditioners.html',
             '/gates': 'automatic-gates.html',
             '/intercom': 'intercom-systems.html',
-            '/cctv': 'cctv-systems.html'
+            '/cctv': 'cctv-systems.html',
+            '/wholesale': 'wholesale.html',
+            '/spare': 'spare-parts.html',
+            '/about-us': 'about-us.html',
+            '/contact': 'contact.html',
+            '/all-products': 'all-products.html',
+            '/air-conditioners': 'air-conditioners.html',
+            '/cctv-systems': 'cctv-systems.html',
+            '/automatic-gates': 'automatic-gates.html',
+            '/intercom-systems': 'intercom-systems.html',
+            '/spare-parts': 'spare-parts.html',
+            '/installation-services': 'installation-services.html'
         };
         
         const targetFile = mappings[file] || (file.slice(1) + '.html');

@@ -1,5 +1,19 @@
 let currentLang = 'ru';
 
+/* ===== THEME TOGGLE ===== */
+function toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('saycom_theme', newTheme);
+}
+
+// Apply saved theme on page load (called from inline script too, but this ensures it's set)
+(function applyThemeOnLoad() {
+    const savedTheme = localStorage.getItem('saycom_theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+})();
+
 function setLanguage(lang) {
     if (!translations[lang]) return;
     currentLang = lang;
@@ -912,6 +926,12 @@ function renderProducts(products) {
         const isLiked = wishlist.some(wp => wp.id === p.id);
         const oldPriceHtml = p.oldPrice ? `<span class="p-price-old" style="color:var(--text-muted); text-decoration:line-through; font-size:14px; margin-left:8px;">₸${p.oldPrice.toLocaleString()}</span>` : '';
 
+        // Build tags HTML
+        const tags = [p.tag1, p.tag2, p.tag3].filter(t => t && t.trim());
+        const tagsHtml = tags.length > 0
+            ? `<div class="p-tags" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px;">${tags.map(t => `<span style="background:rgba(16,185,129,0.12); color:var(--primary); border:1px solid rgba(16,185,129,0.25); font-size:11px; font-weight:600; padding:3px 10px; border-radius:20px;">${t}</span>`).join('')}</div>`
+            : '';
+
         const card = document.createElement('div');
         card.className = `product-card ${currentViewMode === 'list' ? 'list-mode' : ''}`;
         card.onclick = (e) => {
@@ -928,9 +948,10 @@ function renderProducts(products) {
                     <img src="${imageSrc}" style="max-height: 100%; max-width: 100%; object-fit: contain;" onerror="this.src='uploads/placeholder.png'">
                 </div>
                 <h3 class="p-title" style="color: white; font-size: 16px; font-weight: 700; margin-bottom: 6px;">${p.title}</h3>
-                <div class="p-rating" style="font-size: 12px; margin-bottom: 20px; display: flex; align-items: center; gap: 4px;">
+                <div class="p-rating" style="font-size: 12px; margin-bottom: 10px; display: flex; align-items: center; gap: 4px;">
                     <i class="fa-solid fa-star" style="color:var(--primary);"></i><span style="color:var(--primary); font-weight:600; font-size:13px;">${p.rating || 4.8}</span> <span style="color: white;">(${p.reviews || 0} ${translations[currentLang]['reviews']})</span>
                 </div>
+                ${tagsHtml}
                 <div class="p-price" style="font-size: 24px; font-weight: 800; color: var(--primary); margin-bottom: 20px;">₸${p.price.toLocaleString()} ${oldPriceHtml}</div>
                 <button class="btn-add" onclick="event.stopPropagation(); addToCart(${JSON.stringify(p).replace(/"/g, '&quot;')})" style="background: var(--primary); color: white; border: none; padding: 12px; border-radius: 10px; font-weight: 700; width: 100%; cursor: pointer;">
                     <i class="fa-solid fa-cart-shopping"></i> ${translations[currentLang]['add_to_cart']}
@@ -949,6 +970,7 @@ function renderProducts(products) {
                         <span style="display:flex; align-items:center; gap:5px;"><i class="fa-solid fa-star" style="color:var(--primary);"></i> <b style="color:white;">${p.rating || 4.8}</b> (${p.reviews || 0} ${translations[currentLang]['reviews']})</span>
                         <span style="color: var(--primary); font-weight: 700; display:flex; align-items:center; gap:5px;"><i class="fa-solid fa-check"></i> ${translations[currentLang]['in_stock']}</span>
                     </div>
+                    ${tagsHtml}
                 </div>
                 <div class="p-actions-right" style="display:flex; flex-direction:column; justify-content:center; gap:40px; align-items:flex-end; margin-left: auto;">
                     <div style="text-align: right;">

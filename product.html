@@ -10,7 +10,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=3.0">
+    <!-- Theme Init (prevents flash of wrong theme) -->
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('saycom_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     <style>
         body {
             background-color: #101827;
@@ -566,6 +573,177 @@
                 grid-template-columns: 1fr !important;
             }
         }
+
+        /* ===== LIGHT THEME ADJUSTMENTS ===== */
+        [data-theme="light"] {
+            --text-dark: #0f172a;
+        }
+
+        [data-theme="light"] body {
+            background-color: #ffffff;
+            color: #0f172a;
+        }
+
+        [data-theme="light"] #bread-title {
+            color: #0f172a !important;
+        }
+
+        [data-theme="light"] .p-features li {
+            color: #334155 !important;
+        }
+
+        [data-theme="light"] .qty-btn {
+            color: #0f172a !important;
+        }
+
+        [data-theme="light"] .qty-input {
+            background: rgba(0, 0, 0, 0.04) !important;
+            border-color: #cbd5e1 !important;
+        }
+
+        [data-theme="light"] .qty-num {
+            color: #0f172a !important;
+        }
+
+        [data-theme="light"] .spec-value {
+            color: #0f172a !important;
+        }
+
+        [data-theme="light"] .spec-item {
+            background: rgba(0, 0, 0, 0.02) !important;
+            border-color: #e2e8f0 !important;
+        }
+
+        [data-theme="light"] .rv-big-num {
+            color: #0f172a !important;
+        }
+
+        [data-theme="light"] .reviews-summary,
+        [data-theme="light"] .review-card {
+            background: rgba(0, 0, 0, 0.02) !important;
+            border-color: #e2e8f0 !important;
+        }
+
+        [data-theme="light"] .rv-total {
+            color: #64748b !important;
+        }
+
+        [data-theme="light"] .rv-bar {
+            background: rgba(0, 0, 0, 0.06) !important;
+        }
+
+        [data-theme="light"] .review-form-container {
+            background: rgba(0, 0, 0, 0.02) !important;
+            border-color: #e2e8f0 !important;
+        }
+
+        [data-theme="light"] #addReviewForm input,
+        [data-theme="light"] #addReviewForm textarea {
+            background: rgba(0, 0, 0, 0.03) !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+
+        [data-theme="light"] #addReviewForm input::placeholder,
+        [data-theme="light"] #addReviewForm textarea::placeholder {
+            color: #94a3b8 !important;
+        }
+
+        /* Mobile specific light theme fixes */
+        @media (max-width: 768px) {
+            [data-theme="light"] .mobile-app-header {
+                background: rgba(255, 255, 255, 0.85) !important;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+            }
+
+            [data-theme="light"] .app-back-btn {
+                background: rgba(0, 0, 0, 0.04) !important;
+                color: #0f172a !important;
+            }
+
+            [data-theme="light"] .app-logo .logo-title {
+                color: #0f172a !important;
+            }
+
+            [data-theme="light"] .app-home-btn {
+                color: #64748b !important;
+            }
+
+            [data-theme="light"] .action-btns {
+                background: rgba(255, 255, 255, 0.9) !important;
+                border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+                box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.06) !important;
+            }
+
+            [data-theme="light"] .action-btns .btn-outline {
+                border-color: #cbd5e1 !important;
+                color: #0f172a !important;
+                background: rgba(0, 0, 0, 0.03) !important;
+            }
+        }
+
+        /* Footer Light Theme Overrides (since headings are inline style color: white) */
+        [data-theme="light"] footer {
+            background: #f8fafc !important;
+            border-top-color: #e2e8f0 !important;
+        }
+
+        [data-theme="light"] footer .logo-title,
+        [data-theme="light"] footer h4 {
+            color: #0f172a !important;
+        }
+
+        [data-theme="light"] footer .social-links div {
+            background: rgba(0, 0, 0, 0.03) !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+
+        [data-theme="light"] footer form {
+            background: rgba(0, 0, 0, 0.03) !important;
+            border-color: #cbd5e1 !important;
+        }
+
+        [data-theme="light"] footer form input {
+            color: #0f172a !important;
+        }
+
+        [data-theme="light"] footer form input::placeholder {
+            color: #94a3b8 !important;
+        }
+
+        /* Share Menu Light Theme Overrides */
+        [data-theme="light"] #shareMenu > div {
+            background: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15) !important;
+        }
+
+        [data-theme="light"] #shareMenu button,
+        [data-theme="light"] #shareMenu h3,
+        [data-theme="light"] #shareMenu a,
+        [data-theme="light"] #shareMenu span {
+            color: #0f172a !important;
+        }
+
+        [data-theme="light"] #shareMenu i {
+            color: #ffffff !important;
+        }
+
+        [data-theme="light"] #shareMenu .copy-link-btn > div {
+            background: rgba(0, 0, 0, 0.04) !important;
+            border-color: #cbd5e1 !important;
+        }
+
+        [data-theme="light"] #shareMenu .copy-link-btn i {
+            color: #0f172a !important;
+        }
+
+        [data-theme="light"] #share-url-input {
+            background: rgba(0, 0, 0, 0.03) !important;
+            border-color: #cbd5e1 !important;
+            color: #64748b !important;
+        }
     </style>
 
 
@@ -610,8 +788,6 @@
             }
 
             .product-grid {
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
-                gap: 15px !important;
             }
 
             .product-card {
@@ -959,7 +1135,7 @@
                                 </div>
                                 <span style="font-size:11px;" data-i18n="auto_product_21">Instagram</span>
                             </a>
-                            <div onclick="copyLink()"
+                            <div onclick="copyLink()" class="copy-link-btn"
                                 style="display:flex; flex-direction:column; align-items:center; gap:8px; cursor:pointer;">
                                 <div
                                     style="width:50px; height:50px; background:rgba(255,255,255,0.05); border:1px solid var(--border-color); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:20px;">
@@ -1010,7 +1186,7 @@
                 </div>
 
                 <!-- Add Review Form -->
-                <div
+                <div class="review-form-container"
                     style="margin-top: 50px; background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 20px; padding: 30px;">
                     <h3 style="margin-bottom: 25px; font-size: 20px;" data-i18n="auto_product_30">Оставить отзыв</h3>
                     <form id="addReviewForm" onsubmit="submitReview(event)">
@@ -1397,7 +1573,7 @@
                 const t_reviews = translations[lang]?.reviews || 'reviews';
                 const topRatingEl = document.getElementById('pRatingCount');
                 if (topRatingEl) {
-                    topRatingEl.innerHTML = `<i class="fa-solid fa-star" style="color:var(--primary);"></i> <b style="color:white;">${p.rating || 5.0}</b> (${reviews.length} ${t_reviews})`;
+                    topRatingEl.innerHTML = `<i class="fa-solid fa-star" style="color:var(--primary);"></i> <b style="color:var(--text-dark);">${p.rating || 5.0}</b> (${reviews.length} ${t_reviews})`;
                 }
             }
 
@@ -1487,9 +1663,9 @@
                 if (img === 'AC') img = 'https://smarttech.uz/wp-content/uploads/2021/04/ac-placeholder.png';
 
                 grid.innerHTML += `
-                    <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'" style="cursor:pointer; background: #0D1421; border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 22px; position: relative;">
+                    <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'" style="cursor:pointer;">
                         <div class="p-image" style="height: 150px; display:flex; align-items:center; justify-content:center; margin-bottom: 15px;"><img src="${img}" style="max-height:100%; max-width:100%; object-fit:contain;"></div>
-                        <h3 class="p-title" style="color:white; font-size:15px; margin-bottom:10px;">${p.title}</h3>
+                        <h3 class="p-title" style="font-size:15px; margin-bottom:10px;">${p.title}</h3>
                         <div style="display:flex; justify-content:space-between; align-items:center;">
                             <div class="p-price" style="font-size: 16px; font-weight: 800; color: var(--primary);">${p.price.toLocaleString()} ₸</div>
                             <div style="font-size:11px; color:var(--text-muted);"><i class="fa-solid fa-star" style="color:var(--primary)"></i> 4.8</div>

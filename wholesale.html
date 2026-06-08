@@ -7,7 +7,14 @@
     <title data-i18n="wholesale_title">Оптовые продажи и B2B - SAYCOM</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=2.2">
+    <link rel="stylesheet" href="css/style.css?v=3.0">
+    <!-- Theme Init (prevents flash of wrong theme) -->
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem('saycom_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+        })();
+    </script>
     <style>
         .wholesale-hero {
             padding: 120px 0 80px;
@@ -95,7 +102,7 @@
             font-size: 20px;
             font-weight: 700;
             margin-bottom: 15px;
-            color: white;
+            color: var(--text-dark);
         }
 
         .benefit-desc {
@@ -106,7 +113,7 @@
 
         .threshold-section {
             padding: 100px 0;
-            background: rgba(255, 255, 255, 0.02);
+            background: var(--input-bg);
             border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
         }
@@ -119,11 +126,11 @@
         }
 
         .threshold-item {
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--input-bg);
             padding: 30px;
             border-radius: 20px;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
         }
 
         .threshold-count {
@@ -137,7 +144,7 @@
         .threshold-label {
             font-size: 14px;
             font-weight: 600;
-            color: white;
+            color: var(--text-dark);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -198,6 +205,33 @@
                 padding: 12px 25px !important;
                 font-size: 15px !important;
             }
+        }
+        [data-theme="light"] .cta-section {
+            background: #F0FDF4 !important;
+        }
+
+        [data-theme="light"] .cta-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(240, 253, 244, 0.8) 100%) !important;
+            border-color: rgba(16, 185, 129, 0.3) !important;
+            box-shadow: 0 8px 32px rgba(16, 185, 129, 0.1) !important;
+        }
+
+        [data-theme="light"] .threshold-section {
+            background: #F8FAFC !important;
+        }
+
+        [data-theme="light"] .benefit-card {
+            background: #FFFFFF !important;
+            border-color: #E2E8F0 !important;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
+        }
+
+        [data-theme="light"] .benefit-desc {
+            color: #475569 !important;
+        }
+
+        [data-theme="light"] .threshold-count {
+            color: var(--primary) !important;
         }
     </style>
     
@@ -346,6 +380,13 @@
                     <span
                         style="position: absolute; top: -6px; right: -6px; background: var(--primary); color: white; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; border: 2px solid var(--bg-light);">0</span>
                 </div>
+
+                <!-- Theme Toggle Button -->
+                <button class="theme-toggle-btn" id="theme-toggle-btn" onclick="toggleTheme()" title="Switch theme" aria-label="Toggle light/dark mode">
+                    <i class="fa-solid fa-sun icon-sun"></i>
+                    <i class="fa-solid fa-moon icon-moon"></i>
+                </button>
+
                 <div class="action-btn" onclick="window.location.href='auth.html'" id="user-account-btn"
                     style="display:flex; align-items:center; gap:12px; background: rgba(255,255,255,0.04); padding: 8px 16px; border-radius: 8px; cursor: pointer; transition: 0.2s; border: 1px solid transparent;">
                     <i class="fa-regular fa-user" style="font-size:16px; color: white;"></i>
@@ -368,7 +409,7 @@
                 style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Все
                 товары</a>
             <a href="/wholesale" data-i18n="nav_wholesale" class="nav-link" data-filename="wholesale.html"
-                style="padding: 15px 0; color: var(--text-muted);">Оптом</a>
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Оптом</a>
             <a href="/air-conditioners" data-i18n="nav_ac" class="nav-link" data-filename="air-conditioners.html"
                 style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Кондиционеры</a>
             <a href="/cctv-systems" data-i18n="nav_cctv" class="nav-link" data-filename="cctv-systems.html"
@@ -379,6 +420,8 @@
             <a href="/intercom-systems" data-i18n="nav_intercom" class="nav-link"
                 data-filename="intercom-systems.html"
                 style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Домофоны</a>
+            <a href="/spare-parts" data-i18n="nav_spare_parts" class="nav-link" data-filename="spare-parts.html"
+                style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Запчасти</a>
             <a href="/installation-services" data-i18n="nav_install" class="nav-link" data-filename="installation-services.html" style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">Услуги монтажа</a>
             <a href="/about-us" data-i18n="nav_about" class="nav-link" data-filename="about-us.html"
                 style="padding: 15px 0; color: var(--text-muted); border-bottom: 2px solid transparent; position: relative; transition: 0.2s;">О
@@ -436,7 +479,7 @@
         <section class="threshold-section">
             <div class="container">
                 <div style="text-align: center; margin-bottom: 50px;">
-                    <h2 style="color: white; font-size: 32px; font-weight: 800;" data-i18n="wholesale_threshold_title">
+                    <h2 style="font-size: 32px; font-weight: 800; color: var(--text-dark);" data-i18n="wholesale_threshold_title">
                         Пороги квалификации</h2>
                     <p style="color: var(--text-muted);" data-i18n="wholesale_threshold_desc">Закажите больше указанного
                         количества, чтобы разблокировать специальные цены B2B</p>
@@ -491,7 +534,7 @@
         <section class="cta-section">
             <div class="container">
                 <div class="cta-box">
-                    <h2 style="color: white; font-size: 36px; font-weight: 800; margin-bottom: 20px;"
+                    <h2 style="color: var(--text-dark); font-size: 36px; font-weight: 800; margin-bottom: 20px;"
                         data-i18n="wholesale_cta_title">Готовы стать нашим партнером?</h2>
                     <p style="color: var(--text-muted); margin-bottom: 40px;" data-i18n="wholesale_cta_desc">Отправьте
                         нам запрос в WhatsApp, и наш B2B-отдел предоставит вам индивидуальное коммерческое предложение в
